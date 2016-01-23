@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <scenes>
+        <!--MigrationVC-->
+        <scene sceneID="Ops-Jo-E0h">
+            <objects>
+                <viewController storyboardIdentifier="migration" id="8RH-ia-N3g" customClass="LCYMigrationVC" customModule="LCYCoreDataHelper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eFD-qk-7S3"/>
+                        <viewControllerLayoutGuide type="bottom" id="UuN-Y6-LRb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GPk-yN-uT3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="HzP-qY-KQZ">
+                                <rect key="frame" x="150" y="299" width="300" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="PE2-4Y-wXz"/>
+                                </constraints>
+                            </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j1a-Nj-GYs">
+                                <rect key="frame" x="279" y="253" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HzP-qY-KQZ" firstAttribute="top" secondItem="j1a-Nj-GYs" secondAttribute="bottom" constant="25" id="BHM-QG-ldW"/>
+                            <constraint firstItem="HzP-qY-KQZ" firstAttribute="centerX" secondItem="GPk-yN-uT3" secondAttribute="centerX" id="Y8c-Ur-PkX"/>
+                            <constraint firstItem="j1a-Nj-GYs" firstAttribute="centerX" secondItem="HzP-qY-KQZ" secondAttribute="centerX" id="oZK-M1-psX"/>
+                            <constraint firstItem="HzP-qY-KQZ" firstAttribute="centerY" secondItem="GPk-yN-uT3" secondAttribute="centerY" id="yzs-Gx-H0y"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="label" destination="j1a-Nj-GYs" id="So7-ze-Det"/>
+                        <outlet property="progressView" destination="HzP-qY-KQZ" id="N7w-Mv-sCL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Q4-Wg-Hfo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="367" y="353"/>
+        </scene>
+    </scenes>
+</document>

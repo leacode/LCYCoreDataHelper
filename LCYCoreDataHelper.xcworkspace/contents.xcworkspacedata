@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:LCYCoreDataHelper"
+      name = "LCYCoreDataHelper">
+      <FileRef
+         location = "group:LCYCoreDataHelper.xcodeproj">
+      </FileRef>
+      <Group
+         location = "group:LCYCoreDataHelperTests"
+         name = "LCYCoreDataHelperTests">
+         <FileRef
+            location = "group:Info.plist">
+         </FileRef>
+         <FileRef
+            location = "group:LCYCoreDataHelperTests.swift">
+         </FileRef>
+      </Group>
+   </Group>
+   <Group
+      location = "group:LCYCoreDataHelperExample"
+      name = "LCYCoreDataHelperExample">
+      <FileRef
+         location = "group:LCYCoreDataHelperExample.xcodeproj">
+      </FileRef>
+      <Group
+         location = "group:LCYCoreDataHelperExampleTests"
+         name = "LCYCoreDataHelperExampleTests">
+         <FileRef
+            location = "group:Info.plist">
+         </FileRef>
+         <FileRef
+            location = "group:LCYCoreDataHelperExampleTests.swift">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:LCYCoreDataHelperExampleUITests"
+         name = "LCYCoreDataHelperExampleUITests">
+         <FileRef
+            location = "group:Info.plist">
+         </FileRef>
+         <FileRef
+            location = "group:LCYCoreDataHelperExampleUITests.swift">
+         </FileRef>
+      </Group>
+   </Group>
+</Workspace>
