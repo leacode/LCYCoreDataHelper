@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         
-//        User.insertCoreDataModel()
+          User.insertCoreDataModel()
 //        try! coreDataHelper?.resetStore()
         
         
