@@ -10,7 +10,7 @@ import UIKit
 import LCYCoreDataHelper
 import CoreData
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class CollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionView: LCYCoreDataCollectionView!
     
@@ -46,18 +46,65 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionViewCellId", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionViewCellId", forIndexPath: indexPath) as! UserCollectionViewCell
         
         let user: User = self.collectionView.frc.objectAtIndexPath(indexPath) as! User
         
-        print(user.username)
+        print(user.id)
+        
+        cell.usernameLabel.text = user.username
         
 //        self.collectionView.frc
         
         return cell
     }
     
+    // MRK: - CRUD
+    
+    @IBAction func addNewItem(sender: AnyObject) {
+        
+        if collectionView.frc.fetchedObjects?.count > 0 {
+            let user = (self.collectionView.frc.fetchedObjects?.last)! as! User
+            User.i = user.id + 1
+        }
+        
+        User.insertCoreDataModel()
+        
+    }
+    
+    
+    @IBAction func deleteLast(sender: AnyObject) {
+        
+        if collectionView.frc.fetchedObjects?.count > 0 {
+            globalContext?.deleteObject((self.collectionView.frc.fetchedObjects?.last)! as! NSManagedObject)
+        }
+        
+    }
+    
+    @IBAction func deleteAll(sender: AnyObject) {
+        
+        do {
+            try coreDataHelper?.removeAll("User")
+            NSFetchedResultsController.deleteCacheWithName("UserCache")
+            try collectionView.frc.performFetch()
+            collectionView.reloadData()
+        } catch {
+        
+        }
+        
+    }
+    
     
 
 }
+
+class UserCollectionViewCell: UICollectionViewCell {
+    
+    @IBOutlet weak var usernameLabel: UILabel!
+    
+    
+    
+    
+}
+
 

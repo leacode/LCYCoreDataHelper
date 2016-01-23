@@ -57,6 +57,9 @@ public class LCYCoreDataCollectionView: UICollectionView, NSFetchedResultsContro
     }
     
     override public func numberOfItemsInSection(section: Int) -> Int {
+        
+        self.frc.fetchedObjects?.count
+        
         var numberOfRow: Int = 0
         if let sections = self.frc.sections {
             numberOfRow = sections[section].numberOfObjects
@@ -117,6 +120,7 @@ public class LCYCoreDataCollectionView: UICollectionView, NSFetchedResultsContro
         }
         
     }
+   
 
     
 }

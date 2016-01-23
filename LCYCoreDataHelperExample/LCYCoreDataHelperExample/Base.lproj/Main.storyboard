@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Table View Controller-->
@@ -12,7 +13,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="pOO-YR-0Jt">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="WET-xU-2Ci">
                                 <cells>
@@ -27,7 +28,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -36,20 +37,38 @@
                                             <segue destination="BYZ-38-t0r" kind="show" id="6xs-2T-0KL"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ZMF-FE-cpr">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="50w-ag-AyV" style="IBUITableViewCellStyleDefault" id="ZMF-FE-cpr">
                                         <rect key="frame" x="0.0" y="143" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZMF-FE-cpr" id="Uhr-iX-wif">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="UITableViewController Demo is developing..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="50w-ag-AyV">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Zvj-yk-9Ag">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="c8F-zz-EfV" style="IBUITableViewCellStyleDefault" id="Zvj-yk-9Ag">
                                         <rect key="frame" x="0.0" y="187" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zvj-yk-9Ag" id="gca-xc-TJ8">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="UICollectionViewController Demo is developing..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="c8F-zz-EfV">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -69,7 +88,7 @@
         <!--Collection View-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Collection View" id="BYZ-38-t0r" customClass="ViewController" customModule="LCYCoreDataHelperExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Collection View" id="BYZ-38-t0r" customClass="CollectionViewController" customModule="LCYCoreDataHelperExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -82,21 +101,37 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q4L-7c-opf">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="97" height="94"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionViewCellId" id="AxR-Yd-1fD">
-                                        <rect key="frame" x="0.0" y="64" width="50" height="50"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionViewCellId" id="AxR-Yd-1fD" customClass="UserCollectionViewCell" customModule="LCYCoreDataHelperExample" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="74" width="97" height="94"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="97" height="94"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0l-rI-hhU">
+                                                    <rect key="frame" x="27.5" y="40" width="42" height="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="i0l-rI-hhU" firstAttribute="centerX" secondItem="AxR-Yd-1fD" secondAttribute="centerX" id="Ds0-tc-yPT"/>
+                                            <constraint firstItem="i0l-rI-hhU" firstAttribute="top" secondItem="AxR-Yd-1fD" secondAttribute="topMargin" constant="32" id="Hbh-qG-8lU"/>
+                                            <constraint firstItem="i0l-rI-hhU" firstAttribute="centerY" secondItem="AxR-Yd-1fD" secondAttribute="centerY" id="XBe-Gv-VtD"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="usernameLabel" destination="i0l-rI-hhU" id="yDN-dU-alj"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -104,13 +139,36 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="00H-l3-xWj"/>
                                 </connections>
                             </collectionView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o2C-Zz-7D8">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="Add" id="23K-ay-Bqg">
+                                        <connections>
+                                            <action selector="addNewItem:" destination="BYZ-38-t0r" id="pLS-69-1HH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Delete Last" id="IOV-jh-jaU">
+                                        <connections>
+                                            <action selector="deleteLast:" destination="BYZ-38-t0r" id="Km3-MZ-PtW"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Delete All" id="2o1-xz-1pl">
+                                        <connections>
+                                            <action selector="deleteAll:" destination="BYZ-38-t0r" id="Qyj-Gz-o3H"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="o2C-Zz-7D8" firstAttribute="leading" secondItem="wzU-Qi-Gwf" secondAttribute="leading" id="1vg-nu-d9T"/>
+                            <constraint firstItem="o2C-Zz-7D8" firstAttribute="trailing" secondItem="wzU-Qi-Gwf" secondAttribute="trailing" id="36M-lk-cSu"/>
                             <constraint firstItem="wzU-Qi-Gwf" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="PE3-GF-GMV"/>
                             <constraint firstItem="wzU-Qi-Gwf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="QEQ-VK-hje"/>
                             <constraint firstItem="wzU-Qi-Gwf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eww-vz-Mqq"/>
                             <constraint firstAttribute="trailing" secondItem="wzU-Qi-Gwf" secondAttribute="trailing" id="gGF-WE-5p6"/>
+                            <constraint firstItem="o2C-Zz-7D8" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="uND-kn-DI2"/>
                         </constraints>
                     </view>
                     <connections>

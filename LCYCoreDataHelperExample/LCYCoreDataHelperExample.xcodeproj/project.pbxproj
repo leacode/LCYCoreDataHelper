@@ -12,7 +12,7 @@
 		6D7E27921C5215310010E4B6 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E27901C5215310010E4B6 /* User+CoreDataProperties.swift */; };
 		6D7E27931C5215310010E4B6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E27911C5215310010E4B6 /* User.swift */; };
 		6DE4CF531C52041D0017B3EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF521C52041D0017B3EF /* AppDelegate.swift */; };
-		6DE4CF551C52041D0017B3EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF541C52041D0017B3EF /* ViewController.swift */; };
+		6DE4CF551C52041D0017B3EF /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF541C52041D0017B3EF /* CollectionViewController.swift */; };
 		6DE4CF581C52041D0017B3EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DE4CF561C52041D0017B3EF /* Main.storyboard */; };
 		6DE4CF5B1C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF591C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodeld */; };
 		6DE4CF5D1C52041D0017B3EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DE4CF5C1C52041D0017B3EF /* Assets.xcassets */; };
@@ -58,7 +58,7 @@
 		6D7E27911C5215310010E4B6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6DE4CF4F1C52041D0017B3EF /* LCYCoreDataHelperExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCYCoreDataHelperExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DE4CF521C52041D0017B3EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6DE4CF541C52041D0017B3EF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6DE4CF541C52041D0017B3EF /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		6DE4CF571C52041D0017B3EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6DE4CF5A1C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LCYCoreDataHelperExample.xcdatamodel; sourceTree = "<group>"; };
 		6DE4CF5C1C52041D0017B3EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		6D7E278D1C520ADA0010E4B6 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				6DE4CF541C52041D0017B3EF /* ViewController.swift */,
+				6DE4CF541C52041D0017B3EF /* CollectionViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -301,7 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DE4CF551C52041D0017B3EF /* ViewController.swift in Sources */,
+				6DE4CF551C52041D0017B3EF /* CollectionViewController.swift in Sources */,
 				6DE4CF5B1C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodeld in Sources */,
 				6D7E27921C5215310010E4B6 /* User+CoreDataProperties.swift in Sources */,
 				6D7E27931C5215310010E4B6 /* User.swift in Sources */,

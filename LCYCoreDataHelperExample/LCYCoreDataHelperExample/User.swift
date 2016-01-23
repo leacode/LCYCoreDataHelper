@@ -13,6 +13,8 @@ import LCYCoreDataHelper
 class User: NSManagedObject {
     
     
+    static var i = 0
+    
     override func awakeFromInsert() {
         super.awakeFromInsert()
     }
@@ -21,8 +23,12 @@ class User: NSManagedObject {
         
         let user: User? = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: globalContext!) as? User
         
-        user?.id = 231312
-        user?.username = "旺仔牛奶"
+        
+        
+        user?.id = i
+        i++
+//        user?.id = 231312
+        user?.username = "User\(i)"
         user?.amount = 23.23
 
         do {
