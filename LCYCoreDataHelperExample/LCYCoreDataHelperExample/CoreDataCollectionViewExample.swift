@@ -10,7 +10,7 @@ import UIKit
 import LCYCoreDataHelper
 import CoreData
 
-class CollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class CoreDataCollectionViewExample: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionView: LCYCoreDataCollectionView!
     
@@ -23,7 +23,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         fetchRequest.sortDescriptors = sortDescriptors
         
         collectionView.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: globalContext!, sectionNameKeyPath: nil, cacheName: "UserCache")
-        
         collectionView.frc.delegate = collectionView
         
         do {
@@ -32,8 +31,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
         
-        print(User.fetchCoreDataModels().count)
-        print(User.fetchCoreDataModels().last?.username)
     }
 
     
@@ -49,12 +46,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionViewCellId", forIndexPath: indexPath) as! UserCollectionViewCell
         
         let user: User = self.collectionView.frc.objectAtIndexPath(indexPath) as! User
-        
-        print(user.id)
-        
         cell.usernameLabel.text = user.username
-        
-//        self.collectionView.frc
         
         return cell
     }
@@ -93,8 +85,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         
     }
-    
-    
 
 }
 

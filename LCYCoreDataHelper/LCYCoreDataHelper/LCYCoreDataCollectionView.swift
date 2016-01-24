@@ -13,19 +13,14 @@ public class LCYCoreDataCollectionView: UICollectionView, NSFetchedResultsContro
 
     public var frc:NSFetchedResultsController!
     
+    //MARK: - INITIAL
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
-        
-        
-        
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        
-        
     }
     
     //MARK: - FETCHING
@@ -47,17 +42,14 @@ public class LCYCoreDataCollectionView: UICollectionView, NSFetchedResultsContro
     // MARK: UICollectionViewDataSource
     
     override public func numberOfSections() -> Int {
-        
         var numberOfSections: Int = 0
         if let sections = self.frc.sections {
             numberOfSections = sections.count
         }
         return numberOfSections
-        
     }
     
     override public func numberOfItemsInSection(section: Int) -> Int {
-        
         self.frc.fetchedObjects?.count
         
         var numberOfRow: Int = 0

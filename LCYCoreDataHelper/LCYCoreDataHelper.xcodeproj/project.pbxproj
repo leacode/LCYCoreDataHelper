@@ -21,6 +21,7 @@
 		6D7E279D1C5228B20010E4B6 /* NSManagedObjectContext+AsynchronousDataTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E279C1C5228B20010E4B6 /* NSManagedObjectContext+AsynchronousDataTransaction.swift */; };
 		6D7E27A01C52736A0010E4B6 /* LCYCoreDataHelperTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E279F1C52736A0010E4B6 /* LCYCoreDataHelperTools.swift */; };
 		6D7E27A21C53E85C0010E4B6 /* NSPersistentStoreCoordinatorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E27A11C53E85C0010E4B6 /* NSPersistentStoreCoordinatorExtension.swift */; };
+		6DF2AA7C1C55287F0094AA75 /* LCYCoreDataTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF2AA7B1C55287F0094AA75 /* LCYCoreDataTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		6D7E279C1C5228B20010E4B6 /* NSManagedObjectContext+AsynchronousDataTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+AsynchronousDataTransaction.swift"; sourceTree = "<group>"; };
 		6D7E279F1C52736A0010E4B6 /* LCYCoreDataHelperTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LCYCoreDataHelperTools.swift; sourceTree = "<group>"; };
 		6D7E27A11C53E85C0010E4B6 /* NSPersistentStoreCoordinatorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersistentStoreCoordinatorExtension.swift; sourceTree = "<group>"; };
+		6DF2AA7B1C55287F0094AA75 /* LCYCoreDataTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LCYCoreDataTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				6D7E27981C5228800010E4B6 /* LCYCoreDataCollectionView.swift */,
+				6DF2AA7B1C55287F0094AA75 /* LCYCoreDataTableView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				6D7E27991C5228800010E4B6 /* LCYCoreDataCollectionView.swift in Sources */,
 				6D7E279D1C5228B20010E4B6 /* NSManagedObjectContext+AsynchronousDataTransaction.swift in Sources */,
 				6D7E27861C5206AC0010E4B6 /* LCYCoreDataHelper.swift in Sources */,
+				6DF2AA7C1C55287F0094AA75 /* LCYCoreDataTableView.swift in Sources */,
 				6D7E27891C5206AC0010E4B6 /* NSManagedObjectExtension.swift in Sources */,
 				6D7E27A01C52736A0010E4B6 /* LCYCoreDataHelperTools.swift in Sources */,
 				6D7E27A21C53E85C0010E4B6 /* NSPersistentStoreCoordinatorExtension.swift in Sources */,

@@ -11,14 +11,19 @@
 		6D7E277B1C5205D60010E4B6 /* LCYCoreDataHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6D7E27791C5205D60010E4B6 /* LCYCoreDataHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6D7E27921C5215310010E4B6 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E27901C5215310010E4B6 /* User+CoreDataProperties.swift */; };
 		6D7E27931C5215310010E4B6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E27911C5215310010E4B6 /* User.swift */; };
+		6D8CECC91C54E009002BBF55 /* Product+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8CECC71C54E009002BBF55 /* Product+CoreDataProperties.swift */; };
+		6D8CECCA1C54E009002BBF55 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8CECC81C54E009002BBF55 /* Product.swift */; };
+		6D8CECCC1C54E3BE002BBF55 /* CoreDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8CECCB1C54E3BE002BBF55 /* CoreDataTableViewController.swift */; };
+		6D8CECCE1C552780002BBF55 /* CoreDataTableViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8CECCD1C552780002BBF55 /* CoreDataTableViewExample.swift */; };
 		6DE4CF531C52041D0017B3EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF521C52041D0017B3EF /* AppDelegate.swift */; };
-		6DE4CF551C52041D0017B3EF /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF541C52041D0017B3EF /* CollectionViewController.swift */; };
+		6DE4CF551C52041D0017B3EF /* CoreDataCollectionViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF541C52041D0017B3EF /* CoreDataCollectionViewExample.swift */; };
 		6DE4CF581C52041D0017B3EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DE4CF561C52041D0017B3EF /* Main.storyboard */; };
 		6DE4CF5B1C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF591C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodeld */; };
 		6DE4CF5D1C52041D0017B3EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DE4CF5C1C52041D0017B3EF /* Assets.xcassets */; };
 		6DE4CF601C52041D0017B3EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DE4CF5E1C52041D0017B3EF /* LaunchScreen.storyboard */; };
 		6DE4CF6B1C52041D0017B3EF /* LCYCoreDataHelperExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF6A1C52041D0017B3EF /* LCYCoreDataHelperExampleTests.swift */; };
 		6DE4CF761C52041D0017B3EF /* LCYCoreDataHelperExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF751C52041D0017B3EF /* LCYCoreDataHelperExampleUITests.swift */; };
+		6DF2AA7E1C5530470094AA75 /* CoreDataCollectionViewControllerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF2AA7D1C5530470094AA75 /* CoreDataCollectionViewControllerExample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,9 +61,14 @@
 		6D7E27791C5205D60010E4B6 /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = LCYCoreDataHelper.framework; path = "/Users/leacode/Library/Developer/Xcode/DerivedData/LCYCoreDataHelper-eezrvegzvgipnfejifdpckgpxgdh/Build/Products/Debug-iphoneos/LCYCoreDataHelper.framework"; sourceTree = "<absolute>"; };
 		6D7E27901C5215310010E4B6 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6D7E27911C5215310010E4B6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6D8CECC61C54DF00002BBF55 /* LCYCoreDataHelperExample 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LCYCoreDataHelperExample 2.xcdatamodel"; sourceTree = "<group>"; };
+		6D8CECC71C54E009002BBF55 /* Product+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Product+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6D8CECC81C54E009002BBF55 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		6D8CECCB1C54E3BE002BBF55 /* CoreDataTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewController.swift; sourceTree = "<group>"; };
+		6D8CECCD1C552780002BBF55 /* CoreDataTableViewExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewExample.swift; sourceTree = "<group>"; };
 		6DE4CF4F1C52041D0017B3EF /* LCYCoreDataHelperExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCYCoreDataHelperExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DE4CF521C52041D0017B3EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6DE4CF541C52041D0017B3EF /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		6DE4CF541C52041D0017B3EF /* CoreDataCollectionViewExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCollectionViewExample.swift; sourceTree = "<group>"; };
 		6DE4CF571C52041D0017B3EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6DE4CF5A1C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LCYCoreDataHelperExample.xcdatamodel; sourceTree = "<group>"; };
 		6DE4CF5C1C52041D0017B3EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,6 +80,7 @@
 		6DE4CF711C52041D0017B3EF /* LCYCoreDataHelperExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LCYCoreDataHelperExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DE4CF751C52041D0017B3EF /* LCYCoreDataHelperExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCYCoreDataHelperExampleUITests.swift; sourceTree = "<group>"; };
 		6DE4CF771C52041D0017B3EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6DF2AA7D1C5530470094AA75 /* CoreDataCollectionViewControllerExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataCollectionViewControllerExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +112,8 @@
 		6D7E278C1C520ABF0010E4B6 /* Core Data Models */ = {
 			isa = PBXGroup;
 			children = (
+				6D8CECC71C54E009002BBF55 /* Product+CoreDataProperties.swift */,
+				6D8CECC81C54E009002BBF55 /* Product.swift */,
 				6D7E27901C5215310010E4B6 /* User+CoreDataProperties.swift */,
 				6D7E27911C5215310010E4B6 /* User.swift */,
 				6DE4CF591C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodeld */,
@@ -111,7 +124,10 @@
 		6D7E278D1C520ADA0010E4B6 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				6DE4CF541C52041D0017B3EF /* CollectionViewController.swift */,
+				6DE4CF541C52041D0017B3EF /* CoreDataCollectionViewExample.swift */,
+				6DF2AA7D1C5530470094AA75 /* CoreDataCollectionViewControllerExample.swift */,
+				6D8CECCB1C54E3BE002BBF55 /* CoreDataTableViewController.swift */,
+				6D8CECCD1C552780002BBF55 /* CoreDataTableViewExample.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -301,11 +317,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DE4CF551C52041D0017B3EF /* CollectionViewController.swift in Sources */,
+				6DE4CF551C52041D0017B3EF /* CoreDataCollectionViewExample.swift in Sources */,
 				6DE4CF5B1C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodeld in Sources */,
+				6DF2AA7E1C5530470094AA75 /* CoreDataCollectionViewControllerExample.swift in Sources */,
+				6D8CECCC1C54E3BE002BBF55 /* CoreDataTableViewController.swift in Sources */,
+				6D8CECCE1C552780002BBF55 /* CoreDataTableViewExample.swift in Sources */,
+				6D8CECC91C54E009002BBF55 /* Product+CoreDataProperties.swift in Sources */,
 				6D7E27921C5215310010E4B6 /* User+CoreDataProperties.swift in Sources */,
 				6D7E27931C5215310010E4B6 /* User.swift in Sources */,
 				6DE4CF531C52041D0017B3EF /* AppDelegate.swift in Sources */,
+				6D8CECCA1C54E009002BBF55 /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,9 +581,10 @@
 		6DE4CF591C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6D8CECC61C54DF00002BBF55 /* LCYCoreDataHelperExample 2.xcdatamodel */,
 				6DE4CF5A1C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodel */,
 			);
-			currentVersion = 6DE4CF5A1C52041D0017B3EF /* LCYCoreDataHelperExample.xcdatamodel */;
+			currentVersion = 6D8CECC61C54DF00002BBF55 /* LCYCoreDataHelperExample 2.xcdatamodel */;
 			path = LCYCoreDataHelperExample.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

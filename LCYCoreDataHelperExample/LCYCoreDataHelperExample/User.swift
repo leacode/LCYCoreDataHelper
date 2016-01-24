@@ -27,7 +27,6 @@ class User: NSManagedObject {
         
         user?.id = i
         i++
-//        user?.id = 231312
         user?.username = "User\(i)"
         user?.amount = 23.23
 
