@@ -11,20 +11,22 @@ import CoreData
 
 public final class LCYCoreDataHelper: NSObject {
     
+    private var sourceStoreFilename: String?
+    
     private var storeName: String!
     private var  migrationVC: LCYMigrationVC?
     private var model: NSManagedObjectModel?
     private var coordinator: NSPersistentStoreCoordinator?
-//        {
-//        didSet {
-//            print("did set coordinator")
-//            context.persistentStoreCoordinator = coordinator
-//        }
-//    }
+    private var sourceCoordinator: NSPersistentStoreCoordinator?
     public private(set) var context: NSManagedObjectContext = {
         return NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
     }()
+    public private(set) var sourceContext: NSManagedObjectContext = {
+        return NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
+    }()
+    
     private var store: NSPersistentStore?
+    private var sourceStore: NSPersistentStore?
     
     //MARK: - PATHS
     lazy private var applicationDocumentsDirectory: NSURL = {
@@ -53,14 +55,37 @@ public final class LCYCoreDataHelper: NSObject {
         return self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.storeName)
     }()
     
+    lazy private var sourceStoreURL: NSURL? = {
+        guard let fileName = self.sourceStoreFilename else {
+            return nil
+        }
+        
+        guard let path = NSBundle.mainBundle().pathForResource((fileName as NSString).stringByDeletingPathExtension, ofType: (fileName as NSString).pathExtension) else {
+            return nil
+        }
+        
+        return NSURL(fileURLWithPath: path)
+    }()
+    
     // MARK: - Initial
     
     public convenience init(storeFileName: String) throws {
-        
         self.init()
         
         self.storeName = storeFileName
         try loadStore()
+    }
+    
+    public convenience init(sourceStoreFileName: String, storeFileName: String?) {
+        self.init()
+        
+        sourceCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
+        sourceContext.performBlockAndWait { () -> Void in
+            self.sourceContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            self.sourceContext.parentContext = self.context
+            self.sourceContext.undoManager = nil
+        }
+        
     }
     
     public required override init() {
@@ -73,7 +98,8 @@ public final class LCYCoreDataHelper: NSObject {
     
     // MARK: - Setup Store
     
-    private func loadStore() throws {
+    func loadStore() throws {
+        
         if store != nil {
             return
         }
@@ -100,6 +126,15 @@ public final class LCYCoreDataHelper: NSObject {
             print("Failed to add store, error: \(error)")
         }
         
+    }
+    
+    func loadSourceStore() throws {
+        if sourceStore != nil {
+            return
+        }
+        
+        let options = [NSReadOnlyPersistentStoreOption: true]
+        sourceStore = try sourceCoordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: sourceStoreURL, options: options)
     }
     
     public func setupCoreData() throws {
@@ -323,6 +358,33 @@ public final class LCYCoreDataHelper: NSObject {
         }
         
     }
+    
+//    func deepCopyFromPersistentStore(url: NSURL) {
+//        let importTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("somethingChanged"), userInfo: nil, repeats: true)
+//        
+//        sourceContext.performBlock { () -> Void in
+//            var entitysToCopy = ["LocationAtHome", "LocationAtShop"]
+//            
+//            
+////            CoreDataImporter *importer = [[CoreDataImporter alloc]
+////                initWithUniqueAttributes:[self selectedUniqueAttributes]];
+////            
+////            [importer deepCopyEntities:entitiesToCopy
+////                fromContext:_sourceContext
+////                toContext:_importContext];
+////            
+////            [_context performBlock:^{
+////                // Stop periodically refreshing the interface
+////                [_importTimer invalidate];
+////                
+////                // Tell the interface to refresh once import completes
+////                [self somethingChanged];
+//            
+//        }
+//        
+//    }
+//    
+ 
     
     // MARK: - Operation of the store
     public func resetStore() throws {

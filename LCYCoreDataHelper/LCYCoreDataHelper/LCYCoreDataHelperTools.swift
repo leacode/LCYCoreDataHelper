@@ -34,7 +34,7 @@ extension LCYCoreDataHelper {
      
      - parameter context: The `NSManagedObjectContext` to remove the Entities from.
      */
-    public func removeAll(entityName: String) throws {
+    public func deleteAllExistingObjectOfEntity(entityName: String) throws {
         let fetchRequest = NSFetchRequest(entityName: entityName)
         fetchRequest.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         
@@ -50,7 +50,25 @@ extension LCYCoreDataHelper {
         try saveContext()
         
     }
-
+    
+    public func deleteAllMachingPredicate(entityName: String, predicate: NSPredicate) throws {
+        
+        let request = NSFetchRequest.fetchRequestInContext(entityName, context: context)
+        request.predicate = predicate
+        request.returnsObjectsAsFaults = true
+        request.includesPropertyValues = false
+        
+        if #available(iOS 9.0, *) {
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+            try context.executeRequest(deleteRequest)
+        } else {
+            request.includesSubentities = false
+            try context.executeFetchRequest(request).lazy.map{ $0 as! NSManagedObject }.forEach(context.deleteObject)
+        }
+        
+        try saveContext()
+        
+    }
     
     
 }

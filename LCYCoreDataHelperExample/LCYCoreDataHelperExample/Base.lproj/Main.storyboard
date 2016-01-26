@@ -204,7 +204,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="productCellId" textLabel="BRh-vt-PYR" detailTextLabel="8R3-VQ-OOy" rowHeight="81" style="IBUITableViewCellStyleSubtitle" id="qiV-87-IyK">
-                                        <rect key="frame" x="0.0" y="114" width="600" height="81"/>
+                                        <rect key="frame" x="0.0" y="113.5" width="600" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qiV-87-IyK" id="Gbi-tK-YBQ">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="80.5"/>

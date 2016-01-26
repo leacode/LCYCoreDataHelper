@@ -11,6 +11,16 @@ import CoreData
 
 public extension NSManagedObject {
 
-       
+    func deleteEntity() throws {
+        guard let context = self.managedObjectContext else {
+            return
+        }
+        try self.deleteEntityInContext(context)
+    }
+    
+    func deleteEntityInContext(context: NSManagedObjectContext) throws {
+        let entityInContext = try context.existingObjectWithID(self.objectID)
+        context.deleteObject(entityInContext)
+    }
     
 }

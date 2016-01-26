@@ -18,9 +18,7 @@ class CoreDataCollectionViewExample: UIViewController, UICollectionViewDelegate,
         super.viewDidLoad()
         
         let fetchRequest = NSFetchRequest(entityName: "User")
-        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
-        let sortDescriptors  = [sortDescriptor]
-        fetchRequest.sortDescriptors = sortDescriptors
+        fetchRequest.sort("id", ascending: true)
         
         collectionView.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: globalContext!, sectionNameKeyPath: nil, cacheName: "UserCache")
         collectionView.frc.delegate = collectionView
@@ -54,27 +52,21 @@ class CoreDataCollectionViewExample: UIViewController, UICollectionViewDelegate,
     // MRK: - CRUD
     
     @IBAction func addNewItem(sender: AnyObject) {
-        
         if collectionView.frc.fetchedObjects?.count > 0 {
             let user = (self.collectionView.frc.fetchedObjects?.last)! as! User
             User.i = user.id + 1
         }
         
         User.insertCoreDataModel()
-        
     }
     
-    
     @IBAction func deleteLast(sender: AnyObject) {
-        
         if collectionView.frc.fetchedObjects?.count > 0 {
             globalContext?.deleteObject((self.collectionView.frc.fetchedObjects?.last)! as! NSManagedObject)
         }
-        
     }
     
     @IBAction func deleteAll(sender: AnyObject) {
-        
         do {
             try coreDataHelper?.removeAll("User")
             NSFetchedResultsController.deleteCacheWithName("UserCache")
@@ -83,7 +75,6 @@ class CoreDataCollectionViewExample: UIViewController, UICollectionViewDelegate,
         } catch {
         
         }
-        
     }
 
 }
