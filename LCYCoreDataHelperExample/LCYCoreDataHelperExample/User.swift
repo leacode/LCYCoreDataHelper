@@ -12,7 +12,6 @@ import LCYCoreDataHelper
 
 class User: NSManagedObject {
     
-    
     static var i = 0
     
     override func awakeFromInsert() {
@@ -22,9 +21,7 @@ class User: NSManagedObject {
     class func insertCoreDataModel() {
         
         let user: User? = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: globalContext!) as? User
-        
-        
-        
+
         user?.id = i
         i++
         user?.username = "User\(i)"
@@ -53,19 +50,5 @@ class User: NSManagedObject {
         
     }
     
-    
-       
-    
 }
-
-
-
-
-
-
-
-
-
-
-
 

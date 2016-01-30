@@ -12,6 +12,7 @@ import CoreData
 public final class LCYCoreDataHelper: NSObject {
     
     private var sourceStoreFilename: String?
+    public var selectedUniqueAttributes: [String: String]?
     
     private var storeName: String!
     private var  migrationVC: LCYMigrationVC?
@@ -22,8 +23,12 @@ public final class LCYCoreDataHelper: NSObject {
         return NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
     }()
     public private(set) var sourceContext: NSManagedObjectContext = {
-        return NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
+        return NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
     }()
+    public private(set) var importContext: NSManagedObjectContext = {
+        return NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+    }()
+    
     
     private var store: NSPersistentStore?
     private var sourceStore: NSPersistentStore?
@@ -68,32 +73,36 @@ public final class LCYCoreDataHelper: NSObject {
     }()
     
     // MARK: - Initial
-    
-    public convenience init(storeFileName: String) throws {
+    public convenience init(storeFileName: String, sourceStoreFileName: String? = nil, selectedUniqueAttributes: [String: String]? = nil) throws {
         self.init()
         
         self.storeName = storeFileName
-        try loadStore()
-    }
-    
-    public convenience init(sourceStoreFileName: String, storeFileName: String?) {
-        self.init()
+        self.selectedUniqueAttributes = selectedUniqueAttributes
         
-        sourceCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
-        sourceContext.performBlockAndWait { () -> Void in
-            self.sourceContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-            self.sourceContext.parentContext = self.context
-            self.sourceContext.undoManager = nil
+        if let sourceFileName = sourceStoreFileName {
+            self.sourceStoreFilename = sourceFileName
+            
+            importContext.performBlockAndWait({ () -> Void in
+                self.importContext.persistentStoreCoordinator = self.coordinator
+                self.importContext.undoManager = nil
+            })
+            
+            sourceCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
+            sourceContext.performBlockAndWait { () -> Void in
+                self.sourceContext.persistentStoreCoordinator = self.sourceCoordinator
+                self.sourceContext.undoManager = nil
+            }
         }
-        
     }
     
     public required override init() {
         
-        model = NSManagedObjectModel.mergedModelFromBundles(nil)
+        guard let mergedModel = NSManagedObjectModel.mergedModelFromBundles(nil) else {
+            return
+        }
+        model = mergedModel
         coordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
         context.persistentStoreCoordinator = coordinator
-        
     }
     
     // MARK: - Setup Store
@@ -107,39 +116,201 @@ public final class LCYCoreDataHelper: NSObject {
         let useMigrationManager = false
         
         do {
-            
             let isMigrationNecessary: Bool = try isMigrationNecessaryForStore(storeURL)
-            
             if useMigrationManager && isMigrationNecessary {
                 try performBackgroundManagedMigrationForStore(storeURL)
             } else {
                 let options = [NSMigratePersistentStoresAutomaticallyOption: true,
                     NSInferMappingModelAutomaticallyOption: true,
                     NSSQLitePragmasOption:["journal_mode": "DELETE"]]
-                
                 store = try coordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: self.storeURL, options: options)
-                
                 print("Successfully add store")
             }
-            
         } catch {
             print("Failed to add store, error: \(error)")
         }
         
     }
     
-    func loadSourceStore() throws {
+    public func loadSourceStore() throws {
         if sourceStore != nil {
             return
         }
-        
         let options = [NSReadOnlyPersistentStoreOption: true]
-        sourceStore = try sourceCoordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: sourceStoreURL, options: options)
+        
+        do {
+             sourceStore = try sourceCoordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: sourceStoreURL!, options: options)
+        } catch {
+            print("failed to load sourceStore error: \(error)")
+            return
+        }
+        
+       
     }
     
     public func setupCoreData() throws {
+        try self.setDefaultDataStoreAsInitialStore()
         try self.loadStore()
+        try checkIfDefaultDataNeedsImporting()
+        
+//        try loadSourceStore()
+//        sourceContext.performBlock { () -> Void in
+//            do {
+//                try self.sourceCoordinator?.migratePersistentStore(self.sourceStore!, toURL: self.storeURL, options: nil, withType: NSSQLiteStoreType)
+//                self.context.performBlock({ () -> Void in
+//                    self.somethingChanged()
+//                })
+//            } catch {
+//                print("FAILED to migrate: \(error)")
+//            }
+//        }
+//        
+        
+        
     }
+    
+    // MARK: - DATA IMPORT
+    
+    func setDefaultDataAsImportedForStore(aStore: NSPersistentStore) {
+        
+        var dictionary = aStore.metadata
+        dictionary["DefaultDataImported"] = true
+        coordinator?.setMetadata(dictionary, forPersistentStore: aStore)
+        
+    }
+    
+    func setDefaultDataStoreAsInitialStore() throws {
+        
+        guard let fileName = self.sourceStoreFilename else {
+            return
+        }
+
+        let fileManager = NSFileManager.defaultManager()
+        let home = NSHomeDirectory() as NSString
+        /// 2、获得Documents路径，使用NSString对象的stringByAppendingPathComponent()方法拼接路径
+        let docPath = home.stringByAppendingPathComponent("Documents") as NSString
+        let filePath = docPath.stringByAppendingPathComponent(fileName)
+        
+        if !fileManager.fileExistsAtPath(filePath) {
+            guard let defaultDataURL =  NSBundle.mainBundle().pathForResource((fileName as NSString).stringByDeletingPathExtension, ofType: (fileName as NSString).pathExtension) else {
+                return
+            }
+            try fileManager.copyItemAtURL(NSURL(string: defaultDataURL)!, toURL: storeURL)
+        }
+//        
+//        
+//        if !fileManager.fileExistsAtPath(self.storeURL.path!) {
+//            
+//            guard let fileName = self.sourceStoreFilename else {
+//                return
+//            }
+//            
+//            
+//            
+//            
+//            
+//            guard let defaultDataURL =  NSBundle.mainBundle().pathForResource((fileName as NSString).stringByDeletingPathExtension, ofType: (fileName as NSString).pathExtension) else {
+//                return
+//            }
+//            
+//            try fileManager.copyItemAtURL(NSURL(string: defaultDataURL)!, toURL: storeURL)
+//        }
+    
+    }
+    
+//    func loadLocalAddressData() {
+//        let home = NSHomeDirectory() as NSString
+//        /// 2、获得Documents路径，使用NSString对象的stringByAppendingPathComponent()方法拼接路径
+//        let docPath = home.stringByAppendingPathComponent("Documents") as NSString
+//        let filePath = docPath.stringByAppendingPathComponent("DefaultData.sqlite")
+//        let fm : NSFileManager = NSFileManager.defaultManager()
+//        if !fm.fileExistsAtPath(filePath){
+//            let dbPath = NSBundle.mainBundle().pathForResource("DefaultData", ofType: ".sqlite")
+//            
+//            do {
+//                try fm.copyItemAtPath(dbPath!, toPath: filePath)
+//            } catch {
+//                
+//            }
+//            
+//        }
+//    }
+    
+    
+    func isDefaultDataAlreadyImportedForStore(url: NSURL, type: String) -> Bool {
+        
+        do {
+            let dictionary = try NSPersistentStoreCoordinator.metadataForPersistentStoreOfType(type, URL: url)
+            let defaultDataAlreadyImported = dictionary["DefaultDataImported"]?.boolValue
+            
+            guard let isImported = defaultDataAlreadyImported else {
+                return false
+            }
+            if !isImported {
+                return false
+            }
+            return true
+        } catch {
+            return false
+        }
+        
+    }
+    
+    func checkIfDefaultDataNeedsImporting() throws {
+        
+        if !self.isDefaultDataAlreadyImportedForStore(storeURL, type: NSSQLiteStoreType) {
+            try deepCopyFromSourceStore()
+        }
+        
+    }
+    
+    func importDefaultData() {
+        
+    }
+    
+    public func deepCopyFromSourceStore() throws {
+        try loadSourceStore()
+        guard let url = sourceStoreURL else {
+            return
+        }
+        try deepCopyFromPersistentStore(url)
+        
+        try setDefaultDataStoreAsInitialStore()
+        
+        setDefaultDataAsImportedForStore(store!)
+    }
+    
+    public func deepCopyFromPersistentStore(url: NSURL) throws {
+        
+        guard let attributes = selectedUniqueAttributes else {
+            return
+        }
+        
+        let importTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("somethingChanged"), userInfo: nil, repeats: true)
+        
+        sourceContext.performBlock { () -> Void in
+            
+            let entitiesToCopy = ["User"]
+            
+            let importer = LCYCoreDataImporter(uniqueAttributes: attributes)
+            do {
+                try importer.deepCopyEntities(entitiesToCopy, fromContext: self.sourceContext, toContext: self.importContext)
+                self.context.performBlock({ () -> Void in
+                    importTimer.invalidate()
+                    self.somethingChanged()
+                })
+            } catch {
+            
+            }
+            
+        }
+        
+    }
+    
+    func somethingChanged() {
+        NSNotificationCenter.defaultCenter().postNotificationName("SometiongChanged", object: nil)
+    }
+    
     
     //MARK: - SAVING
     public func saveContext() throws {
@@ -433,3 +604,17 @@ public final class LCYCoreDataHelper: NSObject {
     
 }
 
+
+extension NSNull {
+    func length() -> Int { return 0 }
+    
+    func integerValue() -> Int { return 0 }
+    
+    func floatValue() -> Float { return 0 };
+    
+    func componentsSeparatedByString(separator: String) -> [AnyObject] { return [AnyObject]() }
+    
+    func objectForKey(key: AnyObject) -> AnyObject? { return nil }
+    
+    func boolValue() -> Bool { return false }
+}

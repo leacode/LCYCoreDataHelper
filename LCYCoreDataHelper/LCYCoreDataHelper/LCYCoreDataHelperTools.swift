@@ -12,12 +12,12 @@ import CoreData
 
 extension LCYCoreDataHelper {
 
-    func fetchCoreDataModels(entityName: String, sortKey: String, ascending: Bool ) -> [AnyObject] {
+    func fetchAllCoreDataModels( entityName: String, sortKey: String, ascending: Bool, ctx: NSManagedObjectContext ) -> [AnyObject] {
         
         let fetchRequest: NSFetchRequest = NSFetchRequest(entityName: entityName)
         let sortDescriptor = NSSortDescriptor(key: sortKey, ascending: ascending)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: self.context)
+        let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: ctx)
         fetchRequest.entity = entity
         
         do {
@@ -34,41 +34,40 @@ extension LCYCoreDataHelper {
      
      - parameter context: The `NSManagedObjectContext` to remove the Entities from.
      */
-    public func deleteAllExistingObjectOfEntity(entityName: String) throws {
+    public func deleteAllExistingObjectOfEntity(entityName: String, ctx: NSManagedObjectContext) throws {
         let fetchRequest = NSFetchRequest(entityName: entityName)
-        fetchRequest.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
+        fetchRequest.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: ctx)
         
         if #available(iOS 9.0, *) {
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            try context.executeRequest(deleteRequest)
+            try ctx.executeRequest(deleteRequest)
         } else {
             fetchRequest.includesPropertyValues = false
             fetchRequest.includesSubentities = false
-            try context.executeFetchRequest(fetchRequest).lazy.map { $0 as! NSManagedObject }.forEach(context.deleteObject)
+            try ctx.executeFetchRequest(fetchRequest).lazy.map { $0 as! NSManagedObject }.forEach(ctx.deleteObject)
         }
         
         try saveContext()
         
     }
     
-    public func deleteAllMachingPredicate(entityName: String, predicate: NSPredicate) throws {
+    public func deleteAllMachingPredicate(entityName: String, predicate: NSPredicate, ctx: NSManagedObjectContext) throws {
         
-        let request = NSFetchRequest.fetchRequestInContext(entityName, context: context)
+        let request = NSFetchRequest.fetchRequestInContext(entityName, context: ctx)
         request.predicate = predicate
         request.returnsObjectsAsFaults = true
         request.includesPropertyValues = false
         
         if #available(iOS 9.0, *) {
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-            try context.executeRequest(deleteRequest)
+            try ctx.executeRequest(deleteRequest)
         } else {
             request.includesSubentities = false
-            try context.executeFetchRequest(request).lazy.map{ $0 as! NSManagedObject }.forEach(context.deleteObject)
+            try ctx.executeFetchRequest(request).lazy.map{ $0 as! NSManagedObject }.forEach(ctx.deleteObject)
         }
         
         try saveContext()
         
     }
-    
     
 }

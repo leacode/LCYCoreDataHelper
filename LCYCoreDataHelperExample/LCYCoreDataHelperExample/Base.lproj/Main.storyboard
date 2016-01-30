@@ -452,5 +452,69 @@
             </objects>
             <point key="canvasLocation" x="-309" y="277"/>
         </scene>
+        <!--Impored Data-->
+        <scene sceneID="sLS-JN-QfP">
+            <objects>
+                <viewController id="7RQ-SB-klw" customClass="ImportedDataViewController" customModule="LCYCoreDataHelperExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8N6-Vq-7LD"/>
+                        <viewControllerLayoutGuide type="bottom" id="o3H-Gw-lYk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qjg-I2-Nhv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="81" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="OFO-h1-jZ8" customClass="LCYCoreDataTableView" customModule="LCYCoreDataHelper">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userCellId" textLabel="qUb-Ml-zyM" detailTextLabel="LVD-iN-h29" rowHeight="81" style="IBUITableViewCellStyleSubtitle" id="H0I-3D-UFf">
+                                        <rect key="frame" x="0.0" y="49.5" width="600" height="81"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H0I-3D-UFf" id="PN5-NK-wUE">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="80.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qUb-Ml-zyM">
+                                                    <rect key="frame" x="15" y="24" width="31.5" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LVD-iN-h29">
+                                                    <rect key="frame" x="15" y="43.5" width="40.5" height="13.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="7RQ-SB-klw" id="xJz-IR-12w"/>
+                                    <outlet property="delegate" destination="7RQ-SB-klw" id="x91-8q-u5f"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OFO-h1-jZ8" firstAttribute="bottom" secondItem="o3H-Gw-lYk" secondAttribute="top" id="J4U-zf-SiA"/>
+                            <constraint firstItem="OFO-h1-jZ8" firstAttribute="top" secondItem="qjg-I2-Nhv" secondAttribute="top" id="Txy-xk-ADY"/>
+                            <constraint firstItem="OFO-h1-jZ8" firstAttribute="leading" secondItem="qjg-I2-Nhv" secondAttribute="leading" id="Xx2-qQ-Vtj"/>
+                            <constraint firstAttribute="trailing" secondItem="OFO-h1-jZ8" secondAttribute="trailing" id="jlV-qZ-wv5"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Impored Data" id="Ylh-3T-hMV"/>
+                    <connections>
+                        <outlet property="tableView" destination="OFO-h1-jZ8" id="LNe-s8-rgn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oip-GI-0L6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="503" y="-414"/>
+        </scene>
     </scenes>
 </document>

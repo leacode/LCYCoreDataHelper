@@ -31,9 +31,7 @@ class CoreDataCollectionViewControllerExample: LCYCoreDataCVC {
         } catch {
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
-
     }
-
    
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UserCollectionViewCell
@@ -44,7 +42,6 @@ class CoreDataCollectionViewControllerExample: LCYCoreDataCVC {
         return cell
     }
     
-    
     // MRK: - CRUD
     
     @IBAction func addNewItem(sender: AnyObject) {
@@ -53,31 +50,23 @@ class CoreDataCollectionViewControllerExample: LCYCoreDataCVC {
             User.i = user.id + 1
         }
         User.insertCoreDataModel()
-        
     }
     
-    
     @IBAction func deleteLast(sender: AnyObject) {
-        
         if self.frc.fetchedObjects?.count > 0 {
             globalContext?.deleteObject((self.frc.fetchedObjects?.last)! as! NSManagedObject)
         }
-        
     }
     
     @IBAction func deleteAll(sender: AnyObject) {
-        
         do {
-            try coreDataHelper?.removeAll("User")
+            try coreDataHelper?.deleteAllExistingObjectOfEntity("User", ctx: globalContext!)
             NSFetchedResultsController.deleteCacheWithName("UserCache")
             try self.frc.performFetch()
             collectionView!.reloadData()
         } catch {
             
         }
-        
     }
-
-
 
 }

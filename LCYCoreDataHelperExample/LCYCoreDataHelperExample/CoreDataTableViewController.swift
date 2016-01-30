@@ -54,7 +54,7 @@ class CoreDataTableViewController: LCYCoreDataTVC {
     @IBAction func deleteAll(sender: AnyObject) {
         
         do {
-            try coreDataHelper?.removeAll("Product")
+            try coreDataHelper?.deleteAllExistingObjectOfEntity("Product", ctx: globalContext!)
             NSFetchedResultsController.deleteCacheWithName("productCache")
             try self.frc.performFetch()
             tableView.reloadData()

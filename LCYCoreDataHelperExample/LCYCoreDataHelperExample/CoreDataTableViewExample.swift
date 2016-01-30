@@ -71,7 +71,7 @@ class CoreDataTableViewExample: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func deleteAll(sender: AnyObject) {
         
         do {
-            try coreDataHelper?.removeAll("Product")
+            try coreDataHelper?.deleteAllExistingObjectOfEntity("Product", ctx: globalContext!)
             NSFetchedResultsController.deleteCacheWithName("productCache")
             try self.tableView.frc.performFetch()
             tableView.reloadData()

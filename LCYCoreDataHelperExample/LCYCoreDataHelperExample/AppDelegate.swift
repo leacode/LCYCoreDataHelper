@@ -8,10 +8,12 @@
 
 import UIKit
 import LCYCoreDataHelper
+import CoreData
 
 var appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 var coreDataHelper = appDelegate.coreDataHelper
 var globalContext = coreDataHelper?.context
+//var globalContext = coreDataHelper?.importContext
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,7 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var coreDataHelper: LCYCoreDataHelper?
         
         do {
+            self.loadLocalAddressData()
             coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall")
+//            coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall", sourceStoreFileName: "DefaultData.sqlite", selectedUniqueAttributes: [ "User": "username"])
+            try coreDataHelper?.setupCoreData()
         } catch {
             print("load store failed, error: \(error)")
         }
@@ -33,47 +38,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         
+//        loadLocalAddressData()
+//        do {
+//            try coreDataHelper?.deepCopyFromSourceStore()
+//        } catch {
+//            print("copyFromSourceStore error: \(error)")
+//        }
         
-          User.insertCoreDataModel()
-//        try! coreDataHelper?.resetStore()
-        
+               
+//        print(objs?.count)
         
         return true
     }
 
     func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+       
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+       
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
     }
 
     func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
-//        self.saveContext()
+        
     }
 
-    // MARK: - Core Data stack
+    
+    func loadLocalAddressData() {
+        let home = NSHomeDirectory() as NSString
+        /// 2、获得Documents路径，使用NSString对象的stringByAppendingPathComponent()方法拼接路径
+        let docPath = home.stringByAppendingPathComponent("Documents") as NSString
+        let filePath = docPath.stringByAppendingPathComponent("DefaultData.sqlite")
+        let fm : NSFileManager = NSFileManager.defaultManager()
+        if !fm.fileExistsAtPath(filePath){
+            let dbPath = NSBundle.mainBundle().pathForResource("DefaultData", ofType: ".sqlite")
+            
+            do {
+                try fm.copyItemAtPath(dbPath!, toPath: filePath)
+            } catch {
+                
+            }
+            
+        }
+    }
 
-    lazy var applicationDocumentsDirectory: NSURL = {
-        // The directory the application uses to store the Core Data store file. This code uses a directory named "com.leacode.LCYCoreDataHelperExample" in the application's documents Application Support directory.
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1]
-    }()
+    
+    
 
 
 }

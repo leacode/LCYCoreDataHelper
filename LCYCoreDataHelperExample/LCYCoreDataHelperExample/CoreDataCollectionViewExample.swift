@@ -68,7 +68,7 @@ class CoreDataCollectionViewExample: UIViewController, UICollectionViewDelegate,
     
     @IBAction func deleteAll(sender: AnyObject) {
         do {
-            try coreDataHelper?.removeAll("User")
+            try coreDataHelper?.deleteAllExistingObjectOfEntity("User", ctx: globalContext!)
             NSFetchedResultsController.deleteCacheWithName("UserCache")
             try collectionView.frc.performFetch()
             collectionView.reloadData()
