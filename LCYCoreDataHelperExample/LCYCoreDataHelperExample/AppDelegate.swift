@@ -26,9 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             self.loadLocalAddressData()
-            coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall")
-//            coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall", sourceStoreFileName: "DefaultData.sqlite", selectedUniqueAttributes: [ "User": "username"])
-            try coreDataHelper?.setupCoreData()
+//            coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall")
+            coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall", sourceStoreFileName: "DefaultData.sqlite", selectedUniqueAttributes: [ "User": "username"])
+            
         } catch {
             print("load store failed, error: \(error)")
         }
@@ -38,6 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        do {
+            try coreDataHelper?.setupCoreData()
+        } catch {
+        
+        }
         
 //        loadLocalAddressData()
 //        do {

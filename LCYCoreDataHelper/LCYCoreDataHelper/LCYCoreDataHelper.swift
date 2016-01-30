@@ -294,7 +294,7 @@ public final class LCYCoreDataHelper: NSObject {
             
             let importer = LCYCoreDataImporter(uniqueAttributes: attributes)
             do {
-                try importer.deepCopyEntities(entitiesToCopy, fromContext: self.sourceContext, toContext: self.importContext)
+                try importer.deepCopyEntities(entitiesToCopy, fromContext: self.sourceContext, toContext: self.context)
                 self.context.performBlock({ () -> Void in
                     importTimer.invalidate()
                     self.somethingChanged()
