@@ -1,0 +1,26 @@
+language: objective-c
+osx_image: xcode7.2
+xcode_project: <PROJECT_PLACEHOLDER>
+xcode_scheme: <SCHEME_PLACEHOLDER>
+xcode_sdk: iphonesimulator9.2
+env: 
+global:
+- FRAMEWORK_NAME=<THIS_IS_A_PLACEHOLDER_REPLACE_ME>
+before_install:
+- brew update
+- brew install carthage
+before_script:
+- carthage bootstrap
+before_deploy:
+- carthage build --no-skip-current
+- carthage archive $FRAMEWORK_NAME
+deploy:
+  provider: releases
+  api_key:
+    secure: Sk33SPP2Ve00mWkhdzWZgl6/nYc1AM73VSocigZPAuMMZniJhcIvFQbTh7rC84Zpajkcewj6YR4aMUSbZkct1iUb/OilfnCcmqiqhEcmVhGgXbU4Qjbcd4hw5Ksq7rOcQhXjit7JtrpX0/gSRd7b9wrsIQBCmxLtYPJ5RWwNkZwcwM96cxvcfrFomQlGEGa8sg9ZM5Y3PcdxI3zBOk3xC0PBeM6RIP0RUtO5mXrvzff88okzFNorS4eHnlQwgKqNzDNcC4rzbP7JfU7VrEGwD4QDTb41IZAmyxJTJ5lxMLyDqk3MZaNV030++KxpAsF7YJc8e471xtCjJSFoxjodVRd2HGE/of6YPv0gzCofRWHS6iHMrBDdPuL3DlB18//dvBOULp0Pl/lP39jOm68DmhJtyzwM+qkHy0VL9UhD+y3bWqCzqCNPt2KtTVaKUHsCKxQsGFeD4PIKChXADoKXLTrBK9gA+zrpz5yg3z1Ksm+d0VudSj2YRDbJBgmuvhSIRSc5Fkx79yGgtZgHAZQv/x/UcV7BnwWxxpNHPCnOJsTpEYDmdqgLzPa7AomtUaSTd5K93TenhgAl/C8ALMWaeiZwtFbbpPp1ND9o7WN65OY5kP3fNHtZfNgbNjWNjOHIxAVhQ0Up5lAul2myfBBtjYsqYFp8rLjqQMXONe4Lf0g=
+  file: $FRAMEWORK_NAME.framework.zip
+  skip_cleanup: true
+  on:
+    repo: leacode/LCYCoreDataHelper
+    branch: travis-setup
+    tags: true
