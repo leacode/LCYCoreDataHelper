@@ -6,3 +6,5 @@ This is a pure swift coredata framework. It is developing and improving. The way
 
 如有疑问请邮件我： lichunyu@vip.qq.com     
 My email address:  lichunyu@vip.qq.com
+
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
