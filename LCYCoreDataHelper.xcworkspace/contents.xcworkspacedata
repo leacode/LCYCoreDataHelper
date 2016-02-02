@@ -7,16 +7,6 @@
       <FileRef
          location = "group:LCYCoreDataHelper.xcodeproj">
       </FileRef>
-      <Group
-         location = "group:LCYCoreDataHelperTests"
-         name = "LCYCoreDataHelperTests">
-         <FileRef
-            location = "group:Info.plist">
-         </FileRef>
-         <FileRef
-            location = "group:LCYCoreDataHelperTests.swift">
-         </FileRef>
-      </Group>
    </Group>
    <Group
       location = "group:LCYCoreDataHelperExample"
