@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6D38B6071C5204430051020B /* LCYCoreDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D38B6061C5204430051020B /* LCYCoreDataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6D38B60E1C5204430051020B /* LCYCoreDataHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D38B6031C5204430051020B /* LCYCoreDataHelper.framework */; };
-		6D38B6131C5204430051020B /* LCYCoreDataHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D38B6121C5204430051020B /* LCYCoreDataHelperTests.swift */; };
 		6D7E27851C5206AC0010E4B6 /* LCYCoredataHelper.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D7E27801C5206AC0010E4B6 /* LCYCoredataHelper.storyboard */; };
 		6D7E27861C5206AC0010E4B6 /* LCYCoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E27811C5206AC0010E4B6 /* LCYCoreDataHelper.swift */; };
 		6D7E27871C5206AC0010E4B6 /* LCYMigrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E27821C5206AC0010E4B6 /* LCYMigrationVC.swift */; };
@@ -27,21 +25,10 @@
 		6DF2AA7C1C55287F0094AA75 /* LCYCoreDataTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF2AA7B1C55287F0094AA75 /* LCYCoreDataTableView.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		6D38B60F1C5204430051020B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6D38B5FA1C5204430051020B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6D38B6021C5204430051020B;
-			remoteInfo = LCYCoreDataHelper;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		6D38B6031C5204430051020B /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LCYCoreDataHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D38B6061C5204430051020B /* LCYCoreDataHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCYCoreDataHelper.h; sourceTree = "<group>"; };
 		6D38B6081C5204430051020B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6D38B60D1C5204430051020B /* LCYCoreDataHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LCYCoreDataHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D38B6121C5204430051020B /* LCYCoreDataHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCYCoreDataHelperTests.swift; sourceTree = "<group>"; };
 		6D38B6141C5204430051020B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D7E27801C5206AC0010E4B6 /* LCYCoredataHelper.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LCYCoredataHelper.storyboard; sourceTree = "<group>"; };
@@ -69,14 +56,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6D38B60A1C5204430051020B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6D38B60E1C5204430051020B /* LCYCoreDataHelper.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -93,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				6D38B6031C5204430051020B /* LCYCoreDataHelper.framework */,
-				6D38B60D1C5204430051020B /* LCYCoreDataHelperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -195,24 +173,6 @@
 			productReference = 6D38B6031C5204430051020B /* LCYCoreDataHelper.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		6D38B60C1C5204430051020B /* LCYCoreDataHelperTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6D38B61A1C5204430051020B /* Build configuration list for PBXNativeTarget "LCYCoreDataHelperTests" */;
-			buildPhases = (
-				6D38B6091C5204430051020B /* Sources */,
-				6D38B60A1C5204430051020B /* Frameworks */,
-				6D38B60B1C5204430051020B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6D38B6101C5204430051020B /* PBXTargetDependency */,
-			);
-			name = LCYCoreDataHelperTests;
-			productName = LCYCoreDataHelperTests;
-			productReference = 6D38B60D1C5204430051020B /* LCYCoreDataHelperTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -224,9 +184,6 @@
 				ORGANIZATIONNAME = leacode;
 				TargetAttributes = {
 					6D38B6021C5204430051020B = {
-						CreatedOnToolsVersion = 7.2;
-					};
-					6D38B60C1C5204430051020B = {
 						CreatedOnToolsVersion = 7.2;
 					};
 				};
@@ -244,7 +201,6 @@
 			projectRoot = "";
 			targets = (
 				6D38B6021C5204430051020B /* LCYCoreDataHelper */,
-				6D38B60C1C5204430051020B /* LCYCoreDataHelperTests */,
 			);
 		};
 /* End PBXProject section */
@@ -255,13 +211,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D7E27851C5206AC0010E4B6 /* LCYCoredataHelper.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6D38B60B1C5204430051020B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,23 +238,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6D38B6091C5204430051020B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6D38B6131C5204430051020B /* LCYCoreDataHelperTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		6D38B6101C5204430051020B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6D38B6021C5204430051020B /* LCYCoreDataHelper */;
-			targetProxy = 6D38B60F1C5204430051020B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6D38B6151C5204430051020B /* Debug */ = {
@@ -330,7 +263,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTABILITY = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -401,6 +334,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -420,6 +355,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -431,26 +368,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.leacode.LCYCoreDataHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		6D38B61B1C5204430051020B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = LCYCoreDataHelperTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.leacode.LCYCoreDataHelperTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		6D38B61C1C5204430051020B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = LCYCoreDataHelperTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.leacode.LCYCoreDataHelperTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -471,15 +388,6 @@
 			buildConfigurations = (
 				6D38B6181C5204430051020B /* Debug */,
 				6D38B6191C5204430051020B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6D38B61A1C5204430051020B /* Build configuration list for PBXNativeTarget "LCYCoreDataHelperTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6D38B61B1C5204430051020B /* Debug */,
-				6D38B61C1C5204430051020B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
