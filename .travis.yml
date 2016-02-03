@@ -1,59 +1,23 @@
 language: objective-c
 osx_image: xcode7.2
-env:
-global:
-- LC_CTYPE=en_US.UTF-8
-- LANG=en_US.UTF-8
-- WORKSPACE=LCYCoreDataHelper.xcworkspace
-- IOS_FRAMEWORK_SCHEME="LCYCoreDataHelper"
-- IOS_SDK=iphonesimulator9.2
-matrix:
-- DESTINATION="OS=8.1,name=iPhone 4S"          SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="YES"
-- DESTINATION="OS=8.2,name=iPhone 5"           SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="NO"
-- DESTINATION="OS=8.3,name=iPhone 5S"          SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="NO"
-- DESTINATION="OS=8.4,name=iPhone 6"           SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="NO"
-- DESTINATION="OS=9.0,name=iPhone 6 Plus"      SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="NO"
-- DESTINATION="OS=9.1,name=iPhone 6S"          SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="NO"
-- DESTINATION="OS=9.2,name=iPhone 6S Plus"     SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="NO"
-script:
-- set -o pipefail
-- xcodebuild -version
-- xcodebuild -showsdks
-
-# Build Framework in Debug and Run Tests if specified
-- if [ $RUN_TESTS == "YES" ]; then
-xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c;
-else
-xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
-fi
-
-# Build Framework in ReleaseTest and Run Tests if specified
-- if [ $RUN_TESTS == "YES" ]; then
-xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration ReleaseTest ONLY_ACTIVE_ARCH=NO test | xcpretty -c;
-else
-xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration ReleaseTest ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
-fi
-
-# Build Example in Debug if specified
-- if [ $BUILD_EXAMPLE == "YES" ]; then
-xcodebuild -workspace "$WORKSPACE" -scheme "$EXAMPLE_SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
-fi
-
-# Build Example in Release if specified
-- if [ $BUILD_EXAMPLE == "YES" ]; then
-xcodebuild -workspace "$WORKSPACE" -scheme "$EXAMPLE_SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Release ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
-fi
-
-# Run `pod lib lint` if specified
-- if [ $POD_LINT == "YES" ]; then
-pod lib lint;
-fi
-
+xcode_workspace: LCYCoreDataHelper.xcworkspace
+xcode_scheme: LCYCoreDataHelper
+xcode_sdk: iphonesimulator9.2
+env: 
+  global:
+  - FRAMEWORK_NAME=LCYCoreDataHelper
+before_install:
+  - brew update
+  - brew unlink carthage
+  - brew install carthage
+before_deploy:
+  - carthage build --no-skip-current
+  - carthage archive $FRAMEWORK_NAME
 deploy:
-provider: releases
-api_key:
-secure: Sk33SPP2Ve00mWkhdzWZgl6/nYc1AM73VSocigZPAuMMZniJhcIvFQbTh7rC84Zpajkcewj6YR4aMUSbZkct1iUb/OilfnCcmqiqhEcmVhGgXbU4Qjbcd4hw5Ksq7rOcQhXjit7JtrpX0/gSRd7b9wrsIQBCmxLtYPJ5RWwNkZwcwM96cxvcfrFomQlGEGa8sg9ZM5Y3PcdxI3zBOk3xC0PBeM6RIP0RUtO5mXrvzff88okzFNorS4eHnlQwgKqNzDNcC4rzbP7JfU7VrEGwD4QDTb41IZAmyxJTJ5lxMLyDqk3MZaNV030++KxpAsF7YJc8e471xtCjJSFoxjodVRd2HGE/of6YPv0gzCofRWHS6iHMrBDdPuL3DlB18//dvBOULp0Pl/lP39jOm68DmhJtyzwM+qkHy0VL9UhD+y3bWqCzqCNPt2KtTVaKUHsCKxQsGFeD4PIKChXADoKXLTrBK9gA+zrpz5yg3z1Ksm+d0VudSj2YRDbJBgmuvhSIRSc5Fkx79yGgtZgHAZQv/x/UcV7BnwWxxpNHPCnOJsTpEYDmdqgLzPa7AomtUaSTd5K93TenhgAl/C8ALMWaeiZwtFbbpPp1ND9o7WN65OY5kP3fNHtZfNgbNjWNjOHIxAVhQ0Up5lAul2myfBBtjYsqYFp8rLjqQMXONe4Lf0g=
-file: $FRAMEWORK_NAME.framework.zip
-skip_cleanup: true
-on:
-tags: true
+  provider: releases
+  api_key:
+    secure: Sk33SPP2Ve00mWkhdzWZgl6/nYc1AM73VSocigZPAuMMZniJhcIvFQbTh7rC84Zpajkcewj6YR4aMUSbZkct1iUb/OilfnCcmqiqhEcmVhGgXbU4Qjbcd4hw5Ksq7rOcQhXjit7JtrpX0/gSRd7b9wrsIQBCmxLtYPJ5RWwNkZwcwM96cxvcfrFomQlGEGa8sg9ZM5Y3PcdxI3zBOk3xC0PBeM6RIP0RUtO5mXrvzff88okzFNorS4eHnlQwgKqNzDNcC4rzbP7JfU7VrEGwD4QDTb41IZAmyxJTJ5lxMLyDqk3MZaNV030++KxpAsF7YJc8e471xtCjJSFoxjodVRd2HGE/of6YPv0gzCofRWHS6iHMrBDdPuL3DlB18//dvBOULp0Pl/lP39jOm68DmhJtyzwM+qkHy0VL9UhD+y3bWqCzqCNPt2KtTVaKUHsCKxQsGFeD4PIKChXADoKXLTrBK9gA+zrpz5yg3z1Ksm+d0VudSj2YRDbJBgmuvhSIRSc5Fkx79yGgtZgHAZQv/x/UcV7BnwWxxpNHPCnOJsTpEYDmdqgLzPa7AomtUaSTd5K93TenhgAl/C8ALMWaeiZwtFbbpPp1ND9o7WN65OY5kP3fNHtZfNgbNjWNjOHIxAVhQ0Up5lAul2myfBBtjYsqYFp8rLjqQMXONe4Lf0g=
+  file: $FRAMEWORK_NAME.framework.zip
+  skip_cleanup: true
+  on:
+    tags: true
