@@ -29,3 +29,8 @@ github "leacode/LCYCoreDataHelper" "master"
 ```
 
 Run `carthage update` to build the framework and drag the built `Alamofire.framework` into your Xcode project.
+
+
+## License
+
+LCYCoreDataHelper is released under the [MIT License](LICENSE).

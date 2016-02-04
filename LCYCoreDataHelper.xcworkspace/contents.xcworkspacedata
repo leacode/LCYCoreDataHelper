@@ -4,6 +4,9 @@
    <FileRef
       location = "group:README.md">
    </FileRef>
+   <FileRef
+      location = "group:LICENSE">
+   </FileRef>
    <Group
       location = "group:LCYCoreDataHelper"
       name = "LCYCoreDataHelper">

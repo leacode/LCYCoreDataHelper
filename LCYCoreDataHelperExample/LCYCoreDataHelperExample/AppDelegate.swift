@@ -26,8 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             self.loadLocalAddressData()
-//            coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall")
-            coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall", sourceStoreFileName: "DefaultData.sqlite", selectedUniqueAttributes: [ "User": "username"])
+            // create a core data file for storing data
+            coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall")
+            
+            // import DefaultData.sqlite to the main datasource
+//            coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall", sourceStoreFileName: "DefaultData.sqlite", selectedUniqueAttributes: [ "User": "username"])
             
         } catch {
             print("load store failed, error: \(error)")

@@ -197,45 +197,8 @@ public final class LCYCoreDataHelper: NSObject {
             }
             try fileManager.copyItemAtURL(NSURL(string: defaultDataURL)!, toURL: storeURL)
         }
-//        
-//        
-//        if !fileManager.fileExistsAtPath(self.storeURL.path!) {
-//            
-//            guard let fileName = self.sourceStoreFilename else {
-//                return
-//            }
-//            
-//            
-//            
-//            
-//            
-//            guard let defaultDataURL =  NSBundle.mainBundle().pathForResource((fileName as NSString).stringByDeletingPathExtension, ofType: (fileName as NSString).pathExtension) else {
-//                return
-//            }
-//            
-//            try fileManager.copyItemAtURL(NSURL(string: defaultDataURL)!, toURL: storeURL)
-//        }
     
     }
-    
-//    func loadLocalAddressData() {
-//        let home = NSHomeDirectory() as NSString
-//        /// 2、获得Documents路径，使用NSString对象的stringByAppendingPathComponent()方法拼接路径
-//        let docPath = home.stringByAppendingPathComponent("Documents") as NSString
-//        let filePath = docPath.stringByAppendingPathComponent("DefaultData.sqlite")
-//        let fm : NSFileManager = NSFileManager.defaultManager()
-//        if !fm.fileExistsAtPath(filePath){
-//            let dbPath = NSBundle.mainBundle().pathForResource("DefaultData", ofType: ".sqlite")
-//            
-//            do {
-//                try fm.copyItemAtPath(dbPath!, toPath: filePath)
-//            } catch {
-//                
-//            }
-//            
-//        }
-//    }
-    
     
     func isDefaultDataAlreadyImportedForStore(url: NSURL, type: String) -> Bool {
         
@@ -530,33 +493,6 @@ public final class LCYCoreDataHelper: NSObject {
         
     }
     
-//    func deepCopyFromPersistentStore(url: NSURL) {
-//        let importTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("somethingChanged"), userInfo: nil, repeats: true)
-//        
-//        sourceContext.performBlock { () -> Void in
-//            var entitysToCopy = ["LocationAtHome", "LocationAtShop"]
-//            
-//            
-////            CoreDataImporter *importer = [[CoreDataImporter alloc]
-////                initWithUniqueAttributes:[self selectedUniqueAttributes]];
-////            
-////            [importer deepCopyEntities:entitiesToCopy
-////                fromContext:_sourceContext
-////                toContext:_importContext];
-////            
-////            [_context performBlock:^{
-////                // Stop periodically refreshing the interface
-////                [_importTimer invalidate];
-////                
-////                // Tell the interface to refresh once import completes
-////                [self somethingChanged];
-//            
-//        }
-//        
-//    }
-//    
- 
-    
     // MARK: - Operation of the store
     public func resetStore() throws {
         
@@ -600,7 +536,6 @@ public final class LCYCoreDataHelper: NSObject {
         }
         
     }
-    
     
 }
 
