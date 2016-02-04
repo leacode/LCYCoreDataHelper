@@ -9,6 +9,11 @@ My email address:  lichunyu@vip.qq.com
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
+## Installing LCYCoreDataHelper
+
+> ** LCYCoreDataHelper require a minimum deployment target of iOS 7 **
+>
+> If you need to support ios 7 ,you can drag the source file into your project. It will work fine. If your project need to support ios8 or later. I recommend you to use Carthage.
 
 ### Carthage
 
