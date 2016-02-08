@@ -97,7 +97,6 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         self.storeName = storeFileName
         self.selectedUniqueAttributes = selectedUniqueAttributes
         self.entitiesToCopy = entitiesToCopy
-        
         parentContext.performBlockAndWait { () -> Void in
             self.parentContext.persistentStoreCoordinator = self.coordinator
             self.parentContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -108,13 +107,11 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         
         if let sourceFileName = sourceStoreFileName {
             self.sourceStoreFilename = sourceFileName
-            
             importContext.performBlockAndWait({ () -> Void in
                 self.importContext.parentContext = self.parentContext
                 self.importContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 self.importContext.undoManager = nil
             })
-            
             sourceCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
             sourceContext.performBlockAndWait { () -> Void in
                 self.sourceContext.parentContext = self.parentContext
@@ -128,9 +125,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
             self.seedContext.persistentStoreCoordinator = self.seedCoordinator
             self.seedContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             self.seedContext.undoManager = nil // the default on iOS
-            
         }
-
         listenForStoreChanges()
     }
     
@@ -141,7 +136,6 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         }
         model = mergedModel
         coordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
-//        context.persistentStoreCoordinator = coordinator
     }
     
     // MARK: - Setup Store
@@ -151,9 +145,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         if store != nil {
             return
         }
-        
         let useMigrationManager = false
-        
         do {
             let isMigrationNecessary: Bool = try isMigrationNecessaryForStore(storeURL)
             if useMigrationManager && isMigrationNecessary {
@@ -168,7 +160,6 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         } catch {
             print("Failed to add store, error: \(error)")
         }
-        
     }
     
     public func loadSourceStore() throws {
@@ -176,21 +167,28 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
             return
         }
         let options = [NSReadOnlyPersistentStoreOption: true]
-        
         do {
              sourceStore = try sourceCoordinator?.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: sourceStoreURL!, options: options)
         } catch {
             print("failed to load sourceStore error: \(error)")
             return
         }
-        
-       
     }
     
     public func setupCoreData() throws {
+        
+        
         try self.setDefaultDataStoreAsInitialStore()
         try self.loadStore()
         try checkIfDefaultDataNeedsImporting()
+        
+        if store != nil && iCloudStore != nil {
+            
+        } else {
+            
+        }
+        
+        
         
 //        try loadSourceStore()
 //        sourceContext.performBlock { () -> Void in
@@ -259,11 +257,9 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
     }
     
     func checkIfDefaultDataNeedsImporting() throws {
-        
         if !self.isDefaultDataAlreadyImportedForStore(storeURL, type: NSSQLiteStoreType) {
             try deepCopyFromSourceStore()
         }
-        
     }
     
     func importDefaultData() {
@@ -276,9 +272,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
             return
         }
         try deepCopyFromPersistentStore(url)
-        
         try setDefaultDataStoreAsInitialStore()
-        
         setDefaultDataAsImportedForStore(store!)
     }
     
