@@ -27,13 +27,11 @@ public class LCYCoreDataCollectionView: UICollectionView, NSFetchedResultsContro
     
     public func performFetch() throws {
         frc.managedObjectContext.performBlockAndWait { () -> Void in
-            
             do {
                 try self.frc.performFetch()
             } catch {
                 print("Failed to perform fetch")
             }
-            
             self.reloadData()
         }
     }

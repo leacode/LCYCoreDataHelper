@@ -49,7 +49,7 @@ extension NSManagedObjectContext {
      
      - returns: the block
      */
-    public func performAndWaitOrThrow<Return>(body: () throws -> Return) throws -> Return {
+    public func performAndWaitOrThrow<Return>(body: () throws -> Return) throws -> Return? {
         var result: Return!
         var thrown: ErrorType?
         
@@ -68,5 +68,24 @@ extension NSManagedObjectContext {
         }
     }
     
+    public func performOrThrow<Return>(body: () throws -> Return) throws -> Return? {
+        var result: Return!
+        var thrown: ErrorType?
+        
+        performBlock {
+            do {
+                result = try body()
+            } catch {
+                thrown = error
+            }
+        }
+        
+        if let thrown = thrown {
+            throw thrown
+        } else {
+            return result
+        }
+
+    }
     
 }

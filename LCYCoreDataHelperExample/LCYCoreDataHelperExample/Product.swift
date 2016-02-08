@@ -25,7 +25,7 @@ class Product: NSManagedObject {
         product?.productIntroduction = "This is a good thing"
                 
         do {
-            try coreDataHelper?.saveContext()
+            try coreDataHelper?.backgroundSaveContext()
         } catch {
             print("save User failed, error: \(error)")
         }

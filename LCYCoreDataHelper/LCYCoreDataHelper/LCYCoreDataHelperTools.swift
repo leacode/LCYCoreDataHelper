@@ -11,6 +11,10 @@ import UIKit
 import CoreData
 
 extension LCYCoreDataHelper {
+    
+    
+    
+    
 
     func fetchAllCoreDataModels( entityName: String, sortKey: String, ascending: Bool, ctx: NSManagedObjectContext ) -> [AnyObject] {
         
@@ -47,7 +51,8 @@ extension LCYCoreDataHelper {
             try ctx.executeFetchRequest(fetchRequest).lazy.map { $0 as! NSManagedObject }.forEach(ctx.deleteObject)
         }
         
-        try saveContext()
+//        try saveContext()
+        try backgroundSaveContext()
         
     }
     
@@ -69,5 +74,91 @@ extension LCYCoreDataHelper {
         try saveContext()
         
     }
+    
+    // MARK: - CORE DATA RESET
+    
+    func resetContext(moc: NSManagedObjectContext) {
+        moc.performBlockAndWait { () -> Void in
+            moc.reset()
+        }
+    }
+    
+    func reloadStore() -> Bool {
+        do {
+            try coordinator?.removePersistentStore(self.store!)
+            resetContext(sourceContext)
+            resetContext(importContext)
+            resetContext(context)
+            resetContext(parentContext)
+            store = nil
+            try setupCoreData()
+            somethingChanged()
+            if (store != nil) {
+                return true
+            }
+        } catch {
+            return false
+        }
+        return false
+    }
+    
+    
+    func removeAllStoresFromCoordinator(psc: NSPersistentStoreCoordinator) {
+        for s in psc.persistentStores {
+            do {
+                try psc.removePersistentStore(s)
+            } catch {
+                print("Error removing persistent store: \(error)")
+            }
+        }
+    }
+    
+    func resetCoreData() {
+        importContext.performBlockAndWait { () -> Void in
+            try! self.importContext.save()
+            self.resetContext(self.importContext)
+        }
+        context.performBlockAndWait { () -> Void in
+            try! self.context.save()
+            self.resetContext(self.context)
+        }
+        parentContext.performBlockAndWait { () -> Void in
+            try! self.parentContext.save()
+            self.resetContext(self.parentContext)
+        }
+        if let coor = coordinator {
+            removeAllStoresFromCoordinator(coor)
+        }
+        store = nil
+        iCloudStore = nil
+        
+    }
+
+    func unloadStore(ps: NSPersistentStore?) -> Bool {
+        
+        guard let store = ps else {
+            return true // No need to reset, store is nil
+        }
+        guard let psc = store.persistentStoreCoordinator else {
+            return true
+        }
+        do {
+            try psc.removePersistentStore(store)
+            return false
+        } catch {
+            return true // Reset complete
+        }
+        
+    }
+    
+    func removeFileAtURL(url: NSURL) {
+        do {
+            try NSFileManager.defaultManager().removeItemAtURL(url)
+        } catch {
+            print("Failed to delete \(error)")
+        }
+    }
+    
+    
     
 }

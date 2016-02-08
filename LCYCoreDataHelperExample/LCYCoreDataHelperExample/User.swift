@@ -28,7 +28,7 @@ class User: NSManagedObject {
         user?.amount = 23.23
 
         do {
-            try coreDataHelper?.saveContext()
+            try coreDataHelper?.backgroundSaveContext()
         } catch {
             print("save User failed, error: \(error)")
         }

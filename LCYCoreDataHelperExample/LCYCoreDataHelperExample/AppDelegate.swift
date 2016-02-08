@@ -21,9 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     lazy var coreDataHelper: LCYCoreDataHelper? = {
-        
         var coreDataHelper: LCYCoreDataHelper?
-        
         do {
             self.loadLocalAddressData()
             // create a core data file for storing data
@@ -31,11 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             // import DefaultData.sqlite to the main datasource
 //            coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall", sourceStoreFileName: "DefaultData.sqlite", selectedUniqueAttributes: [ "User": "username"])
-            
         } catch {
             print("load store failed, error: \(error)")
         }
-        
         return coreDataHelper
     }()
     
@@ -48,16 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         }
         
-//        loadLocalAddressData()
-//        do {
-//            try coreDataHelper?.deepCopyFromSourceStore()
-//        } catch {
-//            print("copyFromSourceStore error: \(error)")
-//        }
-        
-               
-//        print(objs?.count)
-        
         return true
     }
 
@@ -66,7 +52,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
-       
+        do {
+            try coreDataHelper?.backgroundSaveContext()
+        } catch {
+        
+        }
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -78,9 +68,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(application: UIApplication) {
-        
+        do {
+            try coreDataHelper?.backgroundSaveContext()
+        } catch {
+            
+        }
     }
-
     
     func loadLocalAddressData() {
         let home = NSHomeDirectory() as NSString

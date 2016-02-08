@@ -9,16 +9,29 @@
 import Foundation
 import CoreData
 
-public final class LCYCoreDataHelper: NSObject {
+public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
+    
+    internal var importTimer: NSTimer!
+    
+    internal var iCloudStoreFilename: String?
+    internal var seedInProgress: Bool = false
     
     private var sourceStoreFilename: String?
+    internal var entitiesToCopy: [String]?
     public var selectedUniqueAttributes: [String: String]?
     
-    private var storeName: String!
+    internal var storeName: String!
     private var  migrationVC: LCYMigrationVC?
     private var model: NSManagedObjectModel?
-    private var coordinator: NSPersistentStoreCoordinator?
+    
+    internal var coordinator: NSPersistentStoreCoordinator?
     private var sourceCoordinator: NSPersistentStoreCoordinator?
+    internal var seedCoordinator: NSPersistentStoreCoordinator?
+    
+    
+    public private(set) var parentContext: NSManagedObjectContext = {
+        return NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+    }()
     public private(set) var context: NSManagedObjectContext = {
         return NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
     }()
@@ -28,19 +41,24 @@ public final class LCYCoreDataHelper: NSObject {
     public private(set) var importContext: NSManagedObjectContext = {
         return NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
     }()
+    public private(set) var seedContext: NSManagedObjectContext = {
+        return NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+    }()
     
     
-    private var store: NSPersistentStore?
-    private var sourceStore: NSPersistentStore?
+    internal var store: NSPersistentStore?
+    internal var sourceStore: NSPersistentStore?
+    internal var seedStore: NSPersistentStore?
+    internal var iCloudStore: NSPersistentStore?
     
     //MARK: - PATHS
-    lazy private var applicationDocumentsDirectory: NSURL = {
+    lazy internal var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "org.leacode.TestCoreData" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
     }()
     
-    lazy private var applicationStoresDirectory: NSURL = {
+    lazy internal var applicationStoresDirectory: NSURL = {
         let storesDirectory: NSURL = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Stores")
         var fileManager: NSFileManager = NSFileManager.defaultManager()
         var error: NSError? = nil
@@ -56,7 +74,7 @@ public final class LCYCoreDataHelper: NSObject {
         return storesDirectory
     }()
     
-    lazy private var storeURL: NSURL = {
+    lazy internal var storeURL: NSURL = {
         return self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.storeName)
     }()
     
@@ -73,26 +91,47 @@ public final class LCYCoreDataHelper: NSObject {
     }()
     
     // MARK: - Initial
-    public convenience init(storeFileName: String, sourceStoreFileName: String? = nil, selectedUniqueAttributes: [String: String]? = nil) throws {
+    public convenience init(storeFileName: String, sourceStoreFileName: String? = nil, entitiesToCopy: [String]? = nil,selectedUniqueAttributes: [String: String]? = nil) throws {
         self.init()
         
         self.storeName = storeFileName
         self.selectedUniqueAttributes = selectedUniqueAttributes
+        self.entitiesToCopy = entitiesToCopy
+        
+        parentContext.performBlockAndWait { () -> Void in
+            self.parentContext.persistentStoreCoordinator = self.coordinator
+            self.parentContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        }
+        
+        context.parentContext = parentContext
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
         if let sourceFileName = sourceStoreFileName {
             self.sourceStoreFilename = sourceFileName
             
             importContext.performBlockAndWait({ () -> Void in
-                self.importContext.persistentStoreCoordinator = self.coordinator
+                self.importContext.parentContext = self.parentContext
+                self.importContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 self.importContext.undoManager = nil
             })
             
             sourceCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
             sourceContext.performBlockAndWait { () -> Void in
-                self.sourceContext.persistentStoreCoordinator = self.sourceCoordinator
+                self.sourceContext.parentContext = self.parentContext
+                self.sourceContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 self.sourceContext.undoManager = nil
             }
         }
+        
+        seedCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
+        seedContext.performBlockAndWait { () -> Void in
+            self.seedContext.persistentStoreCoordinator = self.seedCoordinator
+            self.seedContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            self.seedContext.undoManager = nil // the default on iOS
+            
+        }
+
+        listenForStoreChanges()
     }
     
     public required override init() {
@@ -102,7 +141,7 @@ public final class LCYCoreDataHelper: NSObject {
         }
         model = mergedModel
         coordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
-        context.persistentStoreCoordinator = coordinator
+//        context.persistentStoreCoordinator = coordinator
     }
     
     // MARK: - Setup Store
@@ -278,9 +317,21 @@ public final class LCYCoreDataHelper: NSObject {
     //MARK: - SAVING
     public func saveContext() throws {
         
-        try context.saveContextAndWait()
+        try context.save()
                 
     }
+    
+    public func backgroundSaveContext() throws {
+        
+        try self.saveContext()
+        try parentContext.performOrThrow({
+            if self.parentContext.hasChanges {
+                try self.parentContext.save()
+            }
+        })
+        
+    }
+    
     
     //MARK: - MIGRATION MANAGER
     func isMigrationNecessaryForStore(storeUrl: NSURL) throws -> Bool {

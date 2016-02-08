@@ -7,38 +7,13 @@
    <FileRef
       location = "group:LICENSE">
    </FileRef>
-   <Group
-      location = "group:LCYCoreDataHelper"
-      name = "LCYCoreDataHelper">
-      <FileRef
-         location = "group:LCYCoreDataHelper.xcodeproj">
-      </FileRef>
-   </Group>
-   <Group
-      location = "group:LCYCoreDataHelperExample"
-      name = "LCYCoreDataHelperExample">
-      <FileRef
-         location = "group:LCYCoreDataHelperExample.xcodeproj">
-      </FileRef>
-      <Group
-         location = "group:LCYCoreDataHelperExampleTests"
-         name = "LCYCoreDataHelperExampleTests">
-         <FileRef
-            location = "group:Info.plist">
-         </FileRef>
-         <FileRef
-            location = "group:LCYCoreDataHelperExampleTests.swift">
-         </FileRef>
-      </Group>
-      <Group
-         location = "group:LCYCoreDataHelperExampleUITests"
-         name = "LCYCoreDataHelperExampleUITests">
-         <FileRef
-            location = "group:Info.plist">
-         </FileRef>
-         <FileRef
-            location = "group:LCYCoreDataHelperExampleUITests.swift">
-         </FileRef>
-      </Group>
-   </Group>
+   <FileRef
+      location = "group:LCYCoreDataHelper/LCYCoreDataHelper.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:LCYCoreDataHelperExample/LCYCoreDataHelperExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:LCYCoreDataHelperICloudExample/LCYCoreDataHelperICloudExample.xcodeproj">
+   </FileRef>
 </Workspace>
