@@ -11,7 +11,7 @@ before_install:
   - brew unlink carthage
   - brew install carthage
 before_deploy:
-  - carthage build --no-skip-current
+  - xcodebuild -scheme LCYCoreDataHelper -workspace LCYCoreDataHelper.xcworkspace build
   - carthage archive $FRAMEWORK_NAME
 deploy:
   provider: releases
