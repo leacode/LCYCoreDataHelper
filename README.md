@@ -30,7 +30,7 @@ $ brew install carthage
 To integrate Alamofire into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "leacode/LCYCoreDataHelper" "master"
+github "leacode/LCYCoreDataHelper" ~> 1.3
 ```
 
 Run `carthage update` to build the framework and drag the built `Alamofire.framework` into your Xcode project.
