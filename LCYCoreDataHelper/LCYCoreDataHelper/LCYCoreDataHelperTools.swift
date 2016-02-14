@@ -10,11 +10,7 @@
 import UIKit
 import CoreData
 
-extension LCYCoreDataHelper {
-    
-    
-    
-    
+public extension LCYCoreDataHelper {
 
     func fetchAllCoreDataModels( entityName: String, sortKey: String, ascending: Bool, ctx: NSManagedObjectContext ) -> [AnyObject] {
         

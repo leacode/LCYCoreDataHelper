@@ -10,7 +10,7 @@
 import UIKit
 import CoreData
 
-extension LCYCoreDataHelper {
+public extension LCYCoreDataHelper {
     
 //    - (NSURL *)iCloudStoreURL {
 //    if (debug==1) {
