@@ -1,6 +1,9 @@
 # LCYCoreDataHelper
 A pure swift light weight core data framework
 
+![Swift 2 compatible](https://img.shields.io/badge/swift2-compatible-4BC51D.svg?style=flat)
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+
 纯swift的coredata框架，example里有demo，框架正在完善中，欢迎使用和提供建议以及帮助完善。      
 This is a pure swift coredata framework. It is developing and improving. The way to use is in the example project. Welcome to give sugestions or help.
 

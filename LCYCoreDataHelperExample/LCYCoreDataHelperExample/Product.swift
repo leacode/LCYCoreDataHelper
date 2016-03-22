@@ -19,7 +19,7 @@ class Product: NSManagedObject {
         let product: Product? = NSEntityDescription.insertNewObjectForEntityForName("Product", inManagedObjectContext: globalContext!) as? Product
         
         product?.productId = i
-        i++
+        i += 1
         product?.productName = "Product\(i)"
         product?.productPrice = 99.0
         product?.productIntroduction = "This is a good thing"

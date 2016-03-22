@@ -23,7 +23,7 @@ class User: NSManagedObject {
         let user: User? = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: globalContext!) as? User
 
         user?.id = i
-        i++
+        i += 1
         user?.username = "User\(i)"
         user?.amount = 23.23
 

@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var coreDataHelper: LCYCoreDataHelper? = {
         var coreDataHelper: LCYCoreDataHelper?
         do {
-            self.loadLocalAddressData()
+//            self.loadLocalAddressData()
             // create a core data file for storing data
             coreDataHelper = try LCYCoreDataHelper(storeFileName: "buyMall")
         } catch {

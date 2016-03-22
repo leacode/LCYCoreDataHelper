@@ -476,8 +476,8 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         // Display the error(s)
         if errors != nil && errors?.count > 0 {
             for error in errors! {
-                let entity: String! = error.userInfo??["NSValidationErrorObject"]?!.entity.name!
-                
+//                let entity: String! = error.userInfo??["NSValidationErrorObject"]?!.entity.name!
+                                
                 var errorInfo: [NSObject: AnyObject] = error.userInfo!!
                 
                 let property: String = errorInfo["NSValidationErrorKey"] as! String
@@ -486,7 +486,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                 
                 switch code {
                 case NSValidationRelationshipDeniedDeleteError:
-                    txt = "\(entity) delete was denied because there are associate  \(property)\n(Error Code \(code)\n\n)"
+//                    txt = "\(entity) delete was denied because there are associate  \(property)\n(Error Code \(code)\n\n)"
                     break;
                 case NSValidationRelationshipLacksMinimumCountError:
                     txt = "the '\(property)' relationship count is too small (Code \(code)). "
