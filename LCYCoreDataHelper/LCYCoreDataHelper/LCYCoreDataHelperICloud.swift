@@ -58,9 +58,9 @@ public extension LCYCoreDataHelper {
     
     func listenForStoreChanges() {
         let dc = NSNotificationCenter.defaultCenter()
-        dc.addObserver(self, selector: Selector("storesWillChange:"), name: NSPersistentStoreCoordinatorStoresWillChangeNotification, object: self.coordinator)
-        dc.addObserver(self, selector: Selector("storesDidChange:"), name: NSPersistentStoreCoordinatorStoresDidChangeNotification, object: self.coordinator)
-        dc.addObserver(self, selector: Selector("persistentStoreDidImportUbiquitiousContentChanges:"), name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: self.coordinator)
+        dc.addObserver(self, selector: #selector(LCYCoreDataHelper.storesWillChange(_:)), name: NSPersistentStoreCoordinatorStoresWillChangeNotification, object: self.coordinator)
+        dc.addObserver(self, selector: #selector(LCYCoreDataHelper.storesDidChange(_:)), name: NSPersistentStoreCoordinatorStoresDidChangeNotification, object: self.coordinator)
+        dc.addObserver(self, selector: #selector(LCYCoreDataHelper.persistentStoreDidImportUbiquitiousContentChanges(_:)), name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: self.coordinator)
     }
     
     func storesWillChange(n: NSNotification) {
@@ -142,7 +142,7 @@ public extension LCYCoreDataHelper {
             return
         }
         
-        importTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: ("somethingChanged"), userInfo: nil, repeats: true)
+        importTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: (#selector(LCYCoreDataHelper.somethingChanged as (LCYCoreDataHelper) -> () -> ())), userInfo: nil, repeats: true)
         
         try seedContext.performOrThrow {
             
@@ -178,6 +178,10 @@ public extension LCYCoreDataHelper {
 
         }
     
+    }
+    
+    func somethingChanged() {
+        NSNotificationCenter.defaultCenter().postNotificationName("SomethingChanged", object: nil)
     }
     
     

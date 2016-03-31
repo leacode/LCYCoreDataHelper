@@ -282,7 +282,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
             return
         }
         
-        let importTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("somethingChanged"), userInfo: nil, repeats: true)
+        let importTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(LCYCoreDataHelper.somethingChanged), userInfo: nil, repeats: true)
         
         sourceContext.performBlock { () -> Void in
             
@@ -303,9 +303,9 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         
     }
     
-    func somethingChanged() {
-        NSNotificationCenter.defaultCenter().postNotificationName("SometiongChanged", object: nil)
-    }
+//    func somethingChanged() {
+//        NSNotificationCenter.defaultCenter().postNotificationName("SometiongChanged", object: nil)
+//    }
     
     
     //MARK: - SAVING

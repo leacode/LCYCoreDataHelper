@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6D59B7141C5CFBCC00754672 /* ImportedDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D59B7131C5CFBCC00754672 /* ImportedDataViewController.swift */; };
-		6D7E277A1C5205D60010E4B6 /* LCYCoreDataHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D7E27791C5205D60010E4B6 /* LCYCoreDataHelper.framework */; };
-		6D7E277B1C5205D60010E4B6 /* LCYCoreDataHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6D7E27791C5205D60010E4B6 /* LCYCoreDataHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6D7E27921C5215310010E4B6 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E27901C5215310010E4B6 /* User+CoreDataProperties.swift */; };
 		6D7E27931C5215310010E4B6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E27911C5215310010E4B6 /* User.swift */; };
 		6D8CECC91C54E009002BBF55 /* Product+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8CECC71C54E009002BBF55 /* Product+CoreDataProperties.swift */; };
@@ -28,6 +26,8 @@
 		6DE4CF6B1C52041D0017B3EF /* LCYCoreDataHelperExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF6A1C52041D0017B3EF /* LCYCoreDataHelperExampleTests.swift */; };
 		6DE4CF761C52041D0017B3EF /* LCYCoreDataHelperExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE4CF751C52041D0017B3EF /* LCYCoreDataHelperExampleUITests.swift */; };
 		6DF2AA7E1C5530470094AA75 /* CoreDataCollectionViewControllerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF2AA7D1C5530470094AA75 /* CoreDataCollectionViewControllerExample.swift */; };
+		6DF565371C82077300538A98 /* LCYCoreDataHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DF565361C82077300538A98 /* LCYCoreDataHelper.framework */; };
+		6DF565381C82077300538A98 /* LCYCoreDataHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6DF565361C82077300538A98 /* LCYCoreDataHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,13 +48,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6D7E277C1C5205D60010E4B6 /* Embed Frameworks */ = {
+		6DF565391C82077400538A98 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6D7E277B1C5205D60010E4B6 /* LCYCoreDataHelper.framework in Embed Frameworks */,
+				6DF565381C82077300538A98 /* LCYCoreDataHelper.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,7 +63,6 @@
 
 /* Begin PBXFileReference section */
 		6D59B7131C5CFBCC00754672 /* ImportedDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportedDataViewController.swift; sourceTree = "<group>"; };
-		6D7E27791C5205D60010E4B6 /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = LCYCoreDataHelper.framework; path = "/Users/leacode/Library/Developer/Xcode/DerivedData/LCYCoreDataHelper-eezrvegzvgipnfejifdpckgpxgdh/Build/Products/Debug-iphoneos/LCYCoreDataHelper.framework"; sourceTree = "<absolute>"; };
 		6D7E27901C5215310010E4B6 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6D7E27911C5215310010E4B6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6D8CECC61C54DF00002BBF55 /* LCYCoreDataHelperExample 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LCYCoreDataHelperExample 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -89,6 +88,7 @@
 		6DE4CF751C52041D0017B3EF /* LCYCoreDataHelperExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCYCoreDataHelperExampleUITests.swift; sourceTree = "<group>"; };
 		6DE4CF771C52041D0017B3EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6DF2AA7D1C5530470094AA75 /* CoreDataCollectionViewControllerExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataCollectionViewControllerExample.swift; sourceTree = "<group>"; };
+		6DF565361C82077300538A98 /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = LCYCoreDataHelper.framework; path = "/Users/leacode/Library/Developer/Xcode/DerivedData/LCYCoreDataHelper-bzgkedveijbhcdejyimbtfjztvzz/Build/Products/Debug-iphoneos/LCYCoreDataHelper.framework"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D7E277A1C5205D60010E4B6 /* LCYCoreDataHelper.framework in Frameworks */,
+				6DF565371C82077300538A98 /* LCYCoreDataHelper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +147,7 @@
 		6DE4CF461C52041D0017B3EF = {
 			isa = PBXGroup;
 			children = (
-				6D7E27791C5205D60010E4B6 /* LCYCoreDataHelper.framework */,
+				6DF565361C82077300538A98 /* LCYCoreDataHelper.framework */,
 				6DE4CF511C52041D0017B3EF /* LCYCoreDataHelperExample */,
 				6DE4CF691C52041D0017B3EF /* LCYCoreDataHelperExampleTests */,
 				6DE4CF741C52041D0017B3EF /* LCYCoreDataHelperExampleUITests */,
@@ -207,7 +207,7 @@
 				6DE4CF4B1C52041D0017B3EF /* Sources */,
 				6DE4CF4C1C52041D0017B3EF /* Frameworks */,
 				6DE4CF4D1C52041D0017B3EF /* Resources */,
-				6D7E277C1C5205D60010E4B6 /* Embed Frameworks */,
+				6DF565391C82077400538A98 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

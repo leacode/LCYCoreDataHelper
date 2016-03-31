@@ -14,7 +14,7 @@ My email address:  lichunyu@vip.qq.com
 
 ## Installing LCYCoreDataHelper
 
-> **LCYCoreDataHelper require a minimum deployment target of iOS 7**
+> **LCYCoreDataHelper require a minimum deployment target of iOS 7**,  Now support swift2.2
 >
 > If you need to support ios 7 ,you can drag the source file into your project. It will work fine. If your project need to support ios8 or later. I recommend you to use Carthage.
 
@@ -33,7 +33,7 @@ $ brew install carthage
 To integrate Alamofire into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "leacode/LCYCoreDataHelper" ~> 1.3
+github "leacode/LCYCoreDataHelper" ~> 1.4
 ```
 
 Run `carthage update` to build the framework and drag the built `Alamofire.framework` into your Xcode project.
