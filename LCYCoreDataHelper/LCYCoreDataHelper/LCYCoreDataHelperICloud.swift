@@ -164,8 +164,8 @@ public extension LCYCoreDataHelper {
                             let wal = self.storeName.stringByAppendingString("-wal")
                             let shm = self.storeName.stringByAppendingString("-shm")
                             self.removeFileAtURL(self.storeURL)
-                            self.removeFileAtURL(self.applicationStoresDirectory.URLByAppendingPathComponent(wal))
-                            self.removeFileAtURL(self.applicationStoresDirectory.URLByAppendingPathComponent(shm))
+                            self.removeFileAtURL(self.applicationStoresDirectory.URLByAppendingPathComponent(wal)!)
+                            self.removeFileAtURL(self.applicationStoresDirectory.URLByAppendingPathComponent(shm)!)
                             
                         })
                     }

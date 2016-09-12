@@ -59,7 +59,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
     }()
     
     lazy internal var applicationStoresDirectory: NSURL = {
-        let storesDirectory: NSURL = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Stores")
+        let storesDirectory: NSURL = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Stores")!
         var fileManager: NSFileManager = NSFileManager.defaultManager()
         var error: NSError? = nil
         if let path = storesDirectory.path {
@@ -76,7 +76,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
     
     lazy internal var storeURL: NSURL = {
         return self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.storeName)
-    }()
+    }()!
     
     lazy private var sourceStoreURL: NSURL? = {
         guard let fileName = self.sourceStoreFilename else {
@@ -408,7 +408,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
             let destinStore = self.applicationStoresDirectory.URLByAppendingPathComponent("Temp.sqlite")
             
             do {
-                try migrationManager.migrateStoreFromURL(sourceStore, type: NSSQLiteStoreType, options: nil, withMappingModel: mappingModel, toDestinationURL: destinStore, destinationType: NSSQLiteStoreType, destinationOptions: nil)
+                try migrationManager.migrateStoreFromURL(sourceStore, type: NSSQLiteStoreType, options: nil, withMappingModel: mappingModel, toDestinationURL: destinStore!, destinationType: NSSQLiteStoreType, destinationOptions: nil)
                 success = true
             } catch {
                 success = false
@@ -556,8 +556,8 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
             try coor.performAndWaitOrThrow{
                 try coor.removePersistentStore(store)
                 try fm.removeItemAtURL(self.storeURL)
-                try fm.removeItemAtURL(self.storeURL.URLByAppendingPathComponent("-shm"))
-                try fm.removeItemAtURL(self.storeURL.URLByAppendingPathComponent("-wal"))
+                try fm.removeItemAtURL(self.storeURL.URLByAppendingPathComponent("-shm")!)
+                try fm.removeItemAtURL(self.storeURL.URLByAppendingPathComponent("-wal")!)
             }
         
         }
