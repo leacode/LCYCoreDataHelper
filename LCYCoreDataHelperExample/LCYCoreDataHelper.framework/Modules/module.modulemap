@@ -1,0 +1,10 @@
+framework module LCYCoreDataHelper {
+  umbrella header "LCYCoreDataHelper.h"
+
+  export *
+  module * { export * }
+}
+
+module LCYCoreDataHelper.Swift {
+    header "LCYCoreDataHelper-Swift.h"
+}

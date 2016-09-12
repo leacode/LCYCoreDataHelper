@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D5FCD551D8632AD0012F492 /* LCYCoreDataHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D5FCD541D8632AD0012F492 /* LCYCoreDataHelper.framework */; };
+		6D5FCD561D8632AD0012F492 /* LCYCoreDataHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6D5FCD541D8632AD0012F492 /* LCYCoreDataHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6DCA96581C68A1FB0042F5F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCA96571C68A1FB0042F5F6 /* AppDelegate.swift */; };
 		6DCA965A1C68A1FB0042F5F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCA96591C68A1FB0042F5F6 /* ViewController.swift */; };
 		6DCA965D1C68A1FB0042F5F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DCA965B1C68A1FB0042F5F6 /* Main.storyboard */; };
 		6DCA965F1C68A1FB0042F5F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DCA965E1C68A1FB0042F5F6 /* Assets.xcassets */; };
 		6DCA96621C68A1FB0042F5F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DCA96601C68A1FB0042F5F6 /* LaunchScreen.storyboard */; };
-		6DCA966A1C68A3300042F5F6 /* LCYCoreDataHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCA96691C68A3300042F5F6 /* LCYCoreDataHelper.framework */; };
-		6DCA966B1C68A3300042F5F6 /* LCYCoreDataHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCA96691C68A3300042F5F6 /* LCYCoreDataHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,7 +23,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6DCA966B1C68A3300042F5F6 /* LCYCoreDataHelper.framework in Embed Frameworks */,
+				6D5FCD561D8632AD0012F492 /* LCYCoreDataHelper.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -31,6 +31,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6D5FCD541D8632AD0012F492 /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCYCoreDataHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DCA96541C68A1FB0042F5F6 /* LCYCoreDataHelperICloudExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCYCoreDataHelperICloudExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DCA96571C68A1FB0042F5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DCA96591C68A1FB0042F5F6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -38,7 +39,6 @@
 		6DCA965E1C68A1FB0042F5F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6DCA96611C68A1FB0042F5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6DCA96631C68A1FB0042F5F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6DCA96691C68A3300042F5F6 /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = LCYCoreDataHelper.framework; path = "/Users/leacode/Library/Developer/Xcode/DerivedData/LCYCoreDataHelper-bzgkedveijbhcdejyimbtfjztvzz/Build/Products/Debug-iphoneos/LCYCoreDataHelper.framework"; sourceTree = "<absolute>"; };
 		6DCA966D1C68A3800042F5F6 /* LCYCoreDataHelperICloudExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LCYCoreDataHelperICloudExample.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,7 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DCA966A1C68A3300042F5F6 /* LCYCoreDataHelper.framework in Frameworks */,
+				6D5FCD551D8632AD0012F492 /* LCYCoreDataHelper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,7 +57,7 @@
 		6DCA964B1C68A1FA0042F5F6 = {
 			isa = PBXGroup;
 			children = (
-				6DCA96691C68A3300042F5F6 /* LCYCoreDataHelper.framework */,
+				6D5FCD541D8632AD0012F492 /* LCYCoreDataHelper.framework */,
 				6DCA96561C68A1FB0042F5F6 /* LCYCoreDataHelperICloudExample */,
 				6DCA96551C68A1FB0042F5F6 /* Products */,
 			);
@@ -119,6 +119,7 @@
 					6DCA96531C68A1FB0042F5F6 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = Y85J467HQH;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.iCloud = {
 								enabled = 0;
@@ -284,6 +285,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.leacode.LCYCoreDataHelperICloudExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -298,6 +300,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.leacode.LCYCoreDataHelperICloudExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
