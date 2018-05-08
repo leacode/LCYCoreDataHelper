@@ -16,7 +16,7 @@ class Product: NSManagedObject {
 
     class func insertCoreDataModel() {
         
-        let product: Product? = NSEntityDescription.insertNewObjectForEntityForName("Product", inManagedObjectContext: globalContext!) as? Product
+        let product: Product? = NSEntityDescription.insertNewObject(forEntityName: "Product", into: globalContext!) as? Product
         
         product?.productId = i
         i += 1

@@ -18,7 +18,7 @@ class CoreDataTableViewExample: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let fetchRequest = NSFetchRequest(entityName: "Product")
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Product")
         let sortDescriptor = NSSortDescriptor(key: "productId", ascending: true)
         let sortDescriptors  = [sortDescriptor]
         fetchRequest.sortDescriptors = sortDescriptors
@@ -30,49 +30,49 @@ class CoreDataTableViewExample: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    private func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // 'self' is needed here
         return self.tableView.numberOfSectionsInTableView()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // 'self' is needed here
-        return self.tableView.numberOfRowsInSection(section)
+        return self.tableView.numberOfRows(inSection: section)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("productCellId", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "productCellId", for: indexPath as IndexPath)
         
-        let product: Product = self.tableView.frc.objectAtIndexPath(indexPath) as! Product
+        let product: Product = self.tableView.frc.object(at: indexPath as IndexPath) as! Product
         cell.textLabel?.text = product.productName
         cell.detailTextLabel?.text = product.productIntroduction
         
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.01
     }
     
     // MARK: - Actions
     
-    @IBAction func addOneProduct(sender: AnyObject) {
+    @IBAction func addOneProduct(_ sender: AnyObject) {
         Product.insertCoreDataModel()
     }
     
-    @IBAction func deleteLast(sender: AnyObject) {
+    @IBAction func deleteLast(_ sender: AnyObject) {
         
-        if self.tableView.frc.fetchedObjects?.count > 0 {
-            globalContext?.deleteObject((self.tableView.frc.fetchedObjects?.last)! as! NSManagedObject)
+        if (self.tableView.frc.fetchedObjects?.count)! > 0 {
+            globalContext?.delete((self.tableView.frc.fetchedObjects?.last)! as! NSManagedObject)
         }
         
     }
     
-    @IBAction func deleteAll(sender: AnyObject) {
+    @IBAction func deleteAll(_ sender: AnyObject) {
         
         do {
             try coreDataHelper?.deleteAllExistingObjectOfEntity("Product", ctx: globalContext!)
-            NSFetchedResultsController.deleteCacheWithName("productCache")
+            NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "productCache")
             try self.tableView.frc.performFetch()
             tableView.reloadData()
         } catch {

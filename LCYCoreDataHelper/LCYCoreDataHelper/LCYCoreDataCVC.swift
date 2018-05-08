@@ -11,14 +11,14 @@ import CoreData
 
 let reuseIdentifier = "Cell"
 
-public class LCYCoreDataCVC: UICollectionViewController, NSFetchedResultsControllerDelegate {
+open class LCYCoreDataCVC: UICollectionViewController, NSFetchedResultsControllerDelegate {
     
-    public var frc:NSFetchedResultsController!
-
+    open var frc:NSFetchedResultsController<NSFetchRequestResult>!
+    
     //MARK: - FETCHING
     
-    public func performFetch() throws {
-        frc.managedObjectContext.performBlockAndWait { () -> Void in
+    open func performFetch() throws {
+        frc.managedObjectContext.performAndWait { () -> Void in
                         
             do {
                 try self.frc.performFetch()
@@ -32,7 +32,7 @@ public class LCYCoreDataCVC: UICollectionViewController, NSFetchedResultsControl
    
     // MARK: UICollectionViewDataSource
 
-    override public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override open func numberOfSections(in collectionView: UICollectionView) -> Int {
         var numberOfSections: Int = 0
         if let sections = self.frc.sections {
             numberOfSections = sections.count
@@ -41,7 +41,7 @@ public class LCYCoreDataCVC: UICollectionViewController, NSFetchedResultsControl
     }
 
 
-    override public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var numberOfRow: Int = 0
         if let sections = self.frc.sections {
             numberOfRow = sections[section].numberOfObjects
@@ -52,49 +52,53 @@ public class LCYCoreDataCVC: UICollectionViewController, NSFetchedResultsControl
 
     //MARK: - DELEGATE: NSFetchedResultsController
     
-    public func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+    
+    
+    open func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
-        case NSFetchedResultsChangeType.Insert:
+        case NSFetchedResultsChangeType.insert:
             
-            self.collectionView?.insertSections(NSIndexSet(index: sectionIndex))
+            self.collectionView?.insertSections(IndexSet(integer: sectionIndex))
             break;
-        case NSFetchedResultsChangeType.Delete:
-            self.collectionView?.deleteSections(NSIndexSet(index: sectionIndex))
+        case NSFetchedResultsChangeType.delete:
+            self.collectionView?.deleteSections(IndexSet(integer: sectionIndex))
             break;
         default:
             break;
         }
     }
     
-    public func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    
+    
+    open func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
-        case NSFetchedResultsChangeType.Insert:
+        case NSFetchedResultsChangeType.insert:
             if let newPath = newIndexPath {
-                self.collectionView?.insertItemsAtIndexPaths([newPath])
+                self.collectionView?.insertItems(at: [newPath])
             }
             break;
-        case NSFetchedResultsChangeType.Delete:
+        case NSFetchedResultsChangeType.delete:
             if let idxPath = indexPath {
-                self.collectionView?.deleteItemsAtIndexPaths([idxPath])
+                self.collectionView?.deleteItems(at: [idxPath])
             }
             break;
-        case NSFetchedResultsChangeType.Update:
+        case NSFetchedResultsChangeType.update:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
-                    self.collectionView?.deleteItemsAtIndexPaths([idxPath])
-                    self.collectionView?.insertItemsAtIndexPaths([newPath])
+                    self.collectionView?.deleteItems(at: [idxPath])
+                    self.collectionView?.insertItems(at: [newPath])
                 }
             } else {
                 if let idxPath = indexPath {
-                    self.collectionView?.reloadItemsAtIndexPaths([idxPath])
+                    self.collectionView?.reloadItems(at: [idxPath])
                 }
             }
             break;
-        case NSFetchedResultsChangeType.Move:
+        case NSFetchedResultsChangeType.move:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
-                    self.collectionView?.deleteItemsAtIndexPaths([idxPath])
-                    self.collectionView?.insertItemsAtIndexPaths([newPath])
+                    self.collectionView?.deleteItems(at: [idxPath])
+                    self.collectionView?.insertItems(at: [newPath])
                 }
             }
             break;

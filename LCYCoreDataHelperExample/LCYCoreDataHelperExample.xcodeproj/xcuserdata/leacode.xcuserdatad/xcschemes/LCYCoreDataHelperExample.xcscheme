@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0800"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6DE4CF4E1C52041D0017B3EF"
+               BlueprintIdentifier = "6DB98CC01D858EC9006957E8"
                BuildableName = "LCYCoreDataHelperExample.app"
                BlueprintName = "LCYCoreDataHelperExample"
                ReferencedContainer = "container:LCYCoreDataHelperExample.xcodeproj">
@@ -28,31 +28,11 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6DE4CF651C52041D0017B3EF"
-               BuildableName = "LCYCoreDataHelperExampleTests.xctest"
-               BlueprintName = "LCYCoreDataHelperExampleTests"
-               ReferencedContainer = "container:LCYCoreDataHelperExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6DE4CF701C52041D0017B3EF"
-               BuildableName = "LCYCoreDataHelperExampleUITests.xctest"
-               BlueprintName = "LCYCoreDataHelperExampleUITests"
-               ReferencedContainer = "container:LCYCoreDataHelperExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6DE4CF4E1C52041D0017B3EF"
+            BlueprintIdentifier = "6DB98CC01D858EC9006957E8"
             BuildableName = "LCYCoreDataHelperExample.app"
             BlueprintName = "LCYCoreDataHelperExample"
             ReferencedContainer = "container:LCYCoreDataHelperExample.xcodeproj">
@@ -75,7 +55,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6DE4CF4E1C52041D0017B3EF"
+            BlueprintIdentifier = "6DB98CC01D858EC9006957E8"
             BuildableName = "LCYCoreDataHelperExample.app"
             BlueprintName = "LCYCoreDataHelperExample"
             ReferencedContainer = "container:LCYCoreDataHelperExample.xcodeproj">
@@ -94,7 +74,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6DE4CF4E1C52041D0017B3EF"
+            BlueprintIdentifier = "6DB98CC01D858EC9006957E8"
             BuildableName = "LCYCoreDataHelperExample.app"
             BlueprintName = "LCYCoreDataHelperExample"
             ReferencedContainer = "container:LCYCoreDataHelperExample.xcodeproj">

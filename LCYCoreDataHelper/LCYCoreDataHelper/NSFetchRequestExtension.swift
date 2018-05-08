@@ -11,13 +11,14 @@ import CoreData
 
 extension NSFetchRequest {
     
-    public class func fetchRequestInContext(entityName: String, context: NSManagedObjectContext) -> NSFetchRequest {
-        let request = NSFetchRequest()
-        request.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
-        return request
-    }
+//    public class func fetchRequestInContext(_ entityName: String, context: NSManagedObjectContext) -> NSFetchRequest {
+//        let request = NSFetchRequest()
+//        request.entity = NSEntityDescription.entity(forEntityName: entityName, in: context)
+//        return request
+//    }
     
-    public func sort(key: String, ascending: Bool) {
+    @objc
+    public func sort(_ key: String, ascending: Bool) {
         let sortDescriptor = NSSortDescriptor(key: key, ascending: ascending)
         guard let _ = self.sortDescriptors else {
             self.sortDescriptors = [sortDescriptor]
@@ -26,7 +27,8 @@ extension NSFetchRequest {
         self.sortDescriptors?.append(sortDescriptor)
     }
     
-    public func sortByAttributes(attributes: [String], ascending: Bool) {
+    @objc
+    public func sortByAttributes(_ attributes: [String], ascending: Bool) {
         var sortDescriptors: [NSSortDescriptor] = []
         for attributeName in attributes {
             let sortDescriptor = NSSortDescriptor(key: attributeName, ascending: ascending)
@@ -35,15 +37,15 @@ extension NSFetchRequest {
         self.sortDescriptors = sortDescriptors
     }
     
-    public func fetchFirstObject(context: NSManagedObjectContext) -> AnyObject? {
-        self.fetchLimit = 1
-        do {
-            let fetchedObject: AnyObject? = try context.executeFetchRequest(self).first
-            return fetchedObject
-        } catch {
-            return nil
-        }
-    }
+//    public func fetchFirstObject(_ context: NSManagedObjectContext) -> AnyObject? {
+//        self.fetchLimit = 1
+//        do {
+//            let fetchedObject: AnyObject? = try context.fetch(self).first
+//            return fetchedObject
+//        } catch {
+//            return nil
+//        }
+//    }
     
  
 }

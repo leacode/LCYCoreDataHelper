@@ -13,11 +13,9 @@ import CoreData
 
 extension NSManagedObjectContext {
     
-   
-
     func saveSynchronously() throws {
     
-        self.performBlockAndWait { [unowned self] () -> Void in
+        self.performAndWait { [unowned self] () -> Void in
             if !self.hasChanges {
                 return
             }

@@ -18,7 +18,7 @@ class CoreDataCollectionViewControllerExample: LCYCoreDataCVC {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let fetchRequest = NSFetchRequest(entityName: "User")
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
         let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
         let sortDescriptors  = [sortDescriptor]
         fetchRequest.sortDescriptors = sortDescriptors
@@ -32,36 +32,35 @@ class CoreDataCollectionViewControllerExample: LCYCoreDataCVC {
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
     }
-   
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UserCollectionViewCell
     
-        let user: User = self.frc.objectAtIndexPath(indexPath) as! User
-        cell.usernameLabel.text = user.username
-    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! UserCollectionViewCell
+        
+        let user: User? = self.frc.object(at: indexPath as IndexPath) as? User
+        cell.usernameLabel.text = user?.username ?? ""
+        
         return cell
     }
     
     // MRK: - CRUD
-    
-    @IBAction func addNewItem(sender: AnyObject) {
-        if self.frc.fetchedObjects?.count > 0 {
+    @IBAction func addNewItem(_ sender: AnyObject) {
+        if (self.frc.fetchedObjects?.count)! > 0 {
             let user = (self.frc.fetchedObjects?.last)! as! User
             User.i = user.id + 1
         }
         User.insertCoreDataModel()
     }
-    
-    @IBAction func deleteLast(sender: AnyObject) {
-        if self.frc.fetchedObjects?.count > 0 {
-            globalContext?.deleteObject((self.frc.fetchedObjects?.last)! as! NSManagedObject)
+        
+    @IBAction func deleteLast(_ sender: AnyObject) {
+        if (self.frc.fetchedObjects?.count)! > 0 {
+            globalContext?.delete((self.frc.fetchedObjects?.last)! as! NSManagedObject)
         }
     }
     
-    @IBAction func deleteAll(sender: AnyObject) {
+    @IBAction func deleteAll(_ sender: AnyObject) {
         do {
             try coreDataHelper?.deleteAllExistingObjectOfEntity("User", ctx: globalContext!)
-            NSFetchedResultsController.deleteCacheWithName("UserCache")
+            NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "UserCache")
             try self.frc.performFetch()
             collectionView!.reloadData()
         } catch {

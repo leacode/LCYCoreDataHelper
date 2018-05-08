@@ -17,7 +17,7 @@ class CoreDataCollectionViewExample: UIViewController, UICollectionViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let fetchRequest = NSFetchRequest(entityName: "User")
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
         fetchRequest.sort("id", ascending: true)
         
         collectionView.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: globalContext!, sectionNameKeyPath: nil, cacheName: "UserCache")
@@ -30,29 +30,28 @@ class CoreDataCollectionViewExample: UIViewController, UICollectionViewDelegate,
         }
         
     }
-
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return self.collectionView.numberOfSections()
+    private func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return self.collectionView.numberOfSections
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.collectionView.numberOfItemsInSection(section)
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.collectionView.numberOfItems(inSection: section)
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionViewCellId", forIndexPath: indexPath) as! UserCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCellId", for: indexPath as IndexPath) as! UserCollectionViewCell
         
-        let user: User = self.collectionView.frc.objectAtIndexPath(indexPath) as! User
-        cell.usernameLabel.text = user.username
+        let user: User? = self.collectionView.frc.object(at: indexPath as IndexPath) as? User
+        cell.usernameLabel.text = user?.username ?? ""
         
         return cell
     }
     
     // MRK: - CRUD
     
-    @IBAction func addNewItem(sender: AnyObject) {
-        if collectionView.frc.fetchedObjects?.count > 0 {
+    @IBAction func addNewItem(_ sender: AnyObject) {
+        if (collectionView.frc.fetchedObjects?.count)! > 0 {
             let user = (self.collectionView.frc.fetchedObjects?.last)! as! User
             User.i = user.id + 1
         }
@@ -60,16 +59,16 @@ class CoreDataCollectionViewExample: UIViewController, UICollectionViewDelegate,
         User.insertCoreDataModel()
     }
     
-    @IBAction func deleteLast(sender: AnyObject) {
-        if collectionView.frc.fetchedObjects?.count > 0 {
-            globalContext?.deleteObject((self.collectionView.frc.fetchedObjects?.last)! as! NSManagedObject)
+    @IBAction func deleteLast(_ sender: AnyObject) {
+        if (collectionView.frc.fetchedObjects?.count)! > 0 {
+            globalContext?.delete((self.collectionView.frc.fetchedObjects?.last)! as! NSManagedObject)
         }
     }
     
-    @IBAction func deleteAll(sender: AnyObject) {
+    @IBAction func deleteAll(_ sender: AnyObject) {
         do {
             try coreDataHelper?.deleteAllExistingObjectOfEntity("User", ctx: globalContext!)
-            NSFetchedResultsController.deleteCacheWithName("UserCache")
+            NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "UserCache")
             try collectionView.frc.performFetch()
             collectionView.reloadData()
         } catch {

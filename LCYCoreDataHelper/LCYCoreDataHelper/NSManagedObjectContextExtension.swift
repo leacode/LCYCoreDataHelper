@@ -16,7 +16,7 @@ extension NSManagedObjectContext {
      
      - throws: save exception
      */
-    private func saveContext() throws {
+    fileprivate func saveContext() throws {
         if hasChanges {
             try save()
             print("context SAVED changes to persistent store")
@@ -32,10 +32,10 @@ extension NSManagedObjectContext {
      */
     public func saveContextAndWait() throws {
         switch concurrencyType {
-        case .ConfinementConcurrencyType:
+        case .confinementConcurrencyType:
             try saveContext()
-        case .MainQueueConcurrencyType,
-        .PrivateQueueConcurrencyType:
+        case .mainQueueConcurrencyType,
+        .privateQueueConcurrencyType:
             try performAndWaitOrThrow(saveContext)
         }
     }
@@ -49,11 +49,11 @@ extension NSManagedObjectContext {
      
      - returns: the block
      */
-    public func performAndWaitOrThrow<Return>(body: () throws -> Return) throws -> Return? {
+    public func performAndWaitOrThrow<Return>(_ body: @escaping () throws -> Return) throws -> Return? {
         var result: Return!
-        var thrown: ErrorType?
+        var thrown: Error?
         
-        performBlockAndWait {
+        performAndWait {
             do {
                 result = try body()
             } catch {
@@ -68,11 +68,11 @@ extension NSManagedObjectContext {
         }
     }
     
-    public func performOrThrow<Return>(body: () throws -> Return) throws -> Return? {
+    public func performOrThrow<Return>(_ body: @escaping () throws -> Return) throws -> Return? {
         var result: Return!
-        var thrown: ErrorType?
+        var thrown: Error?
         
-        performBlock {
+        perform {
             do {
                 result = try body()
             } catch {

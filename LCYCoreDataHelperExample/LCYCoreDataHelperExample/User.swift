@@ -20,7 +20,7 @@ class User: NSManagedObject {
 
     class func insertCoreDataModel() {
         
-        let user: User? = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: globalContext!) as? User
+        let user: User? = NSEntityDescription.insertNewObject(forEntityName: "User", into: globalContext!) as? User
 
         user?.id = i
         i += 1
@@ -37,12 +37,12 @@ class User: NSManagedObject {
     
     class func fetchCoreDataModels() -> [User] {
         
-        let fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "User")
-        let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: globalContext!)
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
+        let entity = NSEntityDescription.entity(forEntityName: "User", in: globalContext!)
         fetchRequest.entity = entity
         
         do {
-            let users: [User] = try globalContext?.executeFetchRequest(fetchRequest) as! [User]
+            let users: [User] = try globalContext?.fetch(fetchRequest) as! [User]
             return users
         } catch {
             return []

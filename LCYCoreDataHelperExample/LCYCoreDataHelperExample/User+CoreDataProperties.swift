@@ -22,5 +22,6 @@ extension User {
     @NSManaged var sex: Int
     @NSManaged var isLogin: Bool
     @NSManaged var amount: Double
+    @NSManaged var boss: String
 
 }

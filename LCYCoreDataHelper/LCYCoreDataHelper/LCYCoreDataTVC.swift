@@ -9,13 +9,13 @@
 import UIKit
 import CoreData
 
-public class LCYCoreDataTVC: UITableViewController, NSFetchedResultsControllerDelegate {
+open class LCYCoreDataTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
-    public var frc:NSFetchedResultsController!
+    open var frc:NSFetchedResultsController<NSFetchRequestResult>!
     
     //MARK: - FETCHING
-    public func performFetch() {
-        frc.managedObjectContext.performBlockAndWait { () -> Void in
+    open func performFetch() {
+        frc.managedObjectContext.performAndWait { () -> Void in
             
             do {
                 try self.frc.performFetch()
@@ -29,7 +29,7 @@ public class LCYCoreDataTVC: UITableViewController, NSFetchedResultsControllerDe
     
     //MARK: - DATASOURCE: UITableView
     
-    override public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var numberOfRow: Int = 0
         if let sections = self.frc.sections {
             numberOfRow = sections[section].numberOfObjects
@@ -37,7 +37,7 @@ public class LCYCoreDataTVC: UITableViewController, NSFetchedResultsControllerDe
         return numberOfRow
     }
     
-    override public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override open func numberOfSections(in tableView: UITableView) -> Int {
         var numberOfSections: Int = 0
         if let sections = self.frc.sections {
             numberOfSections = sections.count
@@ -45,73 +45,73 @@ public class LCYCoreDataTVC: UITableViewController, NSFetchedResultsControllerDe
         return numberOfSections
     }
     
-    override public func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        return self.frc.sectionForSectionIndexTitle(title, atIndex: index)
+    override open func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        return self.frc.section(forSectionIndexTitle: title, at: index)
     }
 
-    override public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let name: String? = nil
 
         
         return name
     }
     
-    public override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+    open override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return self.frc.sectionIndexTitles
     }
     
     //MARK: - DELEGATE: NSFetchedResultsController
-    public func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    open func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.beginUpdates()
     }
     
-    public func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    open func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.endUpdates()
     }
     
-    public func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+    open func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
-        case NSFetchedResultsChangeType.Insert:
-            self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Fade)
+        case NSFetchedResultsChangeType.insert:
+            self.tableView.insertSections(IndexSet(integer: sectionIndex), with: UITableViewRowAnimation.fade)
             break;
-        case NSFetchedResultsChangeType.Delete:
-            self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Fade)
+        case NSFetchedResultsChangeType.delete:
+            self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: UITableViewRowAnimation.fade)
             break;
         default:
             break;
         }
     }
 
-    public func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    open func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         _ = self.tableView
         switch type {
-        case NSFetchedResultsChangeType.Insert:
+        case NSFetchedResultsChangeType.insert:
             if let newPath = newIndexPath {
-                self.tableView.insertRowsAtIndexPaths([newPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.tableView.insertRows(at: [newPath], with: UITableViewRowAnimation.automatic)
             }
             break;
-        case NSFetchedResultsChangeType.Delete:
+        case NSFetchedResultsChangeType.delete:
             if let idxPath = indexPath {
-                self.tableView.deleteRowsAtIndexPaths([idxPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.tableView.deleteRows(at: [idxPath], with: UITableViewRowAnimation.automatic)
             }
             break;
-        case NSFetchedResultsChangeType.Update:
+        case NSFetchedResultsChangeType.update:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
-                    self.tableView.deleteRowsAtIndexPaths([idxPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-                    self.tableView.insertRowsAtIndexPaths([newPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                    self.tableView.deleteRows(at: [idxPath], with: UITableViewRowAnimation.automatic)
+                    self.tableView.insertRows(at: [newPath], with: UITableViewRowAnimation.automatic)
                 }
             } else {
                 if let idxPath = indexPath {
-                    self.tableView.reloadRowsAtIndexPaths([idxPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                    self.tableView.reloadRows(at: [idxPath], with: UITableViewRowAnimation.automatic)
                 }
             }
             break;
-        case NSFetchedResultsChangeType.Move:
+        case NSFetchedResultsChangeType.move:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
-                    self.tableView.deleteRowsAtIndexPaths([idxPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-                    self.tableView.insertRowsAtIndexPaths([newPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                    self.tableView.deleteRows(at: [idxPath], with: UITableViewRowAnimation.automatic)
+                    self.tableView.insertRows(at: [newPath], with: UITableViewRowAnimation.automatic)
                 }
             }
             break;

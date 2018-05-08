@@ -5,18 +5,15 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
-      location = "group:LICENSE">
+      location = "group:LCYCoreDataHelper.podspec">
    </FileRef>
    <FileRef
-      location = "group:LCYCoreDataHelper.podspec">
+      location = "group:LICENSE">
    </FileRef>
    <FileRef
       location = "group:LCYCoreDataHelper/LCYCoreDataHelper.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:LCYCoreDataHelperExample/LCYCoreDataHelperExample.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:LCYCoreDataHelperICloudExample/LCYCoreDataHelperICloudExample.xcodeproj">
    </FileRef>
 </Workspace>

@@ -10,27 +10,27 @@
 import UIKit
 import CoreData
 
-public class LCYSoureceStoreHelper: NSObject {
+open class LCYSoureceStoreHelper: NSObject {
     
     
-    private var sourceStoreFilename: String?
-    private var sourceCoordinator: NSPersistentStoreCoordinator?
-    private var model: NSManagedObjectModel?
+    fileprivate var sourceStoreFilename: String?
+    fileprivate var sourceCoordinator: NSPersistentStoreCoordinator?
+    fileprivate var model: NSManagedObjectModel?
     
-    public private(set) var sourceContext: NSManagedObjectContext = {
-        return NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
+    open fileprivate(set) var sourceContext: NSManagedObjectContext = {
+        return NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
     }()
     
-    lazy private var sourceStoreURL: NSURL? = {
+    lazy fileprivate var sourceStoreURL: URL? = {
         guard let fileName = self.sourceStoreFilename else {
             return nil
         }
         
-        guard let path = NSBundle.mainBundle().pathForResource((fileName as NSString).stringByDeletingPathExtension, ofType: (fileName as NSString).pathExtension) else {
+        guard let path = Bundle.main.path(forResource: (fileName as NSString).deletingPathExtension, ofType: (fileName as NSString).pathExtension) else {
             return nil
         }
         
-        return NSURL(fileURLWithPath: path)
+        return URL(fileURLWithPath: path)
     }()
     
     // MARK: - Initial
@@ -40,7 +40,7 @@ public class LCYSoureceStoreHelper: NSObject {
         
         self.sourceStoreFilename = sourceStoreFileName
         sourceCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
-        sourceContext.performBlockAndWait { () -> Void in
+        sourceContext.performAndWait { () -> Void in
             self.sourceContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             self.sourceContext.undoManager = nil
         }
@@ -48,7 +48,7 @@ public class LCYSoureceStoreHelper: NSObject {
     }
     
     public required override init() {
-        model = NSManagedObjectModel.mergedModelFromBundles(nil)
+        model = NSManagedObjectModel.mergedModel(from: nil)
         sourceCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model!)
         sourceContext.persistentStoreCoordinator = sourceCoordinator
     }

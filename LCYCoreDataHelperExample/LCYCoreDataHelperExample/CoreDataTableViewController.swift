@@ -15,7 +15,7 @@ class CoreDataTableViewController: LCYCoreDataTVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let fetchRequest = NSFetchRequest(entityName: "Product")
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Product")
         let sortDescriptor = NSSortDescriptor(key: "productId", ascending: true)
         let sortDescriptors  = [sortDescriptor]
         fetchRequest.sortDescriptors = sortDescriptors
@@ -26,36 +26,36 @@ class CoreDataTableViewController: LCYCoreDataTVC {
         self.performFetch()
         
     }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("productCellId", forIndexPath: indexPath)
-
-        let product: Product = self.frc.objectAtIndexPath(indexPath) as! Product
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "productCellId", for: indexPath as IndexPath)
+        
+        let product: Product = self.frc.object(at: indexPath as IndexPath) as! Product
         cell.textLabel?.text = product.productName
         cell.detailTextLabel?.text = product.productIntroduction
-
+        
         return cell
     }
-    
-    @IBAction func addOneProduct(sender: AnyObject) {
+
+    @IBAction func addOneProduct(_ sender: AnyObject) {
         
         Product.insertCoreDataModel()
         
     }
 
-    @IBAction func deleteLast(sender: AnyObject) {
+    @IBAction func deleteLast(_ sender: AnyObject) {
         
-        if self.frc.fetchedObjects?.count > 0 {
-            globalContext?.deleteObject((self.frc.fetchedObjects?.last)! as! NSManagedObject)
+        if (self.frc.fetchedObjects?.count)! > 0 {
+            globalContext?.delete((self.frc.fetchedObjects?.last)! as! NSManagedObject)
         }
         
     }
     
-    @IBAction func deleteAll(sender: AnyObject) {
+    @IBAction func deleteAll(_ sender: AnyObject) {
         
         do {
             try coreDataHelper?.deleteAllExistingObjectOfEntity("Product", ctx: globalContext!)
-            NSFetchedResultsController.deleteCacheWithName("productCache")
+            NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "productCache")
             try self.frc.performFetch()
             tableView.reloadData()
         } catch {

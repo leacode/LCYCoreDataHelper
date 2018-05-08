@@ -18,9 +18,9 @@ public extension NSManagedObject {
         try self.deleteEntityInContext(context)
     }
     
-    func deleteEntityInContext(context: NSManagedObjectContext) throws {
-        let entityInContext = try context.existingObjectWithID(self.objectID)
-        context.deleteObject(entityInContext)
+    func deleteEntityInContext(_ context: NSManagedObjectContext) throws {
+        let entityInContext = try context.existingObject(with: self.objectID)
+        context.delete(entityInContext)
     }
     
 }

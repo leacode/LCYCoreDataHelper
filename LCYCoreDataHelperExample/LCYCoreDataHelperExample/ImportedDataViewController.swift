@@ -18,7 +18,7 @@ class ImportedDataViewController:UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let fetchRequest = NSFetchRequest(entityName: "User")
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
         fetchRequest.sort("id", ascending: true)
         
         tableView.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataHelper!.importContext, sectionNameKeyPath: nil, cacheName: "UserCache")
@@ -40,20 +40,20 @@ class ImportedDataViewController:UIViewController, UITableViewDelegate, UITableV
         
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    private func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // 'self' is needed here
         return self.tableView.numberOfSectionsInTableView()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // 'self' is needed here
-        return self.tableView.numberOfRowsInSection(section)
+        return self.tableView.numberOfRows(inSection: section)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("userCellId", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userCellId", for: indexPath as IndexPath)
         
-        let user: User = self.tableView.frc.objectAtIndexPath(indexPath) as! User
+        let user: User = self.tableView.frc.object(at: indexPath as IndexPath) as! User
         cell.textLabel?.text = user.username
 //        
 //        let product: Product = self.tableView.frc.objectAtIndexPath(indexPath) as! Product
@@ -63,7 +63,7 @@ class ImportedDataViewController:UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.01
     }
     

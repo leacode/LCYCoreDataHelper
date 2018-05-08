@@ -12,17 +12,17 @@ import CoreData
 
 public extension LCYCoreDataHelper {
 
-    func fetchAllCoreDataModels( entityName: String, sortKey: String, ascending: Bool, ctx: NSManagedObjectContext ) -> [AnyObject] {
+    func fetchAllCoreDataModels( _ entityName: String, sortKey: String, ascending: Bool, ctx: NSManagedObjectContext ) -> [AnyObject] {
         
-        let fetchRequest: NSFetchRequest = NSFetchRequest(entityName: entityName)
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: entityName)
         let sortDescriptor = NSSortDescriptor(key: sortKey, ascending: ascending)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: ctx)
+        let entity = NSEntityDescription.entity(forEntityName: "User", in: ctx)
         fetchRequest.entity = entity
         
         do {
-            let models = try context.executeFetchRequest(fetchRequest)
-            return models
+            let models = try context.fetch(fetchRequest)
+            return models as [AnyObject]
         } catch {
             return []
         }
@@ -34,17 +34,17 @@ public extension LCYCoreDataHelper {
      
      - parameter context: The `NSManagedObjectContext` to remove the Entities from.
      */
-    public func deleteAllExistingObjectOfEntity(entityName: String, ctx: NSManagedObjectContext) throws {
-        let fetchRequest = NSFetchRequest(entityName: entityName)
-        fetchRequest.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: ctx)
+    public func deleteAllExistingObjectOfEntity(_ entityName: String, ctx: NSManagedObjectContext) throws {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: entityName)
+        fetchRequest.entity = NSEntityDescription.entity(forEntityName: entityName, in: ctx)
         
         if #available(iOS 9.0, *) {
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            try ctx.executeRequest(deleteRequest)
+            try ctx.execute(deleteRequest)
         } else {
             fetchRequest.includesPropertyValues = false
             fetchRequest.includesSubentities = false
-            try ctx.executeFetchRequest(fetchRequest).lazy.map { $0 as! NSManagedObject }.forEach(ctx.deleteObject)
+            try ctx.fetch(fetchRequest).lazy.map { $0 as! NSManagedObject }.forEach(ctx.delete(_:))
         }
         
 //        try saveContext()
@@ -52,19 +52,20 @@ public extension LCYCoreDataHelper {
         
     }
     
-    public func deleteAllMachingPredicate(entityName: String, predicate: NSPredicate, ctx: NSManagedObjectContext) throws {
+    public func deleteAllMachingPredicate(_ entityName: String, predicate: NSPredicate, ctx: NSManagedObjectContext) throws {
         
-        let request = NSFetchRequest.fetchRequestInContext(entityName, context: ctx)
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest()
+        request.entity = NSEntityDescription.entity(forEntityName: entityName, in: ctx)
         request.predicate = predicate
         request.returnsObjectsAsFaults = true
         request.includesPropertyValues = false
         
         if #available(iOS 9.0, *) {
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-            try ctx.executeRequest(deleteRequest)
+            try ctx.execute(deleteRequest)
         } else {
             request.includesSubentities = false
-            try ctx.executeFetchRequest(request).lazy.map{ $0 as! NSManagedObject }.forEach(ctx.deleteObject)
+            try ctx.fetch(request).lazy.map{ $0 as! NSManagedObject }.forEach(ctx.delete(_:))
         }
         
         try saveContext()
@@ -73,15 +74,15 @@ public extension LCYCoreDataHelper {
     
     // MARK: - CORE DATA RESET
     
-    func resetContext(moc: NSManagedObjectContext) {
-        moc.performBlockAndWait { () -> Void in
+    func resetContext(_ moc: NSManagedObjectContext) {
+        moc.performAndWait { () -> Void in
             moc.reset()
         }
     }
     
     func reloadStore() -> Bool {
         do {
-            try coordinator?.removePersistentStore(self.store!)
+            try coordinator?.remove(self.store!)
             resetContext(sourceContext)
             resetContext(importContext)
             resetContext(context)
@@ -99,10 +100,10 @@ public extension LCYCoreDataHelper {
     }
     
     
-    func removeAllStoresFromCoordinator(psc: NSPersistentStoreCoordinator) {
+    func removeAllStoresFromCoordinator(_ psc: NSPersistentStoreCoordinator) {
         for s in psc.persistentStores {
             do {
-                try psc.removePersistentStore(s)
+                try psc.remove(s)
             } catch {
                 print("Error removing persistent store: \(error)")
             }
@@ -110,15 +111,15 @@ public extension LCYCoreDataHelper {
     }
     
     func resetCoreData() {
-        importContext.performBlockAndWait { () -> Void in
+        importContext.performAndWait { () -> Void in
             try! self.importContext.save()
             self.resetContext(self.importContext)
         }
-        context.performBlockAndWait { () -> Void in
+        context.performAndWait { () -> Void in
             try! self.context.save()
             self.resetContext(self.context)
         }
-        parentContext.performBlockAndWait { () -> Void in
+        parentContext.performAndWait { () -> Void in
             try! self.parentContext.save()
             self.resetContext(self.parentContext)
         }
@@ -130,7 +131,7 @@ public extension LCYCoreDataHelper {
         
     }
 
-    func unloadStore(ps: NSPersistentStore?) -> Bool {
+    func unloadStore(_ ps: NSPersistentStore?) -> Bool {
         
         guard let store = ps else {
             return true // No need to reset, store is nil
@@ -139,7 +140,7 @@ public extension LCYCoreDataHelper {
             return true
         }
         do {
-            try psc.removePersistentStore(store)
+            try psc.remove(store)
             return false
         } catch {
             return true // Reset complete
@@ -147,9 +148,9 @@ public extension LCYCoreDataHelper {
         
     }
     
-    func removeFileAtURL(url: NSURL) {
+    func removeFileAtURL(_ url: URL) {
         do {
-            try NSFileManager.defaultManager().removeItemAtURL(url)
+            try FileManager.default.removeItem(at: url)
         } catch {
             print("Failed to delete \(error)")
         }

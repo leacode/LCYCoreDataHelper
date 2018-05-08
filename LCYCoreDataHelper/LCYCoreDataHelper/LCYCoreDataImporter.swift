@@ -12,7 +12,7 @@ import CoreData
 
 class LCYCoreDataImporter: NSObject {
     
-    class func saveContext(context: NSManagedObjectContext) throws {
+    class func saveContext(_ context: NSManagedObjectContext) throws {
         
         try context.performAndWaitOrThrow {
             if context.hasChanges {
@@ -33,27 +33,27 @@ class LCYCoreDataImporter: NSObject {
         entitiesWithUniqueAttributes = uniqueAttributes
     }
     
-    func arrayForEntity(entity: String, inContext context: NSManagedObjectContext, predicate: NSPredicate?) throws -> [AnyObject] {
+    func arrayForEntity(_ entity: String, inContext context: NSManagedObjectContext, predicate: NSPredicate?) throws -> [AnyObject] {
         
-        let request = NSFetchRequest(entityName: entity)
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: entity)
         request.fetchBatchSize = 50
         request.predicate = predicate
         
-        return try context.executeFetchRequest(request)
+        return try context.fetch(request)
         
     }
     
-    func copyUniqueObject(object: NSManagedObject, toContext targetContext: NSManagedObjectContext) throws -> NSManagedObject? {
+    func copyUniqueObject(_ object: NSManagedObject, toContext targetContext: NSManagedObjectContext) throws -> NSManagedObject? {
         
         let entity = object.entity.name
         let uniqueAttribute = uniqueAttritureForEntity(entity!)
-        let uniqueAttributeValue = object.valueForKey(uniqueAttribute) as! String
+        let uniqueAttributeValue = object.value(forKey: uniqueAttribute) as! String
         
-        if uniqueAttributeValue.characters.count > 0 {
+        if uniqueAttributeValue.count > 0 {
             
             var attributeValuesToCopy: [String: AnyObject] = [String: AnyObject]()
             for attribute in object.entity.attributesByName {
-                attributeValuesToCopy[attribute.0] = object.valueForKey(attribute.0)
+                attributeValuesToCopy[attribute.0] = object.value(forKey: attribute.0) as AnyObject?
             }
 
             let copiedObject = try insertUniqueObject(entity!, uniqueAttributeValue: uniqueAttributeValue, attributeValues: attributeValuesToCopy, context: targetContext)
@@ -64,27 +64,27 @@ class LCYCoreDataImporter: NSObject {
         
     }
     
-    func existingObjectInContext(context: NSManagedObjectContext, entity: String, uniqueAttributeValue: String) throws  -> NSManagedObject?{
+    func existingObjectInContext(_ context: NSManagedObjectContext, entity: String, uniqueAttributeValue: String) throws  -> NSManagedObject?{
         
         let uniqueAttribute = uniqueAttritureForEntity(entity)
         let predicate = NSPredicate(format: "%K==%@", uniqueAttribute, uniqueAttributeValue)
-        let fetchRequest = NSFetchRequest(entityName: entity)
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: entity)
         fetchRequest.predicate = predicate
         fetchRequest.fetchLimit = 1
-        let fetchRequestResults = try context.executeFetchRequest(fetchRequest)
+        let fetchRequestResults = try context.fetch(fetchRequest)
         if fetchRequestResults.count == 0 {
             return nil
         }
         return fetchRequestResults.last as? NSManagedObject
     }
     
-    func insertUniqueObject(entity: String, uniqueAttributeValue: String, attributeValues: [String: AnyObject], context: NSManagedObjectContext) throws -> NSManagedObject?{
+    func insertUniqueObject(_ entity: String, uniqueAttributeValue: String, attributeValues: [String: AnyObject], context: NSManagedObjectContext) throws -> NSManagedObject?{
         
         let uniqueAttribute = uniqueAttritureForEntity(entity)
-        if uniqueAttributeValue.characters.count > 0 {
+        if uniqueAttributeValue.count > 0 {
             guard let existingObject = try existingObjectInContext(context, entity: entity, uniqueAttributeValue: uniqueAttributeValue) else {
-                let newObject = NSEntityDescription.insertNewObjectForEntityForName(entity, inManagedObjectContext: context)
-                newObject.setValuesForKeysWithDictionary(attributeValues)
+                let newObject = NSEntityDescription.insertNewObject(forEntityName: entity, into: context)
+                newObject.setValuesForKeys(attributeValues)
                 print("Created \(entity) object with \(uniqueAttribute) \(uniqueAttributeValue)")
                 return newObject
             }
@@ -94,13 +94,13 @@ class LCYCoreDataImporter: NSObject {
     }
     
     
-    func uniqueAttritureForEntity(entity: String) -> String {
+    func uniqueAttritureForEntity(_ entity: String) -> String {
         return entitiesWithUniqueAttributes[entity]!
     }
     
-    func establishToOneRelationship(relationshipName: String, fromObject object: NSManagedObject, toObject relatedObject: NSManagedObject) throws {
+    func establishToOneRelationship(_ relationshipName: String, fromObject object: NSManagedObject, toObject relatedObject: NSManagedObject) throws {
         
-        guard let _ = object.valueForKey(relationshipName) else {
+        guard let _ = object.value(forKey: relationshipName) else {
             return
         }
         
@@ -114,40 +114,40 @@ class LCYCoreDataImporter: NSObject {
         
         try LCYCoreDataImporter.saveContext(relatedObject.managedObjectContext!)
         try LCYCoreDataImporter.saveContext(object.managedObjectContext!)
-        object.managedObjectContext?.refreshObject(object, mergeChanges: false)
-        relatedObject.managedObjectContext?.refreshObject(relatedObject, mergeChanges: false)
+        object.managedObjectContext?.refresh(object, mergeChanges: false)
+        relatedObject.managedObjectContext?.refresh(relatedObject, mergeChanges: false)
         
     }
     
-    func establishToManyRelationship(relationShipName: String, fromObject object: NSManagedObject, withSourceSet sourceSet: NSMutableSet) throws {
+    func establishToManyRelationship(_ relationShipName: String, fromObject object: NSManagedObject, withSourceSet sourceSet: NSMutableSet) throws {
         
-        let copiedSet = object.mutableSetValueForKey(relationShipName)
+        let copiedSet = object.mutableSetValue(forKey: relationShipName)
         
         for relatedObject in sourceSet {
             if let copiedRelatedObject = try copyUniqueObject(relatedObject as! NSManagedObject, toContext: object.managedObjectContext!) {
-                copiedSet.addObject(copiedRelatedObject)
+                copiedSet.add(copiedRelatedObject)
             }
         }
         
         try LCYCoreDataImporter.saveContext(object.managedObjectContext!)
-        object.managedObjectContext?.refreshObject(object, mergeChanges: false)
+        object.managedObjectContext?.refresh(object, mergeChanges: false)
     }
     
-    func establishOrderedToManyRelationship(relationshipName: String, fromObject object: NSManagedObject, withSourceSet sourceSet: NSMutableOrderedSet) throws {
+    func establishOrderedToManyRelationship(_ relationshipName: String, fromObject object: NSManagedObject, withSourceSet sourceSet: NSMutableOrderedSet) throws {
         
-        let copiedSet = object.mutableOrderedSetValueForKey(relationshipName)
+        let copiedSet = object.mutableOrderedSetValue(forKey: relationshipName)
         for relatedObject in sourceSet {
             if let copiedRelatedObject = try copyUniqueObject(relatedObject as! NSManagedObject, toContext: object.managedObjectContext!) {
-                copiedSet.addObject(copiedRelatedObject)
+                copiedSet.add(copiedRelatedObject)
             }
             
         }
         
         try LCYCoreDataImporter.saveContext(object.managedObjectContext!)
-        object.managedObjectContext?.refreshObject(object, mergeChanges: false)
+        object.managedObjectContext?.refresh(object, mergeChanges: false)
     }
     
-    func copyRelationshipsFromObject(sourceObject: NSManagedObject, toContext targetContext: NSManagedObjectContext) throws {
+    func copyRelationshipsFromObject(_ sourceObject: NSManagedObject, toContext targetContext: NSManagedObjectContext) throws {
         
         guard let copiedObject = try copyUniqueObject(sourceObject, toContext: targetContext) else {
             return
@@ -156,23 +156,23 @@ class LCYCoreDataImporter: NSObject {
         for relationshipName in relationships {
             
             let relationship: NSRelationshipDescription = relationships[relationshipName.0]!
-            if let _ =  sourceObject.valueForKey(relationshipName.0) {
-                if relationship.toMany && relationship.ordered {
+            if let _ =  sourceObject.value(forKey: relationshipName.0) {
+                if relationship.isToMany && relationship.isOrdered {
                     
                     // COPY To-Many Ordered
-                    let sourceSet = sourceObject.mutableOrderedSetValueForKey(relationshipName.0)
+                    let sourceSet = sourceObject.mutableOrderedSetValue(forKey: relationshipName.0)
                     try establishOrderedToManyRelationship(relationshipName.0, fromObject: copiedObject, withSourceSet: sourceSet)
                     
-                } else if relationship.toMany && !relationship.ordered {
+                } else if relationship.isToMany && !relationship.isOrdered {
                     
                     // COPY To-Many
-                    let sourceSet = sourceObject.mutableSetValueForKey(relationshipName.0)
+                    let sourceSet = sourceObject.mutableSetValue(forKey: relationshipName.0)
                     try establishToManyRelationship(relationshipName.0, fromObject: copiedObject, withSourceSet: sourceSet)
                     
                 }else {
                     
                     // COPY To-One
-                    let relatedSourceObject: NSManagedObject = sourceObject.valueForKey(relationshipName.0) as! NSManagedObject
+                    let relatedSourceObject: NSManagedObject = sourceObject.value(forKey: relationshipName.0) as! NSManagedObject
                     guard let relatiedCopiedObject = try copyUniqueObject(relatedSourceObject, toContext: targetContext) else {
                         return
                     }
@@ -185,7 +185,7 @@ class LCYCoreDataImporter: NSObject {
         
     }
     
-    func deepCopyEntities(entities: [String], fromContext sourceContext: NSManagedObjectContext, toContext targetContext: NSManagedObjectContext) throws {
+    func deepCopyEntities(_ entities: [String], fromContext sourceContext: NSManagedObjectContext, toContext targetContext: NSManagedObjectContext) throws {
         for entity in entities {
             
             let sourceObjects = try arrayForEntity(entity, inContext: sourceContext, predicate: nil)
