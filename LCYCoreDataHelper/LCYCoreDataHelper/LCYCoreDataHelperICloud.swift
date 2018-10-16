@@ -44,7 +44,7 @@ public extension LCYCoreDataHelper {
         }
         let options: [AnyHashable: Any] = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true, NSPersistentStoreUbiquitousContentNameKey: self.storeName]
         do {
-            iCloudStore = try coordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: iCloudStoreURL(), options: options)
+            iCloudStore = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: iCloudStoreURL(), options: options)
             if needAlert {
                 self.confirmMergeWithiCloud()
             } else {
@@ -202,7 +202,7 @@ public extension LCYCoreDataHelper {
         
         let options = [NSReadOnlyPersistentStoreOption: true]
         do {
-            seedStore = try seedCoordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL as URL, options: options)
+            seedStore = try seedCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL as URL, options: options)
             print("Successfully loaded Non-iCloud Store as Seed Store: \(seedStore)")
             return true
         } catch {
@@ -222,10 +222,8 @@ public extension LCYCoreDataHelper {
             }
         }
         
-        removeAllStoresFromCoordinator(coordinator!)
-        removeAllStoresFromCoordinator(seedCoordinator!)
-        coordinator = nil
-        seedCoordinator = nil
+        removeAllStoresFromCoordinator(coordinator)
+        removeAllStoresFromCoordinator(seedCoordinator)
         
         let options: [String: String] = [NSPersistentStoreUbiquitousContentNameKey: iCloudStoreFilename!]
         

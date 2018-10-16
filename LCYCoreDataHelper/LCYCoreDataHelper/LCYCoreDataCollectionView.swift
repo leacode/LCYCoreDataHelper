@@ -10,6 +10,9 @@ import UIKit
 import CoreData
 
 open class LCYCoreDataCollectionView: UICollectionView, NSFetchedResultsControllerDelegate {
+    
+    var entity: String? = nil
+    var cacheName: String? = nil
 
     open var frc:NSFetchedResultsController<NSFetchRequestResult>!
     
@@ -108,7 +111,5 @@ open class LCYCoreDataCollectionView: UICollectionView, NSFetchedResultsControll
         }
         
     }
-   
-
     
 }

@@ -52,17 +52,23 @@ class CoreDataCollectionViewControllerExample: LCYCoreDataCVC {
     }
         
     @IBAction func deleteLast(_ sender: AnyObject) {
-        if (self.frc.fetchedObjects?.count)! > 0 {
-            globalContext?.delete((self.frc.fetchedObjects?.last)! as! NSManagedObject)
+        
+        if let object = frc.fetchedObjects?.last, let context = globalContext {
+            context.delete(object as! NSManagedObject)
+            do {
+                try coreDataHelper?.backgroundSaveContext()
+            } catch {
+                fatalError("Failure to save context: \(error)")
+            }
         }
+        
     }
     
     @IBAction func deleteAll(_ sender: AnyObject) {
         do {
             try coreDataHelper?.deleteAllExistingObjectOfEntity("User", ctx: globalContext!)
             NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "UserCache")
-            try self.frc.performFetch()
-            collectionView!.reloadData()
+            try self.performFetch()
         } catch {
             
         }

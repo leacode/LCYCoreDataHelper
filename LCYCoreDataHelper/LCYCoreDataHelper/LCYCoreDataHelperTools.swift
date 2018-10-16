@@ -82,7 +82,7 @@ public extension LCYCoreDataHelper {
     
     func reloadStore() -> Bool {
         do {
-            try coordinator?.remove(self.store!)
+            try coordinator.remove(self.store!)
             resetContext(sourceContext)
             resetContext(importContext)
             resetContext(context)
@@ -123,9 +123,7 @@ public extension LCYCoreDataHelper {
             try! self.parentContext.save()
             self.resetContext(self.parentContext)
         }
-        if let coor = coordinator {
-            removeAllStoresFromCoordinator(coor)
-        }
+        removeAllStoresFromCoordinator(coordinator)
         store = nil
         iCloudStore = nil
         
