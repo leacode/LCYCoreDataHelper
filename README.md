@@ -12,11 +12,36 @@ My email address:  lichunyu@vip.qq.com
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
+## Requirements
+
+- iOS 8.0+
+
 ## Installing LCYCoreDataHelper
 
-> **LCYCoreDataHelper require a minimum deployment target of iOS 7**,  Now support swift4
->
-> If you need to support ios 7 ,you can drag the source file into your project. It will work fine. If your project need to support ios8 or later. I recommend you to use Carthage.
+### CocoaPods
+
+[CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
+
+```bash
+$ gem install cocoapods
+```
+
+Earth is available through [CocoaPods](https://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+use_frameworks!
+
+target '<Your Target Name>' do
+pod 'LCYCoreDataHelper', '~> 5.0'
+end
+```
+
+Then, run the following command:
+
+```bash
+$ pod install
+```
 
 ### Carthage
 
@@ -36,7 +61,7 @@ To integrate Alamofire into your Xcode project using Carthage, specify it in you
 github "leacode/LCYCoreDataHelper" ~> 5.0
 ```
 
-Run `carthage update` to build the framework and drag the built `Alamofire.framework` into your Xcode project.
+Run `carthage update` to build the framework and drag the built `LCYCoreDataHelper.framework` into your Xcode project.
 
 
 ## License

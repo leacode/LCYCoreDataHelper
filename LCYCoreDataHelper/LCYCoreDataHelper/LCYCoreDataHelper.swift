@@ -303,7 +303,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
     }
     
     public func deepCopyFromSourceStore() throws {
-        try loadSourceStore()
+        loadSourceStore()
         guard let url = sourceStoreURL else {
             return
         }
@@ -480,7 +480,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                         
                         do {
                             self.store = try self.coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL, options: nil)
-                            print("Successfully add ad migrated store: \(self.store)")
+                            print("Successfully add ad migrated store: \(String(describing: self.store))")
                         } catch {
                             
                         }
