@@ -44,7 +44,7 @@ public extension LCYCoreDataHelper {
         }
         let options: [AnyHashable: Any] = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true, NSPersistentStoreUbiquitousContentNameKey: self.storeName]
         do {
-            iCloudStore = try coordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: iCloudStoreURL(), options: options)
+            iCloudStore = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: iCloudStoreURL(), options: options)
             if needAlert {
                 self.confirmMergeWithiCloud()
             } else {
@@ -202,8 +202,8 @@ public extension LCYCoreDataHelper {
         
         let options = [NSReadOnlyPersistentStoreOption: true]
         do {
-            seedStore = try seedCoordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL as URL, options: options)
-            print("Successfully loaded Non-iCloud Store as Seed Store: \(seedStore)")
+            seedStore = try seedCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL as URL, options: options)
+            print("Successfully loaded Non-iCloud Store as Seed Store: \(String(describing: seedStore))")
             return true
         } catch {
             print("Failed to load Non-iCloud Store as Seed Store. Error: \(error)")
@@ -222,10 +222,8 @@ public extension LCYCoreDataHelper {
             }
         }
         
-        removeAllStoresFromCoordinator(coordinator!)
-        removeAllStoresFromCoordinator(seedCoordinator!)
-        coordinator = nil
-        seedCoordinator = nil
+        removeAllStoresFromCoordinator(coordinator)
+        removeAllStoresFromCoordinator(seedCoordinator)
         
         let options: [String: String] = [NSPersistentStoreUbiquitousContentNameKey: iCloudStoreFilename!]
         
@@ -236,7 +234,7 @@ public extension LCYCoreDataHelper {
         do {
             try  NSPersistentStoreCoordinator.removeUbiquitousContentAndPersistentStore(at: url, options: options)
         } catch {
-            print("FAILED to destroy iCloud content at URL: \(iCloudStore?.url)")
+            print("FAILED to destroy iCloud content at URL: \(String(describing: iCloudStore?.url))")
         }
         
     }

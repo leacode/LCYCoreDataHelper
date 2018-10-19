@@ -20,7 +20,7 @@ class CoreDataCollectionViewExample: UIViewController, UICollectionViewDelegate,
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
         fetchRequest.sort("id", ascending: true)
         
-        collectionView.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: globalContext!, sectionNameKeyPath: nil, cacheName: "UserCache")
+        collectionView.frc = coreDataHelper?.createFetchedResultsController(fetchRequest: fetchRequest, cacheName: "UserCache")
         collectionView.frc.delegate = collectionView
         
         do {
@@ -60,20 +60,29 @@ class CoreDataCollectionViewExample: UIViewController, UICollectionViewDelegate,
     }
     
     @IBAction func deleteLast(_ sender: AnyObject) {
-        if (collectionView.frc.fetchedObjects?.count)! > 0 {
-            globalContext?.delete((self.collectionView.frc.fetchedObjects?.last)! as! NSManagedObject)
+        
+        if let object = collectionView.frc.fetchedObjects?.last {
+            collectionView.frc.delete(object: object as! NSManagedObject)
+            do {
+                try coreDataHelper?.backgroundSaveContext()
+            } catch {
+                fatalError("Failure to save context: \(error)")
+            }
         }
+        
     }
     
     @IBAction func deleteAll(_ sender: AnyObject) {
         do {
             try coreDataHelper?.deleteAllExistingObjectOfEntity("User", ctx: globalContext!)
             NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "UserCache")
-            try collectionView.frc.performFetch()
-            collectionView.reloadData()
+            try self.collectionView.performFetch()
         } catch {
-        
+            
         }
+        
+        
+        
     }
 
 }

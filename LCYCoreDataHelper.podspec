@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'LCYCoreDataHelper'
-  s.version = '4.0'
+  s.version = '5.0'
   s.license = 'MIT'
   s.summary = 'A pure light weight core data framework written in Swift'
   s.homepage = 'https://github.com/leacode/LCYCoreDataHelper'

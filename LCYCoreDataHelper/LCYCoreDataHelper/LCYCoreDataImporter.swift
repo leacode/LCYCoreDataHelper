@@ -191,7 +191,7 @@ class LCYCoreDataImporter: NSObject {
             let sourceObjects = try arrayForEntity(entity, inContext: sourceContext, predicate: nil)
             
             for sourceObject in sourceObjects {
-                try self.copyUniqueObject(sourceObject as! NSManagedObject, toContext: targetContext)
+                _ = try self.copyUniqueObject(sourceObject as! NSManagedObject, toContext: targetContext)
                 try self.copyRelationshipsFromObject(sourceObject as! NSManagedObject, toContext: targetContext)
             }
             

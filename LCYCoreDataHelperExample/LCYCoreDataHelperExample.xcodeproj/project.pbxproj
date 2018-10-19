@@ -14,6 +14,7 @@
 		6D0BDC001D85929300325BB0 /* ImportedDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BDBFB1D85929300325BB0 /* ImportedDataViewController.swift */; };
 		6D0BDC021D8592B600325BB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D0BDC011D8592B600325BB0 /* Main.storyboard */; };
 		6D2175AB20A18A8A00A2586D /* LCYCoreDataHelper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6D2175AA20A18A8A00A2586D /* LCYCoreDataHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6D63FE5C20BE4E7B0052A4B0 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D63FE5B20BE4E7B0052A4B0 /* CloudKit.framework */; };
 		6D6A456D20A1759300EF13AE /* LCYCoreDataHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D6A456C20A1759300EF13AE /* LCYCoreDataHelper.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6DB98CC51D858EC9006957E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB98CC41D858EC9006957E8 /* AppDelegate.swift */; };
 		6DB98CCC1D858EC9006957E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DB98CCB1D858EC9006957E8 /* Assets.xcassets */; };
@@ -49,6 +50,8 @@
 		6D0BDBFB1D85929300325BB0 /* ImportedDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportedDataViewController.swift; sourceTree = "<group>"; };
 		6D0BDC011D8592B600325BB0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		6D2175AA20A18A8A00A2586D /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LCYCoreDataHelper.framework; path = "../../../../Library/Developer/Xcode/DerivedData/LCYCoreDataHelper-clmqngrntciwdzamrvyighojysik/Build/Products/Debug-iphoneos/LCYCoreDataHelper.framework"; sourceTree = "<group>"; };
+		6D63FE5A20BE4E760052A4B0 /* LCYCoreDataHelperExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LCYCoreDataHelperExample.entitlements; sourceTree = "<group>"; };
+		6D63FE5B20BE4E7B0052A4B0 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		6D6A456C20A1759300EF13AE /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCYCoreDataHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D7835CB1D85902600EDAD89 /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LCYCoreDataHelper.framework; path = "../../../../../../Developer/Xcode/DerivedData/LCYCoreDataHelper-atmojarcxccpmgeeljkarfzjhjqi/Build/Products/Debug-iphonesimulator/LCYCoreDataHelper.framework"; sourceTree = "<group>"; };
 		6DB98CC11D858EC9006957E8 /* LCYCoreDataHelperExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCYCoreDataHelperExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D6A456D20A1759300EF13AE /* LCYCoreDataHelper.framework in Frameworks */,
+				6D63FE5C20BE4E7B0052A4B0 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +85,7 @@
 		6D7835CA1D85902500EDAD89 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6D63FE5B20BE4E7B0052A4B0 /* CloudKit.framework */,
 				6D6A456C20A1759300EF13AE /* LCYCoreDataHelper.framework */,
 				6D7835CB1D85902600EDAD89 /* LCYCoreDataHelper.framework */,
 			);
@@ -123,6 +128,7 @@
 		6DB98CC31D858EC9006957E8 /* LCYCoreDataHelperExample */ = {
 			isa = PBXGroup;
 			children = (
+				6D63FE5A20BE4E760052A4B0 /* LCYCoreDataHelperExample.entitlements */,
 				6D0BDC011D8592B600325BB0 /* Main.storyboard */,
 				6DD021A01D85924900683A85 /* Controllers */,
 				6D7835CD1D8591C000EDAD89 /* Model */,
@@ -182,6 +188,14 @@
 						DevelopmentTeam = Y85J467HQH;
 						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -367,13 +381,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LCYCoreDataHelperExample/LCYCoreDataHelperExample.entitlements;
 				DEVELOPMENT_TEAM = Y85J467HQH;
 				INFOPLIST_FILE = LCYCoreDataHelperExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leacode.LCYCoreDataHelperExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -381,13 +396,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LCYCoreDataHelperExample/LCYCoreDataHelperExample.entitlements;
 				DEVELOPMENT_TEAM = Y85J467HQH;
 				INFOPLIST_FILE = LCYCoreDataHelperExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leacode.LCYCoreDataHelperExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

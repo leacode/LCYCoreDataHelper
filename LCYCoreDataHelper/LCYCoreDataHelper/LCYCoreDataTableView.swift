@@ -14,7 +14,7 @@ open class LCYCoreDataTableView: UITableView, NSFetchedResultsControllerDelegate
 
     open var frc:NSFetchedResultsController<NSFetchRequestResult>!
     
-      override init(frame: CGRect, style: UITableViewStyle) {
+    public override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
     }
 
@@ -82,10 +82,10 @@ open class LCYCoreDataTableView: UITableView, NSFetchedResultsControllerDelegate
     open func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
         case NSFetchedResultsChangeType.insert:
-            self.insertSections(IndexSet(integer: sectionIndex), with: UITableViewRowAnimation.fade)
+            self.insertSections(IndexSet(integer: sectionIndex), with: UITableView.RowAnimation.fade)
             break;
         case NSFetchedResultsChangeType.delete:
-            self.deleteSections(IndexSet(integer: sectionIndex), with: UITableViewRowAnimation.fade)
+            self.deleteSections(IndexSet(integer: sectionIndex), with: UITableView.RowAnimation.fade)
             break;
         default:
             break;
@@ -96,31 +96,31 @@ open class LCYCoreDataTableView: UITableView, NSFetchedResultsControllerDelegate
         switch type {
         case NSFetchedResultsChangeType.insert:
             if let newPath = newIndexPath {
-                self.insertRows(at: [newPath], with: UITableViewRowAnimation.automatic)
+                self.insertRows(at: [newPath], with: UITableView.RowAnimation.automatic)
             }
             break;
         case NSFetchedResultsChangeType.delete:
             if let idxPath = indexPath {
-                self.deleteRows(at: [idxPath], with: UITableViewRowAnimation.automatic)
+                self.deleteRows(at: [idxPath], with: UITableView.RowAnimation.automatic)
             }
             break;
         case NSFetchedResultsChangeType.update:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
-                    self.deleteRows(at: [idxPath], with: UITableViewRowAnimation.automatic)
-                    self.insertRows(at: [newPath], with: UITableViewRowAnimation.automatic)
+                    self.deleteRows(at: [idxPath], with: UITableView.RowAnimation.automatic)
+                    self.insertRows(at: [newPath], with: UITableView.RowAnimation.automatic)
                 }
             } else {
                 if let idxPath = indexPath {
-                    self.reloadRows(at: [idxPath], with: UITableViewRowAnimation.automatic)
+                    self.reloadRows(at: [idxPath], with: UITableView.RowAnimation.automatic)
                 }
             }
             break;
         case NSFetchedResultsChangeType.move:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
-                    self.deleteRows(at: [idxPath], with: UITableViewRowAnimation.automatic)
-                    self.insertRows(at: [newPath], with: UITableViewRowAnimation.automatic)
+                    self.deleteRows(at: [idxPath], with: UITableView.RowAnimation.automatic)
+                    self.insertRows(at: [newPath], with: UITableView.RowAnimation.automatic)
                 }
             }
             break;

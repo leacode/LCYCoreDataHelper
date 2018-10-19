@@ -50,13 +50,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LCYCoreDataHelper/LCYCoreDataHelper/LCYCoreDataCollectionView.swift"
-            timestampString = "547453960.659979"
+            timestampString = "557593202.952219"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
             endingLineNumber = "51"
-            landmarkName = "numberOfItems(inSection:)"
-            landmarkType = "7">
+            landmarkName = "numberOfSections"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -66,13 +66,29 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LCYCoreDataHelper/LCYCoreDataHelper/LCYCoreDataCollectionView.swift"
-            timestampString = "547453960.6603"
+            timestampString = "557593202.952536"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "50"
             endingLineNumber = "50"
-            landmarkName = "numberOfItems(inSection:)"
-            landmarkType = "7">
+            landmarkName = "numberOfSections"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LCYCoreDataHelper/LCYCoreDataHelper/LCYCoreDataHelper.swift"
+            timestampString = "557593202.952839"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "sourceStoreURL"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
