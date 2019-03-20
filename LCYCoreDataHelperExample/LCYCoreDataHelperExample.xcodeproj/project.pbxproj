@@ -7,15 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D055C752241FDAD007D6DFD /* LCYCoreDataHelper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6D055C742241FD9F007D6DFD /* LCYCoreDataHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6D0BDBFC1D85929300325BB0 /* CoreDataCollectionViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BDBF71D85929300325BB0 /* CoreDataCollectionViewExample.swift */; };
 		6D0BDBFD1D85929300325BB0 /* CoreDataCollectionViewControllerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BDBF81D85929300325BB0 /* CoreDataCollectionViewControllerExample.swift */; };
 		6D0BDBFE1D85929300325BB0 /* CoreDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BDBF91D85929300325BB0 /* CoreDataTableViewController.swift */; };
 		6D0BDBFF1D85929300325BB0 /* CoreDataTableViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BDBFA1D85929300325BB0 /* CoreDataTableViewExample.swift */; };
 		6D0BDC001D85929300325BB0 /* ImportedDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BDBFB1D85929300325BB0 /* ImportedDataViewController.swift */; };
 		6D0BDC021D8592B600325BB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D0BDC011D8592B600325BB0 /* Main.storyboard */; };
-		6D2175AB20A18A8A00A2586D /* LCYCoreDataHelper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6D2175AA20A18A8A00A2586D /* LCYCoreDataHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6D63FE5C20BE4E7B0052A4B0 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D63FE5B20BE4E7B0052A4B0 /* CloudKit.framework */; };
-		6D6A456D20A1759300EF13AE /* LCYCoreDataHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D6A456C20A1759300EF13AE /* LCYCoreDataHelper.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6DB98CC51D858EC9006957E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB98CC41D858EC9006957E8 /* AppDelegate.swift */; };
 		6DB98CCC1D858EC9006957E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DB98CCB1D858EC9006957E8 /* Assets.xcassets */; };
 		6DB98CCF1D858EC9006957E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DB98CCD1D858EC9006957E8 /* LaunchScreen.storyboard */; };
@@ -29,6 +28,16 @@
 		6DD0219F1D85920300683A85 /* LCYCoreDataHelperExample.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 6DD021971D85920300683A85 /* LCYCoreDataHelperExample.xcdatamodel */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6D055C732241FD9F007D6DFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D055C6F2241FD9F007D6DFD /* LCYCoreDataHelper.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6D38B6031C5204430051020B;
+			remoteInfo = LCYCoreDataHelper;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		6D6A456E20A1763900EF13AE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -36,20 +45,20 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6D2175AB20A18A8A00A2586D /* LCYCoreDataHelper.framework in CopyFiles */,
+				6D055C752241FDAD007D6DFD /* LCYCoreDataHelper.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6D055C6F2241FD9F007D6DFD /* LCYCoreDataHelper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LCYCoreDataHelper.xcodeproj; path = ../LCYCoreDataHelper/LCYCoreDataHelper.xcodeproj; sourceTree = "<group>"; };
 		6D0BDBF71D85929300325BB0 /* CoreDataCollectionViewExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataCollectionViewExample.swift; sourceTree = "<group>"; };
 		6D0BDBF81D85929300325BB0 /* CoreDataCollectionViewControllerExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataCollectionViewControllerExample.swift; sourceTree = "<group>"; };
 		6D0BDBF91D85929300325BB0 /* CoreDataTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewController.swift; sourceTree = "<group>"; };
 		6D0BDBFA1D85929300325BB0 /* CoreDataTableViewExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewExample.swift; sourceTree = "<group>"; };
 		6D0BDBFB1D85929300325BB0 /* ImportedDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportedDataViewController.swift; sourceTree = "<group>"; };
 		6D0BDC011D8592B600325BB0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		6D2175AA20A18A8A00A2586D /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LCYCoreDataHelper.framework; path = "../../../../Library/Developer/Xcode/DerivedData/LCYCoreDataHelper-clmqngrntciwdzamrvyighojysik/Build/Products/Debug-iphoneos/LCYCoreDataHelper.framework"; sourceTree = "<group>"; };
 		6D63FE5A20BE4E760052A4B0 /* LCYCoreDataHelperExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LCYCoreDataHelperExample.entitlements; sourceTree = "<group>"; };
 		6D63FE5B20BE4E7B0052A4B0 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		6D6A456C20A1759300EF13AE /* LCYCoreDataHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCYCoreDataHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,7 +83,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D6A456D20A1759300EF13AE /* LCYCoreDataHelper.framework in Frameworks */,
 				6D63FE5C20BE4E7B0052A4B0 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,6 +90,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D055C702241FD9F007D6DFD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6D055C742241FD9F007D6DFD /* LCYCoreDataHelper.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		6D7835CA1D85902500EDAD89 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,7 +126,7 @@
 		6DB98CB81D858EC9006957E8 = {
 			isa = PBXGroup;
 			children = (
-				6D2175AA20A18A8A00A2586D /* LCYCoreDataHelper.framework */,
+				6D055C6F2241FD9F007D6DFD /* LCYCoreDataHelper.xcodeproj */,
 				6DB98CC31D858EC9006957E8 /* LCYCoreDataHelperExample */,
 				6DB98CC21D858EC9006957E8 /* Products */,
 				6D7835CA1D85902500EDAD89 /* Frameworks */,
@@ -210,12 +226,28 @@
 			mainGroup = 6DB98CB81D858EC9006957E8;
 			productRefGroup = 6DB98CC21D858EC9006957E8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 6D055C702241FD9F007D6DFD /* Products */;
+					ProjectRef = 6D055C6F2241FD9F007D6DFD /* LCYCoreDataHelper.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				6DB98CC01D858EC9006957E8 /* LCYCoreDataHelperExample */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		6D055C742241FD9F007D6DFD /* LCYCoreDataHelper.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LCYCoreDataHelper.framework;
+			remoteRef = 6D055C732241FD9F007D6DFD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6DB98CBF1D858EC9006957E8 /* Resources */ = {

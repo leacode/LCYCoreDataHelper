@@ -11,9 +11,6 @@
       location = "group:LICENSE">
    </FileRef>
    <FileRef
-      location = "group:LCYCoreDataHelper/LCYCoreDataHelper.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:LCYCoreDataHelperExample/LCYCoreDataHelperExample.xcodeproj">
    </FileRef>
 </Workspace>
