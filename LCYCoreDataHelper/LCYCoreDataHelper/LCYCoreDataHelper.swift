@@ -346,9 +346,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
     
     //MARK: - SAVING
     public func saveContext() throws {
-        
         try context.save()
-                
     }
     
     public func backgroundSaveContext() throws {
@@ -408,7 +406,6 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
             
             try FileManager.default.moveItem(at: newStore, to: oldStore)
             success = true
-            
         } catch {
             print("FAILED to replace store, error: \(error) ")
         }
@@ -425,9 +422,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         
         var sourceModel: NSManagedObjectModel?
         if let metadata = sourceMetadata {
-            
             sourceModel = NSManagedObjectModel.mergedModel(from: nil, forStoreMetadata: metadata)
-            
         }
         
         let destinModel: NSManagedObjectModel? = model
@@ -477,7 +472,6 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                 
                 if done {
                     DispatchQueue.main.async(execute: { () -> Void in
-                        
                         do {
                             self.store = try self.coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL, options: nil)
                             print("Successfully add ad migrated store: \(String(describing: self.store))")
@@ -492,7 +486,6 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                 
             }
         }
-        
     }
     
     func showValidationError(_ anError: NSError?) {

@@ -117,8 +117,8 @@
 				6D7E27961C5228740010E4B6 /* LCYCoreDataTVC.swift */,
 				6D7E279A1C52288E0010E4B6 /* LCYCoreDataCVC.swift */,
 				6D7E27821C5206AC0010E4B6 /* LCYMigrationVC.swift */,
-				6D7E27801C5206AC0010E4B6 /* LCYCoredataHelper.storyboard */,
 				6DF9ACFA213C36B300795A48 /* CoreDataTableViewController.swift */,
+				6D7E27801C5206AC0010E4B6 /* LCYCoredataHelper.storyboard */,
 			);
 			name = viewcontrollers;
 			sourceTree = "<group>";

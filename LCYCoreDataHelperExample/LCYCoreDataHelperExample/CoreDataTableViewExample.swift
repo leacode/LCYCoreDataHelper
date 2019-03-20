@@ -62,10 +62,14 @@ class CoreDataTableViewExample: UIViewController, UITableViewDelegate, UITableVi
     
     @IBAction func deleteLast(_ sender: AnyObject) {
         
-        if (self.tableView.frc.fetchedObjects?.count)! > 0 {
-            globalContext?.delete((self.tableView.frc.fetchedObjects?.last)! as! NSManagedObject)
+        if let object = self.tableView.frc.fetchedObjects?.last, let context = globalContext {
+            context.delete(object as! NSManagedObject)
+            do {
+                try coreDataHelper?.backgroundSaveContext()
+            } catch {
+                fatalError("Failure to save context: \(error)")
+            }
         }
-        
     }
     
     @IBAction func deleteAll(_ sender: AnyObject) {

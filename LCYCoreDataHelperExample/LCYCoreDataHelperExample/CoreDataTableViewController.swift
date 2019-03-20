@@ -45,8 +45,13 @@ class CoreDataTableViewController: LCYCoreDataTVC {
 
     @IBAction func deleteLast(_ sender: AnyObject) {
         
-        if (self.frc.fetchedObjects?.count)! > 0 {
-            globalContext?.delete((self.frc.fetchedObjects?.last)! as! NSManagedObject)
+        if let object = frc.fetchedObjects?.last, let context = globalContext {
+            context.delete(object as! NSManagedObject)
+            do {
+                try coreDataHelper?.backgroundSaveContext()
+            } catch {
+                fatalError("Failure to save context: \(error)")
+            }
         }
         
     }
