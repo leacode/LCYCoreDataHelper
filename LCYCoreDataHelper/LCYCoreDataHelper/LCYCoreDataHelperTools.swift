@@ -34,7 +34,7 @@ public extension LCYCoreDataHelper {
      
      - parameter context: The `NSManagedObjectContext` to remove the Entities from.
      */
-    public func deleteAllExistingObjectOfEntity(_ entityName: String, ctx: NSManagedObjectContext) throws {
+    func deleteAllExistingObjectOfEntity(_ entityName: String, ctx: NSManagedObjectContext) throws {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: entityName)
         fetchRequest.entity = NSEntityDescription.entity(forEntityName: entityName, in: ctx)
         
@@ -52,7 +52,7 @@ public extension LCYCoreDataHelper {
         
     }
     
-    public func deleteAllMachingPredicate(_ entityName: String, predicate: NSPredicate, ctx: NSManagedObjectContext) throws {
+    func deleteAllMachingPredicate(_ entityName: String, predicate: NSPredicate, ctx: NSManagedObjectContext) throws {
         
         let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest()
         request.entity = NSEntityDescription.entity(forEntityName: entityName, in: ctx)
@@ -62,14 +62,26 @@ public extension LCYCoreDataHelper {
         
         if #available(iOS 9.0, *) {
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-            try ctx.execute(deleteRequest)
+            let result = try ctx.execute(deleteRequest) as? NSBatchDeleteResult
+            let objectIDArray = result?.result as? [NSManagedObjectID]
+            let changes = [NSDeletedObjectsKey : objectIDArray]
+            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes as [AnyHashable : Any], into: [ctx])
         } else {
             request.includesSubentities = false
             try ctx.fetch(request).lazy.map{ $0 as! NSManagedObject }.forEach(ctx.delete(_:))
         }
         
         try saveContext()
+    }
+    
+    func delete(object: NSManagedObject, ctx: NSManagedObjectContext) {
         
+        ctx.delete(object)
+        do {
+            try backgroundSaveContext()
+        } catch {
+            fatalError("Failure to save context: \(error)")
+        }
     }
     
     // MARK: - CORE DATA RESET
@@ -98,7 +110,6 @@ public extension LCYCoreDataHelper {
         }
         return false
     }
-    
     
     func removeAllStoresFromCoordinator(_ psc: NSPersistentStoreCoordinator) {
         for s in psc.persistentStores {
@@ -153,7 +164,5 @@ public extension LCYCoreDataHelper {
             print("Failed to delete \(error)")
         }
     }
-    
-    
     
 }

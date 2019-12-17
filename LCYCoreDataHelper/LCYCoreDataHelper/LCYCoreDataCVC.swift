@@ -76,12 +76,12 @@ open class LCYCoreDataCVC: UICollectionViewController, NSFetchedResultsControlle
             if let newPath = newIndexPath {
                 self.collectionView?.insertItems(at: [newPath])
             }
-            break;
+            break
         case NSFetchedResultsChangeType.delete:
             if let idxPath = indexPath {
                 self.collectionView?.deleteItems(at: [idxPath])
             }
-            break;
+            break
         case NSFetchedResultsChangeType.update:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
@@ -93,7 +93,7 @@ open class LCYCoreDataCVC: UICollectionViewController, NSFetchedResultsControlle
                     self.collectionView?.reloadItems(at: [idxPath])
                 }
             }
-            break;
+            break
         case NSFetchedResultsChangeType.move:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
@@ -101,7 +101,9 @@ open class LCYCoreDataCVC: UICollectionViewController, NSFetchedResultsControlle
                     self.collectionView?.insertItems(at: [newPath])
                 }
             }
-            break;
+            break
+        @unknown default:
+            break
         }
         
     }

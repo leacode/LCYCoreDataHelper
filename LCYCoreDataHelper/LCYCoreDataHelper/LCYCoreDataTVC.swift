@@ -89,12 +89,12 @@ open class LCYCoreDataTVC: UITableViewController, NSFetchedResultsControllerDele
             if let newPath = newIndexPath {
                 self.tableView.insertRows(at: [newPath], with: UITableView.RowAnimation.automatic)
             }
-            break;
+            break
         case NSFetchedResultsChangeType.delete:
             if let idxPath = indexPath {
                 self.tableView.deleteRows(at: [idxPath], with: UITableView.RowAnimation.automatic)
             }
-            break;
+            break
         case NSFetchedResultsChangeType.update:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
@@ -106,7 +106,7 @@ open class LCYCoreDataTVC: UITableViewController, NSFetchedResultsControllerDele
                     self.tableView.reloadRows(at: [idxPath], with: UITableView.RowAnimation.automatic)
                 }
             }
-            break;
+            break
         case NSFetchedResultsChangeType.move:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
@@ -114,7 +114,9 @@ open class LCYCoreDataTVC: UITableViewController, NSFetchedResultsControllerDele
                     self.tableView.insertRows(at: [newPath], with: UITableView.RowAnimation.automatic)
                 }
             }
-            break;
+            break
+        @unknown default:
+            break
         }
         
     }

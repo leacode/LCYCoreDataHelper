@@ -339,11 +339,6 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         
     }
     
-//    func somethingChanged() {
-//        NSNotificationCenter.defaultCenter().postNotificationName("SometiongChanged", object: nil)
-//    }
-    
-    
     //MARK: - SAVING
     public func saveContext() throws {
         try context.save()
@@ -488,7 +483,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func showValidationError(_ anError: NSError?) {
+    func showValidationError(_ anError: NSError?) -> String? {
         
         let errors: [AnyObject]? = nil
         var txt = ""
@@ -503,9 +498,10 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         // Display the error(s)
         if errors != nil && errors?.count > 0 {
             for error in errors! {
-//                let entity: String! = error.userInfo??["NSValidationErrorObject"]?!.entity.name!
                                 
-                var errorInfo: [AnyHashable: Any] = error.userInfo!!
+                guard let errorInfo: [AnyHashable: Any] = error.userInfo else {
+                    return nil
+                }
                 
                 let property: String = errorInfo["NSValidationErrorKey"] as! String
                 
@@ -513,7 +509,7 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                 
                 switch code {
                 case NSValidationRelationshipDeniedDeleteError:
-//                    txt = "\(entity) delete was denied because there are associate  \(property)\n(Error Code \(code)\n\n)"
+                    txt = "delete was denied (Code \(code)"
                     break;
                 case NSValidationRelationshipLacksMinimumCountError:
                     txt = "the '\(property)' relationship count is too small (Code \(code)). "
@@ -557,12 +553,9 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                     break;
                 }
             }
-            // display error message txt message
-            let message = "\(txt)Please double-tap the home button and close this application by swiping the application screenshot upwards"
-            let alertView: UIAlertView = UIAlertView(title: "Validation Error", message: message, delegate: nil, cancelButtonTitle: nil)
-            alertView.show()
+            
         }
-        
+        return txt
     }
     
     // MARK: - Operation of the store
@@ -599,11 +592,9 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                 
             }
         }
-        
     }
     
 }
-
 
 extension NSNull {
     func length() -> Int { return 0 }

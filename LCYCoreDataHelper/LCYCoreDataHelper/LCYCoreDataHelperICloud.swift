@@ -42,7 +42,7 @@ public extension LCYCoreDataHelper {
             // Don’t load iCloud store if it’s already loaded
             return true
         }
-        let options: [AnyHashable: Any] = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true, NSPersistentStoreUbiquitousContentNameKey: self.storeName]
+        let options: [AnyHashable: Any] = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true, NSPersistentStoreUbiquitousContentNameKey: self.storeName!]
         do {
             iCloudStore = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: iCloudStoreURL(), options: options)
             if needAlert {
@@ -116,7 +116,7 @@ public extension LCYCoreDataHelper {
     
     }
     
-    @objc(alertView:clickedButtonAtIndex:) public func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
+    @objc(alertView:clickedButtonAtIndex:) func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         if alertView.tag == 1 { // merge icloud
             
             if buttonIndex == alertView.firstOtherButtonIndex {

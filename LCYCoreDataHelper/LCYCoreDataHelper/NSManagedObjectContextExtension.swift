@@ -37,6 +37,8 @@ extension NSManagedObjectContext {
         case .mainQueueConcurrencyType,
         .privateQueueConcurrencyType:
             try performAndWaitOrThrow(saveContext)
+        @unknown default:
+            break
         }
     }
 

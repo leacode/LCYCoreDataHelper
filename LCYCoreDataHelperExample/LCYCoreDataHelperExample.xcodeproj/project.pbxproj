@@ -202,7 +202,7 @@
 					6DB98CC01D858EC9006957E8 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = Y85J467HQH;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -217,7 +217,7 @@
 			};
 			buildConfigurationList = 6DB98CBC1D858EC9006957E8 /* Build configuration list for PBXProject "LCYCoreDataHelperExample" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -420,7 +420,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.leacode.LCYCoreDataHelperExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -435,7 +435,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.leacode.LCYCoreDataHelperExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

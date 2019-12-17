@@ -98,12 +98,12 @@ open class LCYCoreDataTableView: UITableView, NSFetchedResultsControllerDelegate
             if let newPath = newIndexPath {
                 self.insertRows(at: [newPath], with: UITableView.RowAnimation.automatic)
             }
-            break;
+            break
         case NSFetchedResultsChangeType.delete:
             if let idxPath = indexPath {
                 self.deleteRows(at: [idxPath], with: UITableView.RowAnimation.automatic)
             }
-            break;
+            break
         case NSFetchedResultsChangeType.update:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
@@ -115,7 +115,7 @@ open class LCYCoreDataTableView: UITableView, NSFetchedResultsControllerDelegate
                     self.reloadRows(at: [idxPath], with: UITableView.RowAnimation.automatic)
                 }
             }
-            break;
+            break
         case NSFetchedResultsChangeType.move:
             if let newPath = newIndexPath {
                 if let idxPath = indexPath {
@@ -123,7 +123,9 @@ open class LCYCoreDataTableView: UITableView, NSFetchedResultsControllerDelegate
                     self.insertRows(at: [newPath], with: UITableView.RowAnimation.automatic)
                 }
             }
-            break;
+            break
+        @unknown default:
+            break
         }
         
     }
