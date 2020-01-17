@@ -8,6 +8,8 @@
 
 import CoreData
 import Foundation
+import UIKit
+
 func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l?, r?):
@@ -460,72 +462,68 @@ public final class LCYCoreDataHelper: NSObject {
     }
 
     func showValidationError(_ anError: NSError?) -> String? {
-        let errors: [AnyObject]? = nil
+        var errors: [NSError]? = nil
         var txt = ""
-        if let error = anError {
-            if error.domain == NSCocoaErrorDomain {
-                if error.code == NSValidationMultipleErrorsError {
-                    _ = error.userInfo[NSDetailedErrorsKey] as? [AnyObject]
-                }
+        if let error = anError,
+            error.domain == NSCocoaErrorDomain {
+            if error.code == NSValidationMultipleErrorsError {
+                errors = error.userInfo[NSDetailedErrorsKey] as? [NSError]
+            } else {
+                errors = [error]
             }
         }
+        
+        guard let errs = errors else { return nil }
 
         // Display the error(s)
-        if errors != nil && errors?.count > 0 {
-            for error in errors! {
-                guard let errorInfo: [AnyHashable: Any] = error.userInfo else {
-                    return nil
-                }
+        for error in errs {
+            let errorInfo = error.userInfo
+            let property: String = errorInfo["NSValidationErrorKey"] as! String
+            let code = error.code
 
-                let property: String = errorInfo["NSValidationErrorKey"] as! String
-
-                let code: Int = error.code!
-
-                switch code {
-                case NSValidationRelationshipDeniedDeleteError:
-                    txt = "delete was denied (Code \(code)"
-                    break
-                case NSValidationRelationshipLacksMinimumCountError:
-                    txt = "the '\(property)' relationship count is too small (Code \(code)). "
-                    break
-                case NSValidationRelationshipExceedsMaximumCountError:
-                    txt = "the '\(property)' relationship count is too large (Code \(code)). "
-                    break
-                case NSValidationMissingMandatoryPropertyError:
-                    txt = "the '\(property)' property is missing (Code \(code)). "
-                    break
-                case NSValidationNumberTooSmallError:
-                    txt = "the '\(property)' number is too small (Code \(code)). "
-                    break
-                case NSValidationNumberTooLargeError:
-                    txt = "the '\(property)' number is too large (Code \(code)). "
-                    break
-                case NSValidationDateTooSoonError:
-                    txt = "the '\(property)' date is too soon (Code \(code)). "
-                    break
-                case NSValidationDateTooLateError:
-                    txt = "the '\(property)' date is too late (Code \(code)). "
-                    break
-                case NSValidationInvalidDateError:
-                    txt = "the '\(property)' date is invalid (Code \(code)). "
-                    break
-                case NSValidationStringTooLongError:
-                    txt = "the '\(property)' text is too long (Code \(code)). "
-                    break
-                case NSValidationStringTooShortError:
-                    txt = "the '\(property)' text is too short (Code \(code)). "
-                    break
-                case NSValidationStringPatternMatchingError:
-                    txt = "the '\(property)' text doesn't match the specified pattern (Code \(code)). "
-                    break
-                case NSManagedObjectValidationError:
-                    txt = "generated validation error (Code \(code)). "
-                    break
-
-                default:
-                    txt = "Unhandled error code \(code) in showValidationError method"
-                    break
-                }
+            switch code {
+            case NSValidationRelationshipDeniedDeleteError:
+                txt = "delete was denied (Code \(code)"
+                break
+            case NSValidationRelationshipLacksMinimumCountError:
+                txt = "the '\(property)' relationship count is too small (Code \(code)). "
+                break
+            case NSValidationRelationshipExceedsMaximumCountError:
+                txt = "the '\(property)' relationship count is too large (Code \(code)). "
+                break
+            case NSValidationMissingMandatoryPropertyError:
+                txt = "the '\(property)' property is missing (Code \(code)). "
+                break
+            case NSValidationNumberTooSmallError:
+                txt = "the '\(property)' number is too small (Code \(code)). "
+                break
+            case NSValidationNumberTooLargeError:
+                txt = "the '\(property)' number is too large (Code \(code)). "
+                break
+            case NSValidationDateTooSoonError:
+                txt = "the '\(property)' date is too soon (Code \(code)). "
+                break
+            case NSValidationDateTooLateError:
+                txt = "the '\(property)' date is too late (Code \(code)). "
+                break
+            case NSValidationInvalidDateError:
+                txt = "the '\(property)' date is invalid (Code \(code)). "
+                break
+            case NSValidationStringTooLongError:
+                txt = "the '\(property)' text is too long (Code \(code)). "
+                break
+            case NSValidationStringTooShortError:
+                txt = "the '\(property)' text is too short (Code \(code)). "
+                break
+            case NSValidationStringPatternMatchingError:
+                txt = "the '\(property)' text doesn't match the specified pattern (Code \(code)). "
+                break
+            case NSManagedObjectValidationError:
+                txt = "generated validation error (Code \(code)). "
+                break
+            default:
+                txt = "Unhandled error code \(code) in showValidationError method"
+                break
             }
         }
         return txt
