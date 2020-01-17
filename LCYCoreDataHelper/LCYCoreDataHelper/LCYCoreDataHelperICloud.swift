@@ -109,26 +109,26 @@ public extension LCYCoreDataHelper {
     
     func confirmMergeWithiCloud() {
         
-        let alertView = UIAlertView(title: "Merge with iCloud?", message: "This will move your existing data into iCloud. If you don't merge now, you can merge later by toggling iCloud for this application in Settings.", delegate: self, cancelButtonTitle: "Don't merge", otherButtonTitles: "Merge")
-        
-        alertView.tag = 1
-        alertView.show()
+//        let alertView = UIAlertView(title: "Merge with iCloud?", message: "This will move your existing data into iCloud. If you don't merge now, you can merge later by toggling iCloud for this application in Settings.", delegate: self, cancelButtonTitle: "Don't merge", otherButtonTitles: "Merge")
+//
+//        alertView.tag = 1
+//        alertView.show()
     
     }
     
-    @objc(alertView:clickedButtonAtIndex:) func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
-        if alertView.tag == 1 { // merge icloud
-            
-            if buttonIndex == alertView.firstOtherButtonIndex {
-                do {
-                    try self.mergeNoniCloudDataWithiCloud()
-                } catch {
-                    
-                }
-            }
-            
-        }
-    }
+//    @objc(alertView:clickedButtonAtIndex:) func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
+//        if alertView.tag == 1 { // merge icloud
+//
+//            if buttonIndex == alertView.firstOtherButtonIndex {
+//                do {
+//                    try self.mergeNoniCloudDataWithiCloud()
+//                } catch {
+//
+//                }
+//            }
+//
+//        }
+//    }
 
 //    @objc(alertView:clickedButtonAtIndex:) public func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
 //        

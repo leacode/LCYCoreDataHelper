@@ -6,43 +6,41 @@
 //  Copyright (c) 2015年 hzwanqing. All rights reserved.
 //
 
-import Foundation
 import CoreData
-func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
+import Foundation
+func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l < r
+    case (nil, _?):
+        return true
+    default:
+        return false
+    }
 }
 
-func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
+func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l > r
+    default:
+        return rhs < lhs
+    }
 }
 
-
-public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
-    
+public final class LCYCoreDataHelper: NSObject {
     var importTimer: Timer!
-    
+
     var iCloudStoreFilename: String?
     var seedInProgress: Bool = false
-    
+
     var sourceStoreFilename: String?
     var entitiesToCopy: [String]?
     public var selectedUniqueAttributes: [String: String]?
-    
+
     var storeName: String!
-    var  migrationVC: LCYMigrationVC?
-    
+    var migrationVC: LCYMigrationVC?
+
 //    lazy var modelURL: URL = {
 //        let bundle = Bundle.main
 //        if let url = bundle.url(forResource: "Model", withExtension: "momd") {
@@ -51,13 +49,14 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
 //        print("CRITICAL - Managed Object Model file not found")
 //        abort()
 //    }()
-    
+
     var model: NSManagedObjectModel!
 //        = {
 //        return NSManagedObjectModel(contentsOf: self.modelURL)!
 //    }()
-    
+
     // MARK: - Context
+
     lazy var parentContext: NSManagedObjectContext = {
         let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         moc.persistentStoreCoordinator = self.coordinator
@@ -71,57 +70,60 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return moc
     }()
-    
+
     public lazy var importContext: NSManagedObjectContext = {
         let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         moc.parent = self.context
         moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return moc
     }()
-    
+
     public lazy var sourceContext: NSManagedObjectContext = {
         let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         moc.parent = self.context
         moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return moc
     }()
-    
+
     lazy var seedContext: NSManagedObjectContext = {
         let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         moc.persistentStoreCoordinator = self.seedCoordinator
         moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return moc
     }()
-    
+
     // MARK: - COORDINATOR
+
     lazy var coordinator: NSPersistentStoreCoordinator = {
-        return NSPersistentStoreCoordinator(managedObjectModel:self.model)
+        NSPersistentStoreCoordinator(managedObjectModel: self.model)
     }()
-    lazy var sourceCoordinator:NSPersistentStoreCoordinator = {
-        return NSPersistentStoreCoordinator(managedObjectModel:self.model)
+
+    lazy var sourceCoordinator: NSPersistentStoreCoordinator = {
+        NSPersistentStoreCoordinator(managedObjectModel: self.model)
     }()
-    lazy var seedCoordinator:NSPersistentStoreCoordinator = {
-        return NSPersistentStoreCoordinator(managedObjectModel:self.model)
+
+    lazy var seedCoordinator: NSPersistentStoreCoordinator = {
+        NSPersistentStoreCoordinator(managedObjectModel: self.model)
     }()
-    
-    
+
     var store: NSPersistentStore?
     var sourceStore: NSPersistentStore?
     var seedStore: NSPersistentStore?
     var iCloudStore: NSPersistentStore?
-    
-    //MARK: - PATHS
+
+    // MARK: - PATHS
+
     lazy var applicationDocumentsDirectory: URL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "org.leacode.TestCoreData" in the application's documents Application Support directory.
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return urls[urls.count-1]
+        return urls[urls.count - 1]
     }()
-    
+
     lazy var applicationStoresDirectory: URL = {
         let storesDirectory: URL = self.applicationDocumentsDirectory.appendingPathComponent("Stores")
         var fileManager: FileManager = FileManager.default
-        var error: NSError? = nil
-        
+        var error: NSError?
+
         if fileManager.fileExists(atPath: storesDirectory.path) {
             do {
                 try fileManager.createDirectory(at: storesDirectory, withIntermediateDirectories: true, attributes: nil)
@@ -129,41 +131,42 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                 print("FAILED to create Stores directory")
             }
         }
-        
+
         return storesDirectory
     }()
-    
+
     lazy var storeURL: URL = {
-        return self.applicationDocumentsDirectory.appendingPathComponent(self.storeName)
+        self.applicationDocumentsDirectory.appendingPathComponent(self.storeName)
     }()
-    
+
     lazy var sourceStoreURL: URL? = {
         guard let fileName = self.sourceStoreFilename else {
             return nil
         }
-        
+
         guard let path = Bundle.main.path(forResource: (fileName as NSString).deletingPathExtension, ofType: "momd") else {
             return nil
         }
-        
+
         return URL(fileURLWithPath: path)
     }()
-    
+
     // MARK: - Initial
-    public convenience init(storeFileName: String, sourceStoreFileName: String? = nil, entitiesToCopy: [String]? = nil,selectedUniqueAttributes: [String: String]? = nil) throws {
+
+    public convenience init(storeFileName: String, sourceStoreFileName: String? = nil, entitiesToCopy: [String]? = nil, selectedUniqueAttributes: [String: String]? = nil) throws {
         self.init()
-        
-        self.storeName = storeFileName
+
+        storeName = storeFileName
         self.selectedUniqueAttributes = selectedUniqueAttributes
         self.entitiesToCopy = entitiesToCopy
-        
+
         if let sourceFileName = sourceStoreFileName {
-            self.sourceStoreFilename = sourceFileName
+            sourceStoreFilename = sourceFileName
         }
-        
+
         listenForStoreChanges()
     }
-    
+
     public required override init() {
         super.init()
         guard let mergedModel = NSManagedObjectModel.mergedModel(from: nil) else {
@@ -171,11 +174,10 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         }
         model = mergedModel
     }
-    
+
     // MARK: - Setup Store
-    
+
     func loadStore() throws {
-        
         if store != nil {
             return
         }
@@ -186,16 +188,16 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                 try performBackgroundManagedMigrationForStore(storeURL)
             } else {
                 let options = [NSMigratePersistentStoresAutomaticallyOption: true,
-                    NSInferMappingModelAutomaticallyOption: true,
-                    NSSQLitePragmasOption:["journal_mode": "DELETE"]] as [String : Any]
-                store = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL, options: options)
+                               NSInferMappingModelAutomaticallyOption: true,
+                               NSSQLitePragmasOption: ["journal_mode": "DELETE"]] as [String: Any]
+                store = try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: options)
                 print("Successfully add store")
             }
         } catch {
             print("Failed to add store, error: \(error)")
         }
     }
-    
+
     public func loadSourceStore() {
         if sourceStore != nil {
             return
@@ -210,22 +212,16 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
             return
         }
     }
-    
+
     public func setupCoreData() throws {
-        
-        
-        try self.setDefaultDataStoreAsInitialStore()
-        try self.loadStore()
+        try setDefaultDataStoreAsInitialStore()
+        try loadStore()
 //        try checkIfDefaultDataNeedsImporting()
-        
+
         if store != nil && iCloudStore != nil {
-            
         } else {
-            
         }
-        
-        
-        
+
 //        try loadSourceStore()
 //        sourceContext.performBlock { () -> Void in
 //            do {
@@ -237,23 +233,18 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
 //                print("FAILED to migrate: \(error)")
 //            }
 //        }
-//        
-        
-        
+//
     }
-    
+
     // MARK: - DATA IMPORT
-    
+
     func setDefaultDataAsImportedForStore(_ aStore: NSPersistentStore) {
-        
         var dictionary = aStore.metadata
         dictionary?["DefaultDataImported"] = true
         coordinator.setMetadata(dictionary, for: aStore)
-        
     }
-    
+
     func setDefaultDataStoreAsInitialStore() throws {
-        
         guard let fileName = self.sourceStoreFilename else {
             return
         }
@@ -263,22 +254,20 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         /// 2、获得Documents路径，使用NSString对象的stringByAppendingPathComponent()方法拼接路径
         let docPath = home.appendingPathComponent("Documents") as NSString
         let filePath = docPath.appendingPathComponent(fileName)
-        
+
         if !fileManager.fileExists(atPath: filePath) {
-            guard let defaultDataURL =  Bundle.main.path(forResource: (fileName as NSString).deletingPathExtension, ofType: (fileName as NSString).pathExtension) else {
+            guard let defaultDataURL = Bundle.main.path(forResource: (fileName as NSString).deletingPathExtension, ofType: (fileName as NSString).pathExtension) else {
                 return
             }
             try fileManager.copyItem(at: URL(string: defaultDataURL)!, to: storeURL)
         }
-    
     }
-    
+
     func isDefaultDataAlreadyImportedForStore(_ url: URL, type: String) -> Bool {
-        
         do {
             let dictionary = try NSPersistentStoreCoordinator.metadataForPersistentStore(ofType: type, at: url)
             let defaultDataAlreadyImported = (dictionary["DefaultDataImported"] as AnyObject).boolValue
-            
+
             guard let isImported = defaultDataAlreadyImported else {
                 return false
             }
@@ -289,19 +278,17 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         } catch {
             return false
         }
-        
     }
-    
+
     func checkIfDefaultDataNeedsImporting() throws {
-        if !self.isDefaultDataAlreadyImportedForStore(storeURL, type: NSSQLiteStoreType) {
+        if !isDefaultDataAlreadyImportedForStore(storeURL, type: NSSQLiteStoreType) {
             try deepCopyFromSourceStore()
         }
     }
-    
+
     func importDefaultData() {
-        
     }
-    
+
     public func deepCopyFromSourceStore() throws {
         loadSourceStore()
         guard let url = sourceStoreURL else {
@@ -311,19 +298,18 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         try setDefaultDataStoreAsInitialStore()
         setDefaultDataAsImportedForStore(store!)
     }
-    
+
     public func deepCopyFromPersistentStore(_ url: URL) throws {
-        
         guard let attributes = selectedUniqueAttributes else {
             return
         }
-        
+
         let importTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(LCYCoreDataHelper.somethingChanged), userInfo: nil, repeats: true)
-        
+
         sourceContext.perform { () -> Void in
-            
+
             let entitiesToCopy = ["User"]
-            
+
             let importer = LCYCoreDataImporter(uniqueAttributes: attributes)
             do {
                 try importer.deepCopyEntities(entitiesToCopy, fromContext: self.sourceContext, toContext: self.context)
@@ -332,38 +318,34 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                     self.somethingChanged()
                 })
             } catch {
-            
             }
-            
         }
-        
     }
-    
-    //MARK: - SAVING
+
+    // MARK: - SAVING
+
     public func saveContext() throws {
         try context.save()
     }
-    
+
     public func backgroundSaveContext() throws {
-        
-        try self.saveContext()
+        try saveContext()
         try parentContext.performOrThrow({
             if self.parentContext.hasChanges {
                 try self.parentContext.save()
             }
         })
-        
     }
-    
-    
-    //MARK: - MIGRATION MANAGER
+
+    // MARK: - MIGRATION MANAGER
+
     func isMigrationNecessaryForStore(_ storeUrl: URL) throws -> Bool {
-        if FileManager.default.fileExists(atPath: self.storeURL.path) {
+        if FileManager.default.fileExists(atPath: storeURL.path) {
             return false
         }
-        
+
         do {
-            let sourceMetadata: [String : AnyObject] = try NSPersistentStoreCoordinator.metadataForPersistentStore(ofType: NSSQLiteStoreType, at: storeUrl) as [String : AnyObject]
+            let sourceMetadata: [String: AnyObject] = try NSPersistentStoreCoordinator.metadataForPersistentStore(ofType: NSSQLiteStoreType, at: storeUrl) as [String: AnyObject]
             let destinationModel: NSManagedObjectModel = coordinator.managedObjectModel
             if destinationModel.isConfiguration(withName: nil, compatibleWithStoreMetadata: sourceMetadata) {
                 return false
@@ -371,14 +353,12 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         } catch {
             return false
         }
-        
+
         return true
     }
-    
-    
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "migrationProgress" {
-            
             DispatchQueue.main.async(execute: { () -> Void in
                 let progress = (change![NSKeyValueChangeKey.newKey] as AnyObject).floatValue
                 if let progressValue = progress {
@@ -388,56 +368,54 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                     self.migrationVC?.label.text = string
                 }
             })
-            
         }
-        
     }
-    
-    func replaceStore(_ oldStore: URL,withStore newStore: URL) throws -> Bool {
+
+    func replaceStore(_ oldStore: URL, withStore newStore: URL) throws -> Bool {
         var success = false
-        
+
         do {
             try FileManager.default.removeItem(at: oldStore)
-            
+
             try FileManager.default.moveItem(at: newStore, to: oldStore)
             success = true
         } catch {
             print("FAILED to replace store, error: \(error) ")
         }
-        
+
         return success
     }
-    
+
     func migrateStore(_ sourceStore: URL) throws -> Bool {
         var success = false
-        
+
         // STEP 1 - Gather the Source, Destination and Mapping Model
-        
-        let sourceMetadata: [String: AnyObject]? = try NSPersistentStoreCoordinator.metadataForPersistentStore(ofType: NSSQLiteStoreType, at: sourceStore) as [String : AnyObject]?
-        
+
+        let sourceMetadata: [String: AnyObject]? = try NSPersistentStoreCoordinator.metadataForPersistentStore(ofType: NSSQLiteStoreType, at: sourceStore) as [String: AnyObject]?
+
         var sourceModel: NSManagedObjectModel?
         if let metadata = sourceMetadata {
             sourceModel = NSManagedObjectModel.mergedModel(from: nil, forStoreMetadata: metadata)
         }
-        
+
         let destinModel: NSManagedObjectModel? = model
-        
+
         let mappingModel: NSMappingModel? = NSMappingModel(from: nil, forSourceModel: sourceModel, destinationModel: destinModel)
-        
+
         // STEP 2 - Perform migration, assuming the mapping model isn't null
         if let _ = mappingModel {
             let migrationManager: NSMigrationManager = NSMigrationManager(sourceModel: sourceModel!, destinationModel: destinModel!)
             migrationManager.addObserver(self, forKeyPath: "migrationProgress", options: NSKeyValueObservingOptions.new, context: nil)
-            
-            let destinStore = self.applicationStoresDirectory.appendingPathComponent("Temp.sqlite")
-            
+
+            let destinStore = applicationStoresDirectory.appendingPathComponent("Temp.sqlite")
+
             do {
                 try migrationManager.migrateStore(from: sourceStore, sourceType: NSSQLiteStoreType, options: nil, with: mappingModel, toDestinationURL: destinStore, destinationType: NSSQLiteStoreType, destinationOptions: nil)
                 success = true
             } catch {
                 success = false
             }
-            
+
             if success == true {
                 // STEP 3 - Replace the old store with the new migrated store
                 migrationManager.removeObserver(self, forKeyPath: "migrationProgress")
@@ -445,46 +423,43 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
         }
         return true
     }
-    
+
     func performBackgroundManagedMigrationForStore(_ storeURL: URL) throws {
         // Show migration progress view preventing the user from using the app
         let sb: UIStoryboard = UIStoryboard(name: "LCYCoreDataHelper", bundle: Bundle.main)
-        
+
         migrationVC = sb.instantiateViewController(withIdentifier: "migration") as? LCYMigrationVC
         let sa: UIApplication = UIApplication.shared
         let nc: UIViewController? = sa.keyWindow?.rootViewController
-        
+
         if let vc = migrationVC {
             nc?.present(vc, animated: false, completion: nil)
         }
-        
+
         // Perform migration in the background, so it doesn't freeze the UI.
         // This way progress can be shown to the user
-        
+
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
             do {
                 let done = try self.migrateStore(storeURL)
-                
+
                 if done {
                     DispatchQueue.main.async(execute: { () -> Void in
                         do {
                             self.store = try self.coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL, options: nil)
                             print("Successfully add ad migrated store: \(String(describing: self.store))")
                         } catch {
-                            
                         }
                         self.migrationVC?.dismiss(animated: false, completion: nil)
                         self.migrationVC = nil
                     })
                 }
             } catch {
-                
             }
         }
     }
-    
+
     func showValidationError(_ anError: NSError?) -> String? {
-        
         let errors: [AnyObject]? = nil
         var txt = ""
         if let error = anError {
@@ -494,90 +469,87 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                 }
             }
         }
-        
+
         // Display the error(s)
         if errors != nil && errors?.count > 0 {
             for error in errors! {
-                                
                 guard let errorInfo: [AnyHashable: Any] = error.userInfo else {
                     return nil
                 }
-                
+
                 let property: String = errorInfo["NSValidationErrorKey"] as! String
-                
+
                 let code: Int = error.code!
-                
+
                 switch code {
                 case NSValidationRelationshipDeniedDeleteError:
                     txt = "delete was denied (Code \(code)"
-                    break;
+                    break
                 case NSValidationRelationshipLacksMinimumCountError:
                     txt = "the '\(property)' relationship count is too small (Code \(code)). "
-                    break;
+                    break
                 case NSValidationRelationshipExceedsMaximumCountError:
                     txt = "the '\(property)' relationship count is too large (Code \(code)). "
-                    break;
+                    break
                 case NSValidationMissingMandatoryPropertyError:
                     txt = "the '\(property)' property is missing (Code \(code)). "
-                    break;
+                    break
                 case NSValidationNumberTooSmallError:
                     txt = "the '\(property)' number is too small (Code \(code)). "
-                    break;
+                    break
                 case NSValidationNumberTooLargeError:
                     txt = "the '\(property)' number is too large (Code \(code)). "
-                    break;
+                    break
                 case NSValidationDateTooSoonError:
                     txt = "the '\(property)' date is too soon (Code \(code)). "
-                    break;
+                    break
                 case NSValidationDateTooLateError:
                     txt = "the '\(property)' date is too late (Code \(code)). "
-                    break;
+                    break
                 case NSValidationInvalidDateError:
                     txt = "the '\(property)' date is invalid (Code \(code)). "
-                    break;
+                    break
                 case NSValidationStringTooLongError:
                     txt = "the '\(property)' text is too long (Code \(code)). "
-                    break;
+                    break
                 case NSValidationStringTooShortError:
                     txt = "the '\(property)' text is too short (Code \(code)). "
-                    break;
+                    break
                 case NSValidationStringPatternMatchingError:
                     txt = "the '\(property)' text doesn't match the specified pattern (Code \(code)). "
-                    break;
+                    break
                 case NSManagedObjectValidationError:
                     txt = "generated validation error (Code \(code)). "
-                    break;
-                    
+                    break
+
                 default:
                     txt = "Unhandled error code \(code) in showValidationError method"
-                    break;
+                    break
                 }
             }
-            
         }
         return txt
     }
-    
+
     // MARK: - Operation of the store
+
     public func resetStore() throws {
-        
         guard let store = coordinator.persistentStore(for: storeURL) else {
             return
         }
-        
+
         if #available(iOS 9, OSX 10.11, *) {
             try coordinator.destroyPersistentStore(at: storeURL, ofType: NSSQLiteStoreType, options: nil)
         } else {
             let fm = FileManager()
-            try coordinator.performAndWaitOrThrow{
+            try coordinator.performAndWaitOrThrow {
                 try self.coordinator.remove(store)
                 try fm.removeItem(at: self.storeURL)
                 try fm.removeItem(at: self.storeURL.appendingPathComponent("-shm"))
                 try fm.removeItem(at: self.storeURL.appendingPathComponent("-wal"))
             }
-        
         }
-        
+
         // Setup a new stack
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
             let newCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.model)
@@ -585,27 +557,25 @@ public final class LCYCoreDataHelper: NSObject, UIAlertViewDelegate {
                 try newCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL, options: [
                     NSMigratePersistentStoresAutomaticallyOption: true,
                     NSInferMappingModelAutomaticallyOption: true,
-                    NSSQLitePragmasOption: ["journal_mode": "WAL"]
-                    ])
+                    NSSQLitePragmasOption: ["journal_mode": "WAL"],
+                ])
                 self.coordinator = newCoordinator
             } catch {
-                
             }
         }
     }
-    
 }
 
 extension NSNull {
     func length() -> Int { return 0 }
-    
+
     func integerValue() -> Int { return 0 }
-    
-    func floatValue() -> Float { return 0 };
-    
+
+    func floatValue() -> Float { return 0 }
+
     func componentsSeparatedByString(_ separator: String) -> [AnyObject] { return [AnyObject]() }
-    
+
     func objectForKey(_ key: AnyObject) -> AnyObject? { return nil }
-    
+
     func boolValue() -> Bool { return false }
 }
